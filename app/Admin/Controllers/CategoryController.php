@@ -15,7 +15,7 @@ class CategoryController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Category';
+    protected $title = '导航管理';
 
     /**
      * Make a grid builder.
