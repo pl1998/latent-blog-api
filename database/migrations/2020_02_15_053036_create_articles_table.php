@@ -21,12 +21,12 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('cover_img')->nullable();
             $table->string('description')->nullable();
-            $table->boolean('is_show');
+            $table->boolean('is_show')->default(0);
             $table->text('content')->nullable();
-            $table->unsignedInteger('review_count');
-            $table->unsignedInteger('browse_count');
-            $table->unsignedBigInteger('label_id');
-            $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade');
+            $table->unsignedInteger('review_count')->default(0);
+            $table->unsignedInteger('browse_count')->default(0);
+            $table->string('label')->nullable();
+            //$table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade');
             $table->timestamps();
         });
     }

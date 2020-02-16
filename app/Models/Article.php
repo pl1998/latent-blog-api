@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\AdminUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -15,6 +16,11 @@ class Article extends Model
         'content',
         'review_count',
         'browse_count',
+        'label',
+        'created_at',
+        'is_show',
+        'user_id',
+        'category_id'
     ];
 
     protected $casts = [
@@ -27,8 +33,25 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function label()
+    /**
+     *  获取标签数组
+     * @param $value
+     * @return array
+     */
+
+   public function getLabelAttributes($value)
+   {
+       return explode(',', $value);
+   }
+
+    public function setLabelAttribute($value)
     {
-        return $this->hasMany(Label::class);
+        $this->attributes['Label'] = implode(',', $value);
     }
+
+   public function admin_user()
+   {
+       return $this->hasOne(AdminUser::class,'id','user_id');
+   }
+
 }

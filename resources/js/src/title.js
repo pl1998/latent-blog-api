@@ -57,8 +57,6 @@ export default {
                 showTitle()
             }
         }
-        console.log(events);
-
         events.forEach((event) => {
             el.addEventListener(event, handler, true)
         })

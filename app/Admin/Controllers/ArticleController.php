@@ -3,10 +3,14 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Label;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use function foo\func;
 
 class ArticleController extends AdminController
 {
@@ -26,17 +30,41 @@ class ArticleController extends AdminController
     {
         $grid = new Grid(new Article());
 
-        $grid->column('category_id', __('Category id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('title', __('Title'));
-        $grid->column('cover_img', __('Cover img'));
-        $grid->column('description', __('Description'));
-        $grid->column('content', __('Content'));
-        $grid->column('review_count', __('Review count'));
-        $grid->column('browse_count', __('Browse count'));
-        $grid->column('label_id', __('Label id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('name', 'name');
+        });
+        $grid->column('category.name', __('所属分类'));
+        $grid->column('admin_user.name', __('所属作者'));
+        $grid->column('title', __('文章标题'));
+
+        $grid->column('description', __('描述'));
+        //$grid->column('content', __('Content'));
+        $grid->column('review_count', __('评论数'));
+        $grid->column('browse_count', __('浏览量'));
+        $grid->column('label', __('所属标签'))->display(function ($label){
+          $labels =   explode(',',$label);
+          $value = "";
+          foreach ( $labels as $id ) {
+              $label = Label::query()->find($id);
+              $value .= sprintf("<span class='btn btn-xs'  style='background-color: %s;color: #f0f0f0'><i class='fa fa-tag'></i>&nbsp;%s</span>&nbsp;&nbsp;",$label->color,$label->label_name);
+          }
+          return $value;
+        });
+        $grid->column('is_show', __('文章状态'))->display(function ($is_show){
+
+            if($is_show==0){
+                $value = sprintf("<a style='color: #333' href=''><i class='fa fa-circle text-success'></i>&nbsp;&nbsp;show</a>");
+            }else{
+                $value = sprintf("<a style='color: #333' href=''><i class='fa fa-circle text-error'></i>&nbsp;&nbsp;hide</a>");
+            }
+            return $value;
+        });
+
+//        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -75,17 +103,51 @@ class ArticleController extends AdminController
     protected function form()
     {
         $form = new Form(new Article());
+        $form->hidden('user_id')->default(Admin::user()->id);
+        $form->select('category_id','所属分类')->options(function (){
+            $category_array =   Category::query()
+                ->where('is_directory', false)
+                ->get();
+            $category_name = [];
+            foreach ($category_array as $category){
+                $category_name[$category->id] = $category->full_name;
+            }
+            return $category_name;
+        })->rules('required');
+        $form->multipleSelect('label', __('标签'))->options(function (){
+            $labels =    Label::all();
+            $label_name = [];
+            foreach ($labels as $label){
+                $label_name[$label->id] = $label->label_name;
+            }
+            return $label_name;
 
-        $form->number('category_id', __('Category id'));
-        $form->number('user_id', __('User id'));
-        $form->text('title', __('Title'));
-        $form->text('cover_img', __('Cover img'));
-        $form->text('description', __('Description'));
-        $form->textarea('content', __('Content'));
-        $form->number('review_count', __('Review count'));
-        $form->number('browse_count', __('Browse count'));
-        $form->number('label_id', __('Label id'));
+        })->rules('required');
+
+        $form->text('title', __('文章标题'))->rules('required');
+        $form->image('cover_img', __('文章图片'))->rules('required');
+        $form->text('description', __('文章描述'))->rules('required|min:5');
+        $form->textarea('content', __('文章内容'))->rules('required');
+
+
+        $form->switch('is_show', __('是否公开'))->states([
+            'off' => ['value' => 0, 'text' => '公开', 'color' => 'success'],
+            'on'  => ['value' => 1, 'text' => '隐藏', 'color' => 'danger'],
+        ]);
+
+        $form->saving(function (Form $form) {
+
+//            $label = array_filter($form->label);
+//            $form->label = implode(',',$label);
+            if($form->is_show=='off'){
+                $form->is_show = 0;
+            }else{
+                $form->is_show = 1;
+            }
+
+        });
 
         return $form;
     }
+
 }

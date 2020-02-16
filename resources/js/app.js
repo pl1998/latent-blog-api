@@ -67,7 +67,7 @@
 //     router,
 // });
 
-
+require('./bootstrap');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
@@ -80,7 +80,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-
+import axios from 'axios'
+window.axios = axios
 /**
  * 代码高亮
  */
@@ -106,6 +107,7 @@ import Register from './view/layouts/Register'
 Vue.component('Nav',require('./view/Nav.vue').default);
 Vue.component('HeadNav',require('./view/HeadNav.vue').default);
 Vue.component('Footer',require('./view/Footer.vue').default);
+Vue.component('NavCategory',require('./view/layouts/NavCategory.vue').default);
 
 
 

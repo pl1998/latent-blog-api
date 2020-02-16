@@ -15,19 +15,28 @@ class LabelController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Label';
+    protected $title = '标签';
+
+
 
     /**
      * Make a grid builder.
      *
      * @return Grid
      */
+
+
     protected function grid()
     {
         $grid = new Grid(new Label());
 
         $grid->column('id', __('Id'));
-        $grid->column('label_name', __('Label name'));
+        $grid->column('label_name', __('标签'))->display(function ($label_name){
+          $label =   Label::query()->where('label_name',$label_name)
+                          ->first();
+          return   $value = sprintf("<span class='btn btn-xs'  style='background-color: %s;color: #f0f0f0'><i class='fa fa-tag'></i>&nbsp;%s</span>&nbsp;&nbsp;",$label->color,$label->label_name);
+        });
+        $grid->column('color');
 
         return $grid;
     }

@@ -16,6 +16,7 @@ class CreateLabelsTable extends Migration
         Schema::create('labels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('label_name');
+            $table->string('color');
         });
     }
 
