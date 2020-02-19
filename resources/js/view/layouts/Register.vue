@@ -1,6 +1,8 @@
 <template>
+    <div class="blog-login">
     <div class="row">
-        <div class="col-md-4 col-md-offset-4 floating-box">
+        <div class="col-md-4"></div>
+        <div class="col-md-4  floating-box well">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">请注册</h3>
@@ -8,35 +10,39 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label class="control-label">用户名</label>
-                        <input type="text" class="form-control" placeholder="请填写用户名">
+                        <input type="text" name="name" class="form-control" placeholder="请填写用户名">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">邮箱</label>
+                        <input type="text" name="email" class="form-control" placeholder="请填写邮箱">
                     </div>
                     <div class="form-group">
                         <label class="control-label">密码</label>
-                        <input type="password" class="form-control" placeholder="请填写密码">
+                        <input type="password" name="password" class="form-control" placeholder="请填写密码">
                     </div>
                     <div class="form-group">
                         <label class="control-label">确认密码</label>
-                        <input type="password" class="form-control" placeholder="请填写确认密码">
+                        <input type="password" name="confirm_password" class="form-control" placeholder="请填写确认密码">
                     </div>
-<!--                    <div class="form-group">-->
-<!--                        <label class="control-label">图片验证码</label>-->
-<!--                        <input type="text" class="form-control" placeholder="请填写验证码">-->
-<!--                    </div>-->
-<!--                    <div class="thumbnail" title="点击图片重新获取验证码">-->
-<!--                        <div class="captcha"></div>-->
-<!--                    </div>-->
                     <button type="submit" class="btn btn-lg btn-success btn-block">
-                        <i class="fa fa-btn fa-sign-in"></i> 注册
+                        注册
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "Register"
+        name: "Register",
+        data() {
+           return {
+               name:'',
+               email:'',
+           }
+        }
     }
 </script>
 

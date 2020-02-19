@@ -40,9 +40,10 @@ class ArticleController
     public function show(Request $request){
 
        $article =   Article::query()->with('admin_user')->find($request->id);
-
+        $article->label_list = $article->full_name;
        //执行异步任务
        //dispatch(new VisitArticle($article));
+
 
         //文章访问记录
         $this->visit($request->id);

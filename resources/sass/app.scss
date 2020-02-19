@@ -329,5 +329,28 @@ scrollUp:hover{background-color:#333}
 @media screen and (min-width:992px){#scrollUp{bottom:100px
 }}
 
+.blog-login {
+    h3{
+        margin-top: 20px;
+        text-align: center;
+    }
+    .row{
+        margin-top: 120px;
+        .well{
+            background-color: #fff;
+            height: 400px;
+
+            border-radius: 5px;
+        }
+        .strike{
+            text-align: center;
+            margin: 5px 0 5px 0;
+        }
+        .reset_pass{
+            color: #0a1520;
+        }
+    }
+
+}
 
 

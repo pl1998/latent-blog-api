@@ -8,6 +8,7 @@ use App\Observers\ArticleObserver;
 use App\Observers\VisiteObserver;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\Resource;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Resource::withoutWrapping();
 
         Carbon::setLocale('zh');
         //注册模型监听器

@@ -1,11 +1,8 @@
 <template>
     <div class="row article-content">
-        <div class="col-md-1"></div>
+        <div class="col-md-2"></div>
         <div class="col-md-8" style=" background-color: #fff;">
             <div class="markdown-body" v-html="content"></div>
-        </div>
-        <div class="col-md-3">
-            <div></div>
         </div>
     </div>
 </template>
@@ -27,17 +24,15 @@
         methods: {
             articlesListData() {
                 this.error = this.article = null
-                console.log(this.$route.path)
                 axios.get('http://blog.test/api'+this.$route.path)
                     .then(response => {
                         this.article = response.data;
-                        console.log(this.article)
-                        this.content = SimpleMDE.prototype.markdown(this.article.content);
+                            this.content = SimpleMDE.prototype.markdown(this.article.content);
                         this.$nextTick(() => {
                             this.$el.querySelectorAll('pre code').forEach((el) => {
                                 hljs.highlightBlock(el)
                             })
-                        })
+                        });
                     });
             },
         }

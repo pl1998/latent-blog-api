@@ -3,7 +3,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-10 col-md-offset-1">
                 <div v-for="article in articles.data" class="media">
-                    <router-link :to="`/article/${article.id}/sssssss`" class="media-left">
+                    <router-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
                         <img :src="article.cover_img" data-holder-rendered="true">
                     </router-link>
                     <div class="media-body">
@@ -35,7 +35,6 @@
                     <Pagination :currentPage="currentPage" :total="total" :pageSize="pageSize" :onPageChange="changePage" />
                 </div>
             </div>
-<!--            <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;">Scroll to top</a>-->
         </div>
 </template>
 <script>
@@ -75,14 +74,12 @@
                 const pageSize = this.$route.query.page || 1
                 // 当前页
                 const currentPage = this.currentPage
-
                 //获取所有文章
                 axios
                     .get('http://blog.test/api/getArticleList?page='+pageSize)
                     .then(response => {
                         this.articles = response.data;
                         this.total = this.articles.total
-                        //this.currentPage = this.articles.current_page
                     });
                 this.filter = filter
                 // 文章总数
@@ -90,17 +87,7 @@
             },
             // 回调，组件的当前页改变时调用
             changePage(page) {
-                // axios
-                //     .get('http://blog.test/api/getArticleList?page='+page)
-                //     .then(response => {
-                //
-                //         this.articles = response.data;
-                //     });
-               // this.filter = filter
                 this.$router.push({ query: { ...this.$route.query, page } })
-                // 文章总数
-                // this.total = articles.total
-                // this.currentPage = articles.current_page
                 }
             }
         }

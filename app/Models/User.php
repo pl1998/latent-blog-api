@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','avatar'
     ];
 
     /**
@@ -36,4 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setAvatarAttributes($value)
+    {
+        if(empty($value)){
+            $this->attributes['avatar'] = env('APP_URL').'public/images/avatar_github'.rand(1,7).'jpg';
+        }
+    }
+
+    public function getAvatarAttribute($value)
+    {
+        if(empty($value)){
+            return env('APP_URL').'public/images/avatar_github'.rand(1,7).'jpg';
+        }
+    }
 }

@@ -26,17 +26,13 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
-    "@appleple/scroll-up": "^1.0.3",
-    "@ckeditor/ckeditor5-build-classic": "^16.0.0",
-    "@ckeditor/ckeditor5-vue": "^1.0.1",
     "babel-plugin-prismjs": "^2.0.1",
     "element-ui": "^2.13.0",
     "font-awesome": "^4.7.0",
     "highlight.js": "^9.18.1",
     "node-emoji": "^1.10.0",
-    "prismjs": "^1.19.0",
     "simplemde": "^1.11.2",
     "vue-router": "^3.1.5",
-    "vue-scrollup-menu": "^1.0.1"
+    "vuex": "^3.1.2"
   }
 }

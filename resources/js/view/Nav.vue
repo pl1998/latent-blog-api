@@ -1,22 +1,20 @@
 <template>
-    <nav id="top" class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
         <div class="container">
-            <a class="navbar-brand " href="">
-                Latent
-            </a>
+            <router-link class="navbar-brand" :to="{ name: '/' }"> Latent</router-link>
+
             <ul class="navbar-nav mr-auto">
                 <li v-for="nav in navList" class="nav-item  dropdown">
-<!--                    dropdown-->
-                    <a href="#" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true" aria-expanded="false" id="categoryTree">{{nav.name}}</a>
-                    <a href="#" v-else class="nav-link dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="categoryTree">{{nav.name}}</a>
-                                        <ul v-if="nav.children" class="dropdown-menu" aria-labelledby="categoryTree">
-                                            <NavCategory v-for="(item,index) in nav.children" :synClass="item" :key="index" ></NavCategory>
-                                        </ul>
+                    <a href="#" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true"
+                       aria-expanded="false" id="categoryTree">{{nav.name}}</a>
+                    <a href="#" v-else class="nav-link dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" id="categoryTree">{{nav.name}}</a>
+                    <ul v-if="nav.children" class="dropdown-menu" aria-labelledby="categoryTree">
+                        <NavCategory v-for="(item,index) in nav.children" :synClass="item" :key="index"></NavCategory>
+                    </ul>
                 </li>
 
             </ul>
-
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,7 +30,6 @@
                     <router-link class="nav-link" :to="{ name: 'login' }"><i class="fa fa-user"></i> 登 录</router-link>
                     <router-link class="nav-link" :to="{ name: 'register' }"><i class="fa fa-user-plus"></i> 注 册
                     </router-link>
-                    <!--                    <li class="nav-item"><a class="nav-link" href="">register</a></li>-->
                 </ul>
             </div>
         </div>
@@ -40,11 +37,10 @@
 </template>
 
 <script>
-
     import NavCategory from "./layouts/NavCategory";
     export default {
         name: "Nav",
-        components:{NavCategory},
+        components: {NavCategory},
         data() {
             return {
                 navList: null
@@ -70,7 +66,7 @@
                 axios
                     .get('http://blog.test/api/getCategoryTree')
                     .then(response => {
-                        var i =0;
+                        var i = 0;
                         this.navList = response.data;
                     });
             }
