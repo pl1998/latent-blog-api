@@ -9,4 +9,9 @@ class Label extends Model
     //
     public $timestamps = false;
 
+    protected $fillable =[
+      'label_name',
+      'color',
+    ];
+
 }

@@ -15,7 +15,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\User';
+    protected $title = '用户列表';
 
     /**
      * Make a grid builder.
@@ -26,14 +26,13 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->column('id', __('Id'));
+
         $grid->column('name', __('Name'));
         $grid->column('email', __('Email'));
         $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
+        $grid->column('是否验证')->using([0 => '未验证', 1 => '已验证',], '未知')->dot([0 => 'danger', 1 => 'success',], 'warning');
         $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('创建日期', __('Created at'));
 
         return $grid;
     }

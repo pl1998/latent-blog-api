@@ -31,10 +31,13 @@ class CategoryController extends AdminController
         $grid->column('name', __('名称'));
         $grid->column('level', __('层级'));
         $grid->column('is_directory', __('是否目录'))->display(function ($value){
-            return $value ? '是' : '否';
+            return $value ? sprintf("<a style='color: #333' href=''><i class='fa fa-folder-open '></i></a>") : sprintf("<a style='color: #333' href=''><i class='fa fa-file-text-o '></i></a>");
         });
+        $grid->column('id', __('路径'))->display(function ($id){
+            $category = Category::query()->find($id);
+            return $category->full_name;
 
-        $grid->column('path', __('路径'));
+        });
         $grid->actions(function ($actions) {
             // 不展示 Laravel-Admin 默认的查看按钮
             $actions->disableView();

@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<b>Latent</b> Blog',
 
     /*
     |--------------------------------------------------------------------------
@@ -396,6 +396,19 @@ return [
     |
     */
     'extensions' => [
+        'simplemde' => [
 
+            // Set to false if you want to disable this extension
+            'enable' => true,
+
+            // If you want to set an alias for the calling method
+            //'alias' => 'markdown',
+
+            // Editor configuration
+            'config' => [
+                'autofocus'   => true,
+                'placeholder' => '请用markworn书写...',
+            ]
+        ]
     ],
 ];

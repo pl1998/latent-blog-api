@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\AdminUser;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Article extends Model
 {
@@ -18,15 +20,11 @@ class Article extends Model
         'browse_count',
         'label',
         'created_at',
-        'is_show',
+        'status',
         'user_id',
-        'category_id'
+        'category_id',
+        'slug'
     ];
-
-    protected $casts = [
-        'is_show' => 'boolean'
-    ];
-
 
     public function category()
     {
@@ -39,9 +37,17 @@ class Article extends Model
      * @return array
      */
 
-   public function getLabelAttributes($value)
+   public function getFullNameAttribute()
    {
-       return explode(',', $value);
+       $labels = explode(',', $this->label);
+       $label_list = [];
+       foreach ($labels as $key=> $label ) {
+           $labelObj = Label::query()->find($label);
+           $label_list[$key]['id'] = $label;
+           $label_list[$key]['label_name'] = $labelObj->label_name;
+           $label_list[$key]['color'] = $labelObj->color;
+       }
+      return $label_list;
    }
 
     public function setLabelAttribute($value)
@@ -53,5 +59,38 @@ class Article extends Model
    {
        return $this->hasOne(AdminUser::class,'id','user_id');
    }
+
+   public function getCoverImgAttribute($value)
+   {
+       return 'http://blog.test/storage/'.$value;
+   }
+    public function getSlugAttribute($value)
+    {
+        if(!$value){
+            return md5($this->title);
+        }else{
+            return $value;
+        }
+
+    }
+
+   public function getCreatedAtAttribute($value)
+   {
+       return Carbon::createFromFormat('Y-m-d H:i:s',$value)->diffForHumans();
+   }
+
+   public function visitor_registries()
+   {
+       return $this->hasMany(VisitorRegistry::class);
+   }
+
+
+
+
+
+
+
+
+
 
 }

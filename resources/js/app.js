@@ -67,6 +67,8 @@
 //     router,
 // });
 
+
+
 require('./bootstrap');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -82,16 +84,13 @@ Vue.use(ElementUI);
 
 import axios from 'axios'
 window.axios = axios
+
+// import ScrollUp from '@appleple/scroll-up';
+// var scrollUp = require("@appleple/scroll-up")
 /**
  * 代码高亮
  */
-import hljs from 'highlight.js'
 
-/**
- * 添加全局
- * @type {*}
- */
-window.hljs = hljs;
 
 
 
@@ -108,6 +107,7 @@ Vue.component('Nav',require('./view/Nav.vue').default);
 Vue.component('HeadNav',require('./view/HeadNav.vue').default);
 Vue.component('Footer',require('./view/Footer.vue').default);
 Vue.component('NavCategory',require('./view/layouts/NavCategory.vue').default);
+Vue.component('Pagination',require('./view/Pagination.vue').default);
 
 
 
@@ -120,8 +120,8 @@ const router = new VueRouter({
             component: Home
         },
         {
-            path: '/article',
-            name: 'article',
+            path: '/article/:id/:slug',
+            name: 'article.show',
             component: Article
         },
         {

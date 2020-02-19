@@ -1,19 +1,49 @@
 <template>
     <div class="row article-content">
-        <div class="markdown-body">
-
+        <div class="col-md-1"></div>
+        <div class="col-md-8" style=" background-color: #fff;">
+            <div class="markdown-body" v-html="content"></div>
+        </div>
+        <div class="col-md-3">
+            <div></div>
         </div>
     </div>
 </template>
 
 <script>
-    import emoji from 'node-emoji'
     import SimpleMDE from 'simplemde'
+    import hljs from 'highlight.js'
     export default {
-        name: "Article"
+        name: "Article",
+        data() {
+            return {
+                article: null,
+                content:'',
+            }
+        },
+        created() {
+            this.articlesListData();
+        },
+        methods: {
+            articlesListData() {
+                this.error = this.article = null
+                console.log(this.$route.path)
+                axios.get('http://blog.test/api'+this.$route.path)
+                    .then(response => {
+                        this.article = response.data;
+                        console.log(this.article)
+                        this.content = SimpleMDE.prototype.markdown(this.article.content);
+                        this.$nextTick(() => {
+                            this.$el.querySelectorAll('pre code').forEach((el) => {
+                                hljs.highlightBlock(el)
+                            })
+                        })
+                    });
+            },
+        }
     }
 </script>
 
 <style scoped>
-
+    @import '~highlight.js/styles/custom.css';
 </style>

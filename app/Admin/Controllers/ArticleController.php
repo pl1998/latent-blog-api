@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Helpers\Translate;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Label;
@@ -10,7 +11,6 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use function foo\func;
 
 class ArticleController extends AdminController
 {
@@ -29,20 +29,11 @@ class ArticleController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Article());
-
-        $grid->filter(function($filter){
-
-            // 去掉默认的id过滤器
-            $filter->disableIdFilter();
-            // 在这里添加字段过滤器
-            $filter->like('name', 'name');
-        });
+        $grid->model()->orderBy('created_at', 'desc');
         $grid->column('category.name', __('所属分类'));
         $grid->column('admin_user.name', __('所属作者'));
         $grid->column('title', __('文章标题'));
-
         $grid->column('description', __('描述'));
-        //$grid->column('content', __('Content'));
         $grid->column('review_count', __('评论数'));
         $grid->column('browse_count', __('浏览量'));
         $grid->column('label', __('所属标签'))->display(function ($label){
@@ -54,18 +45,29 @@ class ArticleController extends AdminController
           }
           return $value;
         });
-        $grid->column('is_show', __('文章状态'))->display(function ($is_show){
+        $grid->column('status')->using([0 => 'show', 1 => 'hide',], '未知')->dot([0 => 'success', 1 => 'danger',], 'warning');
+        $grid->column('created_at', __('创建时间'));
 
-            if($is_show==0){
-                $value = sprintf("<a style='color: #333' href=''><i class='fa fa-circle text-success'></i>&nbsp;&nbsp;show</a>");
-            }else{
-                $value = sprintf("<a style='color: #333' href=''><i class='fa fa-circle text-error'></i>&nbsp;&nbsp;hide</a>");
-            }
-            return $value;
+        //数据查询过滤器
+        $grid->filter(function ($filter){
+            //显示
+//            $filter->expand();
+            //去掉默认id过滤器
+            //$filter->disableIdFilter();
+            //
+
+
         });
 
-//        $grid->column('updated_at', __('Updated at'));
-
+//        $grid->selector(function (Grid\Tools\Selector $selector) {
+//            $selector->select('category.name', '分类选择', [
+//                1 => '华为',
+//                2 => '小米',
+//                3 => 'OPPO',
+//                4 => 'vivo',
+//            ]);
+//        });
+        $grid->enableHotKeys();
         return $grid;
     }
 
@@ -103,6 +105,7 @@ class ArticleController extends AdminController
     protected function form()
     {
         $form = new Form(new Article());
+
         $form->hidden('user_id')->default(Admin::user()->id);
         $form->select('category_id','所属分类')->options(function (){
             $category_array =   Category::query()
@@ -127,24 +130,23 @@ class ArticleController extends AdminController
         $form->text('title', __('文章标题'))->rules('required');
         $form->image('cover_img', __('文章图片'))->rules('required');
         $form->text('description', __('文章描述'))->rules('required|min:5');
-        $form->textarea('content', __('文章内容'))->rules('required');
-
-
-        $form->switch('is_show', __('是否公开'))->states([
+        $form->simplemde('content', __('文章内容'))->rules('required')->height(500);
+        $form->switch('status', __('是否公开'))->states([
             'off' => ['value' => 0, 'text' => '公开', 'color' => 'success'],
             'on'  => ['value' => 1, 'text' => '隐藏', 'color' => 'danger'],
         ]);
 
         $form->saving(function (Form $form) {
-
-//            $label = array_filter($form->label);
-//            $form->label = implode(',',$label);
-            if($form->is_show=='off'){
-                $form->is_show = 0;
+            if($form->status=='off'){
+                $form->status = 0;
             }else{
-                $form->is_show = 1;
+                $form->status = 1;
             }
 
+            if (!$form->slug) {
+                $translate = new  Translate();
+                $form->slug = $translate->translate($form->title);
+            }
         });
 
         return $form;

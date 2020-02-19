@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
+    <nav id="top" class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
         <div class="container">
             <a class="navbar-brand " href="">
                 Latent
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+
     import NavCategory from "./layouts/NavCategory";
     export default {
         name: "Nav",
@@ -66,8 +67,6 @@
             },
             fetchData() {
                 this.error = this.users = null;
-
-
                 axios
                     .get('http://blog.test/api/getCategoryTree')
                     .then(response => {

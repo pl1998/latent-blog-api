@@ -30,13 +30,14 @@ class LabelController extends AdminController
     {
         $grid = new Grid(new Label());
 
-        $grid->column('id', __('Id'));
+
         $grid->column('label_name', __('标签'))->display(function ($label_name){
           $label =   Label::query()->where('label_name',$label_name)
                           ->first();
           return   $value = sprintf("<span class='btn btn-xs'  style='background-color: %s;color: #f0f0f0'><i class='fa fa-tag'></i>&nbsp;%s</span>&nbsp;&nbsp;",$label->color,$label->label_name);
         });
-        $grid->column('color');
+        $grid->column('color')->editable();
+
 
         return $grid;
     }
@@ -66,7 +67,8 @@ class LabelController extends AdminController
     {
         $form = new Form(new Label());
 
-        $form->text('label_name', __('Label name'));
+        $form->text('label_name', __('标签名'));
+        $form->color('color', __('颜色选择器'));
 
         return $form;
     }
