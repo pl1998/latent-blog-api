@@ -64,7 +64,7 @@
             fetchData() {
                 this.error = this.users = null;
                 axios
-                    .get('http://blog.test/api/getCategoryTree')
+                    .get('/api/getCategoryTree')
                     .then(response => {
                         var i = 0;
                         this.navList = response.data;

@@ -24,7 +24,7 @@
         methods: {
             articlesListData() {
                 this.error = this.article = null
-                axios.get('http://blog.test/api'+this.$route.path)
+                axios.get('/api'+this.$route.path)
                     .then(response => {
                         this.article = response.data;
                             this.content = SimpleMDE.prototype.markdown(this.article.content);

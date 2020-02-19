@@ -76,7 +76,7 @@
                 const currentPage = this.currentPage
                 //获取所有文章
                 axios
-                    .get('http://blog.test/api/getArticleList?page='+pageSize)
+                    .get('/api/getArticleList?page='+pageSize)
                     .then(response => {
                         this.articles = response.data;
                         this.total = this.articles.total
