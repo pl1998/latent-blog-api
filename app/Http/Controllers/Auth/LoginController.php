@@ -41,6 +41,7 @@ class LoginController extends Controller
 
     public function showLoginForm(Request $request)
     {
+        dd(111);
         if ($request->session()->has('url.intended')) {
             if (strpos($request->session()->get('url.intended'), '/admin')) {
                 $request->session()->forget('url.intended');
