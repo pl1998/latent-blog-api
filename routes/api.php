@@ -40,6 +40,15 @@ Route::prefix('v1')->name('api.v1.')
         //删除token
         Route::delete('authorizations', 'Api\v1\AuthorizationController@destroy')->name('api.authorizations.destroy');
 
+        // 某个用户的详情
+        Route::get('users/{user}', 'Api\v1\UsersController@show')
+            ->name('users.show');
+
+        Route::middleware('auth:api')->group(function() {
+            // 当前登录用户信息
+            Route::get('user', 'Api\v1\UsersController@me')
+                ->name('user.show');
+        });
 
 
     });

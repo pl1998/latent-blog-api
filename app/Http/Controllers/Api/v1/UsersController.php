@@ -6,6 +6,7 @@ use App\Http\Requests\Api\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -24,5 +25,15 @@ class UsersController extends Controller
 
         ]);
         return new UserResource($user);
+    }
+
+    public function show(User $user, Request $request)
+    {
+        return new UserResource($user);
+    }
+
+    public function me(Request $request)
+    {
+        return new UserResource($request->user());
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\Api\AuthorizationRequest;
+use App\Http\Resources\UserResource;
 use GuzzleHttp\Client;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
@@ -47,4 +48,7 @@ class AuthorizationController extends Controller
         auth('api')->logout();
         return response(null, 204);
     }
+
+
+
 }
