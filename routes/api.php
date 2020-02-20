@@ -26,10 +26,19 @@ Route::get('/oauth/github', 'Api\AuthController@redirectToProvider');
 Route::get('/github/callback', 'Api\AuthController@handleProviderCallback');
 
 Route::prefix('v1')->name('api.v1.')
-    ->middleware('throttle:1,1')
+//    ->middleware('throttle:1,1')
     ->group(function () {
         // 用户注册
         Route::post('users', 'Api\v1\UsersController@store')->name('users.store');
+
+        //用户登录
+        Route::post('authorizations', 'Api\v1\AuthorizationController@store')->name('api.authorizations.store');
+
+        //刷新token
+        Route::put('authorizations', 'Api\v1\AuthorizationController@update')->name('api.authorizations.update');
+
+        //删除token
+        Route::delete('authorizations', 'Api\v1\AuthorizationController@destroy')->name('api.authorizations.destroy');
 
 
 

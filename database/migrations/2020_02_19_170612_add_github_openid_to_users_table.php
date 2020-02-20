@@ -15,7 +15,7 @@ class AddGithubOpenidToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('github_name');
+            $table->string('github_name')->default(null);
             $table->boolean('verified');
         });
     }
