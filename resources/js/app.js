@@ -3,13 +3,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
-/**
- * 引入element-ui组件
- */
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+//验证器
+import './src/directives/index'
 
 import axios from 'axios'
 window.axios = axios

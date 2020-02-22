@@ -8,9 +8,9 @@
                 <div class="header">
                     <i class="fa fa-user"></i>{{this.article.admin_user.name}}
                     <i class="fa fa-tag"></i>
-                    <router-link :to="`/tag/${label.label_name}`" v-for="label in this.article.label_list" href="">
+                    <routes-link :to="`/tag/${label.label_name}`" v-for="label in this.article.label_list" href="">
                         {{label.label_name}}
-                    </router-link>
+                    </routes-link>
                     <i class="fa fa-times">{{this.article.created_at}}</i>
                 </div>
             </div>

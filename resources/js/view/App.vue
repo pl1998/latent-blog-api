@@ -13,7 +13,8 @@
     import HeadNav from "./HeadNav";
     import Footer from "./Footer";
     export default {
-        components: {HeadNav, Nav, Footer}
+        components: {HeadNav, Nav, Footer},
     }
 </script>
+
 

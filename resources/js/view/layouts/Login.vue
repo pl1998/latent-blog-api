@@ -8,26 +8,26 @@
                         <h3 class="panel-title">登录</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="form-group ">
+                        <div class="form-group data-validator-form">
                             <label class="control-label">邮箱</label>
-                            <input type="text" class="form-control" placeholder="请填写邮箱">
+                            <input   v-model.trim="email" type="text"  class="form-control" placeholder="请填写邮箱">
                         </div>
                         <div class="form-group">
                             <label class="control-label">密码</label>
-                            <input type="password" class="form-control" placeholder="请填写密码">
+                            <input  id="password"  v-model.trim="password" type="password" class="form-control" placeholder="请填写密码">
                         </div>
 
-                        <button type="submit" class="btn  btn-success btn-block">
+                        <button type="submit" @click="login" class="btn  btn-success btn-block">
                              登录
                         </button>
                         <div class="strike">
                             <span>or</span>
                         </div>
                         <div class="form-group">
-                            <a @click="githubLogin()" style="color:#fff" class="btn btn-primary form-control"><i class="fa fa-github"></i>  Github 登录</a>
+                            <a @click="githubLogin" style="color:#fff" class="btn btn-primary form-control"><i class="fa fa-github"></i>  Github 登录</a>
                         </div>
                         <div class="form-group">
-                            <router-link :to="`/password/reset`" class="btn form-control reset_pass">忘记密码?</router-link>
+                            <routes-link :to="`/password/reset`" class="btn form-control reset_pass">忘记密码?</routes-link>
                         </div>
                     </div>
                 </div>
@@ -37,17 +37,14 @@
 </template>
 
 <script>
-    ///
-    import SimpleMDE from "simplemde";
-    import hljs from "highlight.js";
-
     export default {
         name: "Login",
         data(){
             return {
                 name:'',
                 email:'',
-                call:null
+                call:null,
+                password:''
             }
         },
         methods: {
@@ -58,8 +55,29 @@
                        this.call = response.data;
                        console.log(this.call)
                    });
+            },
+            login(e)
+            {
+                this.$nextTick(() => {
+                    console.log(e)
+                    const target = e.target.type === 'submit' ? e.target : e.target.parentElement
+                    if (target.canSubmit) {
+                        this.submit()
+                    }
+                })
+            },
+            submit()
+            {
+                axios.post('/api/v1/authorizations', {
+                    email: this.email,
+                    password: this.password,
+                })
+                    .then(function (response) {
+
+                    });
             }
-        }
+        },
+
     }
 </script>
 

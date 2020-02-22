@@ -17,9 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/getCategoryTree', 'Api\CategoryController@getCategoryTree');
-Route::get('/getArticleList', 'Api\ArticleController@getArticleList');
-Route::get('/article/{id}/{slug}', 'Api\ArticleController@show');
 
 //github登录
 Route::get('/oauth/github', 'Api\AuthController@redirectToProvider');
@@ -28,6 +25,12 @@ Route::get('/github/callback', 'Api\AuthController@handleProviderCallback');
 Route::prefix('v1')->name('api.v1.')
 //    ->middleware('throttle:1,1')
     ->group(function () {
+
+        Route::get('categories', 'Api\v1\CategoryController@getCategoryTree');
+        Route::get('getArticleList', 'Api\v1\ArticleController@getArticleList');
+        Route::get('article/{id}/{slug}', 'Api\v1\ArticleController@show');
+
+
         // 用户注册
         Route::post('users', 'Api\v1\UsersController@store')->name('users.store');
 

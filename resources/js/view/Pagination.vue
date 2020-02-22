@@ -65,7 +65,7 @@
             changePage(page) {
                 if (page === this.internalCurrentPage || page < 1 || page > this.totalPage) return
                 // 点击的不是当前页时，触发 onPageChange 回调
-                this.$router.push({ query: { ...this.$route.query, page } })
+                this.$routes.push({ query: { ...this.$route.query, page } })
             }
         }
     }

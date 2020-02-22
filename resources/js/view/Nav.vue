@@ -6,9 +6,9 @@
             <ul class="navbar-nav mr-auto">
                 <li v-for="nav in navList" class="nav-item  dropdown">
                     <a href="#" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true"
-                       aria-expanded="false" id="categoryTree">{{nav.name}}</a>
+                       aria-expanded="false" >{{nav.name}}</a>
                     <a href="#" v-else class="nav-link dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false" id="categoryTree">{{nav.name}}</a>
+                       aria-expanded="false" >{{nav.name}}</a>
                     <ul v-if="nav.children" class="dropdown-menu" aria-labelledby="categoryTree">
                         <NavCategory v-for="(item,index) in nav.children" :synClass="item" :key="index"></NavCategory>
                     </ul>
@@ -27,9 +27,8 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <ul class="navbar-nav navbar-right">
-                    <router-link class="nav-link" :to="{ name: 'login' }"><i class="fa fa-user"></i> 登 录</router-link>
-                    <router-link class="nav-link" :to="{ name: 'register' }"><i class="fa fa-user-plus"></i> 注 册
-                    </router-link>
+                    <router-link class="nav-link" :to="{ name: 'login' }"> 登 录</router-link>
+                    <router-link class="nav-link" :to="{ name: 'register' }">注 册</router-link>
                 </ul>
             </div>
         </div>
@@ -43,28 +42,22 @@
         components: {NavCategory},
         data() {
             return {
-                navList: null
+                type:['success','info','warning','danger'],
             }
         },
+        computed:{
+            cafesLoadStatus(){
+                return this.$store.getters.getCategoriesLoadStatus;
+            },
+        },
         created() {
-            this.fetchData();
+           this.$store.dispatch('categoriesLoadStatus');
         },
         methods: {
-            open() {
-                this.$alert('这是一段内容', '标题名称', {
-                    confirmButtonText: '确定',
-                    callback: action => {
-                        this.$message({
-                            type: 'info',
-                            message: `action: ${action}`
-                        });
-                    }
-                });
-            },
             fetchData() {
                 this.error = this.users = null;
                 axios
-                    .get('/api/getCategoryTree')
+                    .get('/api/v1/getCategoryTree')
                     .then(response => {
                         var i = 0;
                         this.navList = response.data;
