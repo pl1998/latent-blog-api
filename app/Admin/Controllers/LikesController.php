@@ -70,6 +70,7 @@ class LikesController extends AdminController
         $form->email('email', __('邮箱'))->rules('email');
         $form->text('blog_url', __('Blog url'));
         $form->text('signature', __('签名'));
+        $form->textarea('content', __('留言'));
         $form->switch('is_hide', __('是否添加'))->states([
             'off' => ['value' => 0, 'text' => '隐藏', 'color' => 'danger'],
             'on'  => ['value' => 1, 'text' => '显示', 'color' => 'success'],

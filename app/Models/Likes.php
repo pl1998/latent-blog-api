@@ -8,7 +8,7 @@ class Likes extends Model
 {
     //
     protected $fillable = [
-      'name','blog_url','signature','email','content'
+      'name','blog_url','signature','email','content','is_hide'
     ];
 
 }

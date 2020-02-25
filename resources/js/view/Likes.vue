@@ -7,7 +7,7 @@ import swal from "sweetalert2";
                 <h3>友情链接</h3>
                 <div class="likes" v-for="like in likes">
                     <h2 class="animation pulse">
-                        <a href="" target="_blank">【{{like.name}}】</a>
+                        <a href="{{like.url}}" target="_blank">【{{like.name}}】</a>
                         <span>{{like.signature}}</span>
                     </h2>
                     <h3><button class="btn btn-success" @click="showLikes"><i class="fa fa-ad"></i>添加友链</button></h3>
