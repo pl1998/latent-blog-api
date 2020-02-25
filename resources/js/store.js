@@ -12,6 +12,7 @@ Vue.use( Vuex );
 import { users } from './modules/users'
 import { categories } from './modules/categories'
 import { articles } from './modules/articles'
+import { likes } from './modules/likes'
 
 
 export default new Vuex.Store({
@@ -19,5 +20,6 @@ export default new Vuex.Store({
         users,
         categories,
         articles,
+        likes,
     }
 });

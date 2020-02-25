@@ -30,6 +30,9 @@ Route::prefix('v1')->name('api.v1.')
         Route::get('articles', 'Api\v1\ArticleController@getArticleList');
         Route::get('article/{id}/{slug}', 'Api\v1\ArticleController@show');
 
+        Route::get('likes', 'Api\v1\LikesController@all')->name('api.likes.all');
+        Route::post('likes', 'Api\v1\LikesController@store')->name('api.likes.store');
+
 
         // 用户注册
         Route::post('users', 'Api\v1\UsersController@store')->name('users.store');

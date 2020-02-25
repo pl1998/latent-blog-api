@@ -8,7 +8,7 @@ class Category extends Model
 {
     //
 
-    protected $fillable = ['name', 'is_directory', 'level', 'path'];
+    protected $fillable = ['name', 'is_directory', 'level', 'path','url'];
 
     protected $casts = [
         'is_directory' => 'boolean',

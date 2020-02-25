@@ -5,15 +5,14 @@
 
             <ul class="navbar-nav mr-auto">
                 <li v-for="nav in categories" class="nav-item  dropdown">
-                    <a href="#" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true"
-                       aria-expanded="false" >{{nav.name}}</a>
-                    <a href="#" v-else class="nav-link dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false" >{{nav.name}}</a>
+                    <router-link :to="nav.url" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true"
+                       aria-expanded="false" >{{nav.name}}</router-link>
+                    <router-link :to="{name:nav.url}" v-else class="nav-link dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" >{{nav.name}}</router-link>
                     <ul v-if="nav.children" class="dropdown-menu" aria-labelledby="categoryTree">
                         <NavCategory v-for="(item,index) in nav.children" :synClass="item" :key="index"></NavCategory>
                     </ul>
                 </li>
-
             </ul>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

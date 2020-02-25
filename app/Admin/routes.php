@@ -17,6 +17,7 @@ Route::group([
     $router->resource('label', LabelController::class);
     $router->resource('category', CategoryController::class);
     $router->resource('topic', TopicController::class);
+    $router->resource('likes', LikesController::class);
 
     //下拉导航
     $router->get('api/category', 'CategoryController@apiIndex');

@@ -2,7 +2,7 @@
     <div class="row home-content">
         <div class="col-md-1"></div>
         <div class="col-md-10 col-md-offset-1">
-            <div v-for="article in articles.data" class="media">
+            <div v-for="article in articles.data" class="media animated pulse">
                 <router-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
                     <img :src="article.cover_img" data-holder-rendered="true">
                 </router-link>

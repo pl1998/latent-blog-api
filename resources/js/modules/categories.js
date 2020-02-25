@@ -25,20 +25,19 @@ export const categories = {
             CategoriesAPI.getCategories()
                 .then( function( response ){
                     commit( 'setCategories', response.data );
-                    commit( 'setCategoriesLoadStatus', 2 );
+                    commit( 'setCategoriesStatus', 2 );
                 })
                 .catch( function(){
                     commit( 'setCategories', [] );
-                    commit( 'setCategoriesLoadStatus', 3 );
+                    commit( 'setCategoriesStatus', 3 );
                 });
         },
-
     },
     /**
      * Defines the mutations used
      */
     mutations: {
-        setCategoriesLoadStatus( state, status ){
+        setCategoriesStatus( state, status ){
             state.categoriesLoadStatus = status;
         },
 

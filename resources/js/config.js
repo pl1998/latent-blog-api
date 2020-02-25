@@ -1,6 +1,7 @@
 var api_url ='';
-
+console.log(process.env.NODE_ENV)
 switch( process.env.NODE_ENV ){
+
     case 'development':
         api_url = 'http://blog.test/api/v1';
         break;
