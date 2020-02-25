@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Nav></Nav>
+        <Categories></Categories>
         <HeadNav v-if="$route.path.slice(-6)!=='/login' && $route.path.slice(-9)!=='/register' " ></HeadNav>
         <div class="container">
             <router-view></router-view>
@@ -9,11 +9,11 @@
     </div>
 </template>
 <script>
-    import Nav from "./Nav";
+    import Categories from "./Categories";
     import HeadNav from "./HeadNav";
     import Footer from "./Footer";
     export default {
-        components: {HeadNav, Nav, Footer},
+        components: {HeadNav, Categories, Footer},
     }
 </script>
 

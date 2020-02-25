@@ -6,15 +6,18 @@
  */
 
 import ArticlesAPI from '../api/articles.js';
+import SimpleMDE from 'simplemde'
+
 
 export const articles = {
     /**
      * Defines the state being monitored for the module.
      */
     state: {
-        articles: [],
+        articles: {},
+        total:0,
         articlesLoadStatus: 0,
-
+        pageSize:10,
         article: {},
         articleLoadStatus: 0
     },
@@ -22,12 +25,13 @@ export const articles = {
      * Defines the actions used to retrieve the data.
      */
     actions: {
-        loadArticles( { commit } ){
+        loadArticles( { commit },page ){
             commit( 'setArticlesLoadStatus', 1 );
-
-            ArticlesAPI.getArticles()
+            ArticlesAPI.getArticles(page,5)
                 .then( function( response ){
                     commit( 'setArticles', response.data );
+                    commit( 'setTotal', response.data.total );
+                    commit( 'setPageSize', response.data.per_page);
                     commit( 'setArticlesLoadStatus', 2 );
                 })
                 .catch( function(){
@@ -38,10 +42,11 @@ export const articles = {
 
         loadArticle( { commit }, data ){
             commit( 'setArticleLoadStatus', 1 );
-
-            ArticlesAPI.getArticle( data.id )
+            ArticlesAPI.getArticle(data.id,data.slug)
                 .then( function( response ){
-                    commit( 'setArticle', response.data );
+                    const article = response.data;
+                    article.content = SimpleMDE.prototype.markdown(article.content)
+                    commit( 'setArticle',article);
                     commit( 'setArticleLoadStatus', 2 );
                 })
                 .catch( function(){
@@ -56,18 +61,24 @@ export const articles = {
      */
     mutations: {
         setArticlesLoadStatus( state, status ){
-            state.ArticlesLoadStatus = status;
+            state.articlesLoadStatus = status;
         },
 
         setArticles( state, articles ){
-            state.Articles = Articles;
+            state.articles = articles;
+        },
+        setTotal(state,total) {
+            state.total = total
+        },
+        setPageSize(state,pageSize) {
+            state.pageSize = pageSize
         },
 
         setArticleLoadStatus( state, status ){
-            state.ArticleStatus = status;
+            state.articleLoadStatus = status;
         },
 
-        setArticle( state, Article ){
+        setArticle( state, article ){
             state.article = article;
         }
     },
@@ -76,19 +87,22 @@ export const articles = {
      */
     getters: {
         getArticlesLoadStatus( state ){
-            return state.ArticlesLoadStatus;
+            return state.articlesLoadStatus;
         },
-
         getArticles( state ){
             return state.articles;
         },
-
-        getArticleLoadStatus( state ){
-            return state.ArticleLoadStatus;
+        getTotal( state ){
+            return state.total;
         },
-
-        getArticle( state ){
-            return state.Article;
+        getPageSize( state ){
+            return state.pageSize;
+        },
+        getArticleLoadStatus( state ){
+            return state.articleLoadStatus;
+        },
+        getArticle(state){
+            return state.article;
         }
     }
 };

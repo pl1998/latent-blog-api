@@ -3,9 +3,9 @@
         <div class="col-md-1"></div>
         <div class="col-md-10 col-md-offset-1">
             <div v-for="article in articles.data" class="media">
-                <routes-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
+                <router-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
                     <img :src="article.cover_img" data-holder-rendered="true">
-                </routes-link>
+                </router-link>
                 <div class="media-body">
                     <h6 class="media-heading">
                         <a href="">{{article.title}}</a>
@@ -20,11 +20,11 @@
                                       v-bind:style="{background:labels.color,color:'#f0f0f0'}"><i class='fa fa-tag'></i>&nbsp;{{labels.label_name}}</span>
                         </a>
                         <div class="info">
-                            <i class="el-icon-user"></i>{{article.admin_user.name}}&nbsp;&nbsp;
-                            <i class="el-icon-time"></i>{{article.created_at}}&nbsp;&nbsp;
-                            <i class="el-icon-view"></i>{{article.review_count}}&nbsp;&nbsp;
+                            <i class="fa fa-user"></i>{{article.admin_user.name}}&nbsp;&nbsp;
+                            <i class="fa fa-clock-o"></i>{{article.created_at}}&nbsp;&nbsp;
+                            <i class="fa fa-eye"></i>{{article.review_count}}&nbsp;&nbsp;
                             <a href="http://blog.test/article" class="pull-right">
-                                <routes-link :to="`/article/${article.id}/${article.slug}`">Read More <i class='fa fa-mail-forward'></i></routes-link>
+                                <router-link :to="`/article/${article.id}/${article.slug}`">Read More <i class='fa fa-mail-forward'></i></router-link>
                             </a>
                             <i class="ion-ios-arrow-forward"></i>
                         </div>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="panel-footer  remove-padding-horizontal pager-footer">
-<!--                <Pagination :currentPage="currentPage" :total="total" :pageSize="pageSize" :onPageChange="changePage"/>-->
+                <Pagination :currentPage="currentPage" :total="total" :pageSize="parseInt(pageSize)" :onPageChange="changePage"/>
             </div>
         </div>
     </div>
@@ -41,65 +41,51 @@
     import Pagination from './Pagination';
     export default {
         name: "Home",
-        //引入组件
+        created() {
+            this.$store.dispatch('loadArticles',this.$route.query.page);
+        },
         components: {Pagination},
-        data() {
-            return {
-                articles: null,
-                total: 0, // 文章总数
-                pageSize: 10, // 每页条数
+        watch: {
+            '$route'(to) {
+              this.getArticles('watch');
             }
         },
-        // beforeRouteEnter(to, from, next) {
-        //     next(vm => {
-        //         vm.setDataByFilter(to.query.filter)
-        //     })
-        // },
-        created() {
-             this.$store.dispatch('loadArticles');
-             this.getArticles();
-        },
+
         computed: {
-            //获取加载状态
-            ArticlesLoadStatus(){
+            articlesLoadStatus(){
                 return this.$store.getters.getArticlesLoadStatus;
             },
-            //获取文章article
             articles(){
-                return this.$store.getters.getArticles;
-            }
-            // currentPage() {
-            //     return parseInt(this.$route.query.page) || 1
-            // }
-        },
-        //通过watch来直接监测demo
-        watch: {
-            "$route": "getArticles"
-            // '$route'(to) {
-            //     this.setDataByFilter(to.query.filter)
-            // }
+                 return   this.getArticles('computed');
 
+            },
+            currentPage() {
+                return parseInt(this.$route.query.page) || 1
+            },
+            total()
+            {
+                return this.$store.getters.getTotal;
+            },
+            pageSize()
+            {
+                return this.$store.getters.getPageSize;
+            }
         },
         methods: {
-            // setDataByFilter(filter = 'default') {
-            //     const pageSize = this.$route.query.page || 1
-            //     const currentPage = this.currentPage
-            //     axios
-            //         .get('/api/getArticleList?page=' + pageSize)
-            //         .then(response => {
-            //             this.articles = response.data;
-            //             this.total = this.articles.total
-            //         });
-            //     this.filter = filter
-            //
-            // },
-            // changePage(page) {
-            //     this.$routes.push({query: {...this.$route.query, page}})
-            // },
-            // getArticles(){
-            //
-            // }
-        },
+            changePage(page) {
+                this.$router.push({query: {...this.$route.query, page}})
+            },
+            getArticles(method)
+            {
+                if(method === 'watch') {
+                   const page = parseInt(this.$route.query.page) || 1;
+                    this.$store.dispatch('loadArticles',page);
+                    return this.$store.getters.getArticles;
+                }else {
+                    return this.$store.getters.getArticles;
+                }
+            }
+        }
     }
 </script>
 

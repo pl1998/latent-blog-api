@@ -17,13 +17,14 @@ class ArticleController
     /**
      * @return mixed
      */
-    public function getArticleList()
+    public function getArticleList(Request $request)
     {
+
        $articleList =  Article::query()
            ->with('admin_user')
            ->where('status',0)
            ->orderBy('created_at','desc')
-           ->paginate(10);
+           ->paginate($request->pageSize);
 
        foreach ($articleList as $key=> $article){
            $article->label_list = $article->full_name;

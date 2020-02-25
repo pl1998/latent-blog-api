@@ -14261,6 +14261,14 @@ a:hover {
   margin-bottom: 30px;
 }
 
+.article-content img {
+  text-align: center;
+  width: 50%;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 30px #ccc;
+}
+
 .markdown-body {
   margin: 15px;
 }
@@ -14274,13 +14282,33 @@ a:hover {
   background-image: url(/images/return.png?921d7cdc56db9a085a424f3e728d5ce1);
 }
 
-scrollUp:hover {
-  background-color: #333;
+.dropdown-submenu {
+  position: relative;
 }
 
-@media screen and (min-width: 992px) {
-  #scrollUp {
-    bottom: 100px;
+.dropdown-submenu a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 3px;
+  top: 40%;
+}
+
+.dropdown-submenu:hover > .dropdown-menu,
+.dropdown-submenu:focus > .dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute !important;
+  margin-top: -30px;
+  left: 100%;
+}
+
+@media (max-width: 992px) {
+  .dropdown-menu {
+    width: 50%;
+  }
+
+  .dropdown-menu .dropdown-submenu {
+    width: auto;
   }
 }
 

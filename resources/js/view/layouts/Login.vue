@@ -27,7 +27,7 @@
                             <a @click="githubLogin" style="color:#fff" class="btn btn-primary form-control"><i class="fa fa-github"></i>  Github 登录</a>
                         </div>
                         <div class="form-group">
-                            <routes-link :to="`/password/reset`" class="btn form-control reset_pass">忘记密码?</routes-link>
+                            <router-link :to="`/password/reset`" class="btn form-control reset_pass">忘记密码?</router-link>
                         </div>
                     </div>
                 </div>
@@ -58,13 +58,7 @@
             },
             login(e)
             {
-                this.$nextTick(() => {
-                    console.log(e)
-                    const target = e.target.type === 'submit' ? e.target : e.target.parentElement
-                    if (target.canSubmit) {
-                        this.submit()
-                    }
-                })
+                alert('目前支持github登录？')
             },
             submit()
             {

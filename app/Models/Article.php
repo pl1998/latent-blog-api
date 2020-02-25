@@ -62,7 +62,7 @@ class Article extends Model
 
    public function getCoverImgAttribute($value)
    {
-       return 'http://blog.test/storage/'.$value;
+       return env('APP_URL').'/storage/'.$value;
    }
     public function getSlugAttribute($value)
     {

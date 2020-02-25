@@ -27,7 +27,7 @@ Route::prefix('v1')->name('api.v1.')
     ->group(function () {
 
         Route::get('categories', 'Api\v1\CategoryController@getCategoryTree');
-        Route::get('getArticleList', 'Api\v1\ArticleController@getArticleList');
+        Route::get('articles', 'Api\v1\ArticleController@getArticleList');
         Route::get('article/{id}/{slug}', 'Api\v1\ArticleController@show');
 
 

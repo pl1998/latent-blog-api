@@ -1,10 +1,10 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
         <div class="container">
-            <router-link class="navbar-brand" :to="{ name: '/' }"> Latent</router-link>
+            <router-link class="navbar-brand" :to="{ name: '/#' }">Latent</router-link>
 
             <ul class="navbar-nav mr-auto">
-                <li v-for="nav in navList" class="nav-item  dropdown">
+                <li v-for="nav in categories" class="nav-item  dropdown">
                     <a href="#" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true"
                        aria-expanded="false" >{{nav.name}}</a>
                     <a href="#" v-else class="nav-link dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
@@ -38,32 +38,21 @@
 <script>
     import NavCategory from "./layouts/NavCategory";
     export default {
-        name: "Nav",
+        name: "Categories",
         components: {NavCategory},
-        data() {
-            return {
-                type:['success','info','warning','danger'],
-            }
+        created() {
+            this.$store.dispatch('loadCategories')
         },
         computed:{
-            cafesLoadStatus(){
+            categoriesLoadStatus(){
                 return this.$store.getters.getCategoriesLoadStatus;
             },
-        },
-        created() {
-           this.$store.dispatch('categoriesLoadStatus');
-        },
-        methods: {
-            fetchData() {
-                this.error = this.users = null;
-                axios
-                    .get('/api/v1/getCategoryTree')
-                    .then(response => {
-                        var i = 0;
-                        this.navList = response.data;
-                    });
+            categories()
+            {
+                return this.$store.getters.getCategories;
             }
-        }
+
+        },
     }
 </script>
 

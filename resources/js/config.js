@@ -5,7 +5,7 @@ switch( process.env.NODE_ENV ){
         api_url = 'http://blog.test/api/v1';
         break;
     case 'production':
-        api_url = 'http://pltrue.top/api/v1';
+        api_url = 'https://pltrue.top/api/v1';
         break;
 }
 
