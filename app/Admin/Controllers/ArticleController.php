@@ -131,6 +131,7 @@ class ArticleController extends AdminController
         $form->image('cover_img', __('文章图片'))->rules('required');
         $form->text('description', __('文章描述'))->rules('required|min:5');
         $form->simplemde('content', __('文章内容'))->rules('required')->height(500);
+        $form->date('created_at', __('文章内容'))->format('YYYY-MM-DD');
         $form->switch('status', __('是否公开'))->states([
             'off' => ['value' => 0, 'text' => '公开', 'color' => 'success'],
             'on'  => ['value' => 1, 'text' => '隐藏', 'color' => 'danger'],
