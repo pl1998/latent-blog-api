@@ -38,6 +38,7 @@ class CategoryController extends AdminController
             return $category->full_name;
 
         });
+        $grid->column('url', __('路由'));
         $grid->actions(function ($actions) {
             // 不展示 Laravel-Admin 默认的查看按钮
             $actions->disableView();
@@ -80,6 +81,7 @@ class CategoryController extends AdminController
 
         $form->text('name', '导航名称')->rules('required');
 
+        $form->text('url', '路由')->rules('required');
         // 如果是编辑的情况
         if ($isEditing) {
             // 不允许用户修改『是否目录』和『父类目』字段的值
@@ -99,6 +101,7 @@ class CategoryController extends AdminController
             // 定义一个名为父类目的下拉框
             $form->select('parent_id', '父类目')->ajax('/admin/api/category');
         }
+
 
         return $form;
     }
