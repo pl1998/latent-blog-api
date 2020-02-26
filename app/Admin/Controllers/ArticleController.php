@@ -29,6 +29,7 @@ class ArticleController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Article());
+        $grid->model()->orderBy('stick', 'desc');
         $grid->model()->orderBy('created_at', 'desc');
         $grid->column('category.name', __('所属分类'));
         $grid->column('admin_user.name', __('所属作者'));
@@ -131,15 +132,15 @@ class ArticleController extends AdminController
         $form->image('cover_img', __('文章图片'))->rules('required');
         $form->text('description', __('文章描述'))->rules('required|min:5');
         $form->simplemde('content', __('文章内容'))->rules('required')->height(500);
-        $form->date('created_at', __('文章内容'))->format('YYYY-MM-DD');
+        $form->datetime('created_at', __('发布时间'))->format('YYYY-MM-DD HH:MM:SS');
         //
         $form->switch('status', __('是否公开'))->states([
             'off' => ['value' => 0, 'text' => '公开', 'color' => 'success'],
             'on'  => ['value' => 1, 'text' => '隐藏', 'color' => 'danger'],
         ]);
         $form->switch('stick', __('是否置顶'))->states([
-            'off' => ['value' => 0, 'text' => '否', 'color' => 'success'],
-            'on'  => ['value' => 1, 'text' => '置顶', 'color' => 'danger'],
+            'off' => ['value' => 0, 'text' => '否', 'color' => 'danger'],
+            'on'  => ['value' => 1, 'text' => '置顶', 'color' => 'success'],
         ]);
 
         $form->saving(function (Form $form) {
@@ -150,13 +151,13 @@ class ArticleController extends AdminController
                 $form->status = 1;
             }
 
-            if($form->status=='off'){
+            if($form->stick=='off'){
                 $form->stick = 0;
             }else{
                 $form->stick = 1;
             }
            $form->label =  $this->setStick($form->label,$form->stick);
-            dd($form->label);
+
             if (!$form->slug) {
                 $translate = new  Translate();
                 $form->slug = $translate->translate($form->title);
@@ -168,14 +169,16 @@ class ArticleController extends AdminController
 
     public function setStick($label,int $ment)
     {
+        $label = array_filter($label);
         $labels =  Label::query()->where('label_name','置顶')->first();
-        $label_array = explode(',',$label);
-        if(in_array($labels->id,$label_array)){
+
+
+        if(in_array($labels->id,$label)){
             switch ($ment) {
                 case 0:
-                    $key = array_search($labels->id, $label_array);
-                    $label_array = array_splice($label_array, $key,1);
-                    return implode(',',$label_array);
+                    $key = array_search($labels->id, $label);
+                    $label_array = array_splice($label, $key,1);
+                    return $label_array;
                     break;
                 case 1:
                     return $label;
@@ -188,8 +191,8 @@ class ArticleController extends AdminController
                     return $label;
                     break;
                 case 1:
-                    $label_array[] .=$labels->id;
-                    return implode(',',$label_array);
+                    $label[] .=$labels->id;
+                    return $label;
                     break;
             }
         }
