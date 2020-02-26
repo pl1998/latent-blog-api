@@ -132,18 +132,31 @@ class ArticleController extends AdminController
         $form->text('description', __('文章描述'))->rules('required|min:5');
         $form->simplemde('content', __('文章内容'))->rules('required')->height(500);
         $form->date('created_at', __('文章内容'))->format('YYYY-MM-DD');
+        //
         $form->switch('status', __('是否公开'))->states([
             'off' => ['value' => 0, 'text' => '公开', 'color' => 'success'],
             'on'  => ['value' => 1, 'text' => '隐藏', 'color' => 'danger'],
         ]);
+        $form->switch('stick', __('是否置顶'))->states([
+            'off' => ['value' => 0, 'text' => '否', 'color' => 'success'],
+            'on'  => ['value' => 1, 'text' => '置顶', 'color' => 'danger'],
+        ]);
 
         $form->saving(function (Form $form) {
             if($form->status=='off'){
+
                 $form->status = 0;
             }else{
                 $form->status = 1;
             }
 
+            if($form->status=='off'){
+                $form->stick = 0;
+            }else{
+                $form->stick = 1;
+            }
+           $form->label =  $this->setStick($form->label,$form->stick);
+            dd($form->label);
             if (!$form->slug) {
                 $translate = new  Translate();
                 $form->slug = $translate->translate($form->title);
@@ -153,4 +166,32 @@ class ArticleController extends AdminController
         return $form;
     }
 
+    public function setStick($label,int $ment)
+    {
+        $labels =  Label::query()->where('label_name','置顶')->first();
+        $label_array = explode(',',$label);
+        if(in_array($labels->id,$label_array)){
+            switch ($ment) {
+                case 0:
+                    $key = array_search($labels->id, $label_array);
+                    $label_array = array_splice($label_array, $key,1);
+                    return implode(',',$label_array);
+                    break;
+                case 1:
+                    return $label;
+                    break;
+            }
+
+        }else{
+            switch ($ment) {
+                case 0:
+                    return $label;
+                    break;
+                case 1:
+                    $label_array[] .=$labels->id;
+                    return implode(',',$label_array);
+                    break;
+            }
+        }
+    }
 }

@@ -22,6 +22,7 @@ class CreateArticlesTable extends Migration
             $table->string('cover_img')->nullable();
             $table->string('description')->nullable();
             $table->boolean('status')->default(0);
+            $table->boolean('stick')->default(0);
             $table->text('content')->nullable();
             $table->text('slug')->nullable();
             $table->unsignedInteger('review_count')->default(0);

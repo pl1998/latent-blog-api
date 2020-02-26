@@ -24,7 +24,8 @@ class Article extends Model
         'status',
         'user_id',
         'category_id',
-        'slug'
+        'slug',
+        'stick'
     ];
 
     public function category()
