@@ -22,6 +22,7 @@ class ArticleController
 
        $articleList =  Article::query()
            ->with('admin_user')
+           ->where('status',1)
            ->orderBy('stick','desc')
            ->orderBy('created_at','desc')
            ->paginate($request->pageSize);
