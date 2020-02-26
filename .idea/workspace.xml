@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="302f843f-7a89-4a96-8427-22e2ff5e1e94" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/view/Down.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Article.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Article.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.example.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.example.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/view/Article.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/view/Article.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/view/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/view/Footer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/view/Likes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/view/Likes.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/view/layouts/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/view/layouts/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/view/layouts/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/view/layouts/Register.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +29,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -235,7 +244,8 @@
       <workItem from="1582397970837" duration="3252000" />
       <workItem from="1582406184120" duration="4461000" />
       <workItem from="1582438386406" duration="156000" />
-      <workItem from="1582457355832" duration="38729000" />
+      <workItem from="1582457355832" duration="38917000" />
+      <workItem from="1582688916506" duration="5238000" />
     </task>
     <servers />
   </component>
@@ -263,10 +273,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="776" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1582088022116" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1582457473266">
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1582688916806">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1582457473266" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1582688916806" />
     <state x="567" y="220" width="786" height="600" key="find.popup" timestamp="1582392700180">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

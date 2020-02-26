@@ -2,13 +2,14 @@
     <footer class="footer">
         <div class="container">
             <ul>
-                <li><a v-title="records.paper" :alt="records.paper" href=""><i class="fa fa-paper-plane" aria-hidden="true"></i></a> </li>
-                <li><a v-title="records.weibo" :alt="records.weibo" href=""><i class="fa fa-weibo" aria-hidden="true"></i></a> </li>
-                <li><a v-title="records.github" :href="records.github" ><i class="fa fa-github" aria-hidden="true"></i></a> </li>
+                <li v-for="record in records">
+                    <a v-title="record.name" :alt="record.name" :href="record.url" target="_blank" >
+                        <i :class="record.icon" aria-hidden="true"></i>
+                    </a>
+                </li>
             </ul>
-
             <div class="links">
-                <a v-for="link in links" :href="link.url">{{link.title}}</a>
+                <a v-for="link in links" :href="link.url" target="_blank" >{{link.title}}</a>
             </div>
         </div>
         <p  class="p-bottom">
@@ -16,7 +17,6 @@
         </p>
     </footer>
 </template>
-
 <script>
     import title from "../src/title";
     export default {
@@ -30,21 +30,19 @@
                     paddingRight: '8px'
                 },
                 records:[
-                    {
-                        paper:'xxxx',
-                        weibo:'xxxx',
-                        github:'https://github.com/pl1998',
-                    }
+                    {name:'给我发信', url:'/down',icon:'fa fa-paper-plane'},
+                    {name:'关注我', url:'https://weibo.com/u/5878370732?is_hot=1',icon:'fa fa-weibo'},
+                    {name:'我的github', url:'https://github.com/pl1998',icon:'fa fa-github'},
                 ]
                 ,
                 links:[
                     {
                         title:'友情链接',
-                        url:''
+                        url:'/likes'
                     },
                     {
                         title:'关于我',
-                        url:''
+                        url:'/down'
                     }
                 ],
                 recode:'备案/许可证编号为:赣ICP备19000975号-1'

@@ -58,7 +58,11 @@
             },
             login(e)
             {
-                alert('目前支持github登录？')
+                swal({
+                    title: "登录失败!",
+                    text: '目前支持github登录？',
+                    icon: "error",
+                });
             },
             submit()
             {

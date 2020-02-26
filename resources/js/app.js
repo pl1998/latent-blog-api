@@ -40,6 +40,7 @@ import Login from './view/layouts/Login'
 import Register from './view/layouts/Register'
 import Tag from './view/Tag'
 import Likes from './view/Likes'
+import Down from './view/Down'
 /**
  * 注册组件
  */
@@ -86,6 +87,11 @@ const router = new VueRouter({
             path: '/likes',
             name: 'likes',
             component: Likes
+        },
+        {
+            path: '/down',
+            name: 'down',
+            component: Down
         }
     ],
 });

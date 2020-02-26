@@ -35,7 +35,7 @@
                                    v-validator.required="{ target: '#password' }" class="form-control"
                                    placeholder="请填写确认密码">
                         </div>
-                        <button type="submit" class="btn btn-lg btn-success btn-block" @click="register">
+                        <button  type="submit" class="btn btn-lg btn-info btn-block" @click="register">
                             注册
                         </button>
                     </div>
@@ -69,21 +69,26 @@
                 })
             },
             submit() {
-                axios.post('/api/v1/users', {
-                    name: this.username,
-                    email: this.email,
-                    password: this.password,
-                    confirm_password: this.cpassword
-                })
-                    .then(function (response) {
-                         this.user = response.data;
-                         if(!this.user.message){
-                             //注册成功
-
-                         } else {
-                             alert(this.user.message);
-                         }
-                    });
+                swal({
+                    title: "暂未开发注册功能!",
+                    text: '目前支持github登录？',
+                    icon: "error",
+                });
+                // axios.post('/api/v1/users', {
+                //     name: this.username,
+                //     email: this.email,
+                //     password: this.password,
+                //     confirm_password: this.cpassword
+                // })
+                //     .then(function (response) {
+                //          this.user = response.data;
+                //          if(!this.user.message){
+                //              //注册成功
+                //
+                //          } else {
+                //              alert(this.user.message);
+                //          }
+                //     });
 
             }
         }
@@ -93,5 +98,7 @@
 <style scoped>
     .btn-block {
         margin: 0 0 20px 0;
+        background-color: #409EFF;
+        color:#fff;
     }
 </style>

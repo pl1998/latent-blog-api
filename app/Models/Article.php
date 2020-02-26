@@ -20,6 +20,7 @@ class Article extends Model
         'browse_count',
         'label',
         'created_at',
+        'updated_at',
         'status',
         'user_id',
         'category_id',
