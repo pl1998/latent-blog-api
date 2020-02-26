@@ -314,13 +314,23 @@ a:hover{
 
 .article-content{
     margin-bottom: 30px;
+
     img {
-        text-align: center;
-        width: 50%;
-        margin-top: 10px;
+        display:block;
+        margin: 0 auto;
+        width: 90%;
+        //margin-top: 10px;
         border: 1px solid #ddd;
         -webkit-box-shadow: 0 0 30px #ccc;
         box-shadow: 0 0 30px #ccc;
+        cursor: pointer;
+        transition: all 0.6s;
+        -ms-transition: all 0.8s;
+    }
+
+    img:hover{
+        transform: scale(1.2);
+        -ms-transform: scale(1.2);
     }
 }
 .markdown-body{
