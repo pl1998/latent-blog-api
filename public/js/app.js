@@ -2313,10 +2313,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
@@ -81773,33 +81769,26 @@ var render = function() {
       [
         _vm._l(_vm.articles.data, function(article) {
           return _c("div", { staticClass: "media animated pulse" }, [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-md-6" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "media-left",
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "media-left",
+                    attrs: { to: "/article/" + article.id + "/" + article.slug }
+                  },
+                  [
+                    _c("img", {
                       attrs: {
-                        to: "/article/" + article.id + "/" + article.slug
+                        src: article.cover_img,
+                        "data-holder-rendered": "true"
                       }
-                    },
-                    [
-                      _c("img", {
-                        attrs: {
-                          src: article.cover_img,
-                          "data-holder-rendered": "true"
-                        }
-                      })
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
+                    })
+                  ]
+                ),
+                _vm._v(" "),
                 _c("div", { staticClass: "media-body" }, [
                   _c("h6", { staticClass: "media-heading" }, [
                     _c("a", { attrs: { href: "" } }, [
@@ -81887,8 +81876,9 @@ var render = function() {
                     2
                   )
                 ])
-              ])
-            ])
+              ],
+              1
+            )
           ])
         }),
         _vm._v(" "),

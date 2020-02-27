@@ -4,12 +4,9 @@
         <div class="col-md-10 col-md-offset-1">
             <div v-for="article in articles.data" class="media animated pulse">
                 <div class="row">
-                    <div class="col-md-6">
                         <router-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
                             <img :src="article.cover_img" data-holder-rendered="true">
                         </router-link>
-                    </div>
-                    <div class="col-md-6">
                         <div class="media-body">
                             <h6 class="media-heading">
                                 <a href="">{{article.title}}</a>
@@ -34,10 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
-
-
             </div>
             <div class="panel-footer  remove-padding-horizontal pager-footer">
                 <Pagination :currentPage="currentPage" :total="total" :pageSize="parseInt(pageSize)" :onPageChange="changePage"/>
