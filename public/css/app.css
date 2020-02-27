@@ -14069,6 +14069,7 @@ a:hover {
 
 .home-content .media .media-left {
   padding-right: 10px;
+  display: table-cell;
 }
 
 .home-content .media .media-body {

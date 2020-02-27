@@ -2309,10 +2309,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
@@ -81768,118 +81764,113 @@ var render = function() {
       { staticClass: "col-md-10 col-md-offset-1" },
       [
         _vm._l(_vm.articles.data, function(article) {
-          return _c("div", { staticClass: "media animated pulse" }, [
-            _c(
-              "div",
-              { staticClass: "row" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "media-left",
-                    attrs: { to: "/article/" + article.id + "/" + article.slug }
-                  },
-                  [
-                    _c("img", {
-                      attrs: {
-                        src: article.cover_img,
-                        "data-holder-rendered": "true"
-                      }
-                    })
-                  ]
-                ),
+          return _c(
+            "div",
+            { staticClass: "media animated pulse" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "media-left",
+                  attrs: { to: "/article/" + article.id + "/" + article.slug }
+                },
+                [
+                  _c("img", {
+                    attrs: {
+                      src: article.cover_img,
+                      "data-holder-rendered": "true"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "media-body" }, [
+                _c("h6", { staticClass: "media-heading" }, [
+                  _c("a", { attrs: { href: "" } }, [
+                    _vm._v(_vm._s(article.title))
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "media-body" }, [
-                  _c("h6", { staticClass: "media-heading" }, [
-                    _c("a", { attrs: { href: "" } }, [
-                      _vm._v(_vm._s(article.title))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "meta" }, [
-                    _c("span", { staticClass: "cinema" }, [
-                      _vm._v(_vm._s(article.description))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "description" }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "extra" },
-                    [
-                      _vm._l(article.label_list, function(labels) {
-                        return _c("a", { attrs: { href: "" } }, [
+                _c("div", { staticClass: "meta" }, [
+                  _c("span", { staticClass: "cinema" }, [
+                    _vm._v(_vm._s(article.description))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "description" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "extra" },
+                  [
+                    _vm._l(article.label_list, function(labels) {
+                      return _c("a", { attrs: { href: "" } }, [
+                        _c(
+                          "span",
+                          {
+                            staticClass: "label btn btn-xs",
+                            style: {
+                              background: labels.color,
+                              color: "#f0f0f0"
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-tag" }),
+                            _vm._v(" " + _vm._s(labels.label_name))
+                          ]
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "info" }, [
+                      _c("i", { staticClass: "fa fa-user" }),
+                      _vm._v(
+                        _vm._s(article.admin_user.name) +
+                          "  \n                                "
+                      ),
+                      _c("i", { staticClass: "fa fa-clock-o" }),
+                      _vm._v(
+                        _vm._s(article.created_at) +
+                          "  \n                                "
+                      ),
+                      _c("i", { staticClass: "fa fa-eye" }),
+                      _vm._v(
+                        _vm._s(article.review_count) +
+                          "  \n                                "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "pull-right",
+                          attrs: { href: "http://blog.test/article" }
+                        },
+                        [
                           _c(
-                            "span",
+                            "router-link",
                             {
-                              staticClass: "label btn btn-xs",
-                              style: {
-                                background: labels.color,
-                                color: "#f0f0f0"
+                              attrs: {
+                                to:
+                                  "/article/" + article.id + "/" + article.slug
                               }
                             },
                             [
-                              _c("i", { staticClass: "fa fa-tag" }),
-                              _vm._v(" " + _vm._s(labels.label_name))
+                              _vm._v("Read More "),
+                              _c("i", { staticClass: "fa fa-mail-forward" })
                             ]
                           )
-                        ])
-                      }),
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "info" }, [
-                        _c("i", { staticClass: "fa fa-user" }),
-                        _vm._v(
-                          _vm._s(article.admin_user.name) +
-                            "  \n                                "
-                        ),
-                        _c("i", { staticClass: "fa fa-clock-o" }),
-                        _vm._v(
-                          _vm._s(article.created_at) +
-                            "  \n                                "
-                        ),
-                        _c("i", { staticClass: "fa fa-eye" }),
-                        _vm._v(
-                          _vm._s(article.review_count) +
-                            "  \n                                "
-                        ),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "pull-right",
-                            attrs: { href: "http://blog.test/article" }
-                          },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                attrs: {
-                                  to:
-                                    "/article/" +
-                                    article.id +
-                                    "/" +
-                                    article.slug
-                                }
-                              },
-                              [
-                                _vm._v("Read More "),
-                                _c("i", { staticClass: "fa fa-mail-forward" })
-                              ]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("i", { staticClass: "ion-ios-arrow-forward" })
-                      ])
-                    ],
-                    2
-                  )
-                ])
-              ],
-              1
-            )
-          ])
+                      _c("i", { staticClass: "ion-ios-arrow-forward" })
+                    ])
+                  ],
+                  2
+                )
+              ])
+            ],
+            1
+          )
         }),
         _vm._v(" "),
         _c(
