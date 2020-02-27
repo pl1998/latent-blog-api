@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
         <div class="container">
             <router-link class="navbar-brand" :to="{ name: '/#' }">Latent</router-link>
-
-            <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto  " >
                 <li v-for="nav in categories" class="nav-item  dropdown">
                     <router-link :to="nav.url" v-if="!nav.children " class="nav-link " data-toggle="dropdown " aria-haspopup="true"
                        aria-expanded="false" >{{nav.name}}</router-link>
@@ -14,6 +14,7 @@
                     </ul>
                 </li>
             </ul>
+            </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

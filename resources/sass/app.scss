@@ -156,6 +156,8 @@ a:hover{
             padding-right:10px;
         }
         .media-body {
+            zoom: 1;
+            overflow: hidden;
             .meta {
                 margin:0.5em 0;
                 font-size:1.4em;
@@ -167,8 +169,7 @@ a:hover{
             h6 {
                 font-size:19px;
             }
-            zoom: 1;
-            overflow:hidden;
+
             .media-heading {
                 margin-top:0;
                 margin-bottom:5px;
@@ -338,6 +339,8 @@ a:hover{
 
 }
 
+
+
 #scrollUp {
     text-indent: -999999px;
     bottom: 20px;
@@ -365,15 +368,25 @@ a:hover{
     left: 100%;
 }
 
-@media (max-width: 992px) {
-    .dropdown-menu {
-        width: 50%;
+
+
+@media (max-width: 767px) {
+    media-left {
+        display: block;
+        text-align: center;
+        img {
+            display: block;
+            height: auto;
+            border-radius: 5px;
+            margin: 0 auto;
+            max-width: 250px
+        }
     }
-    .dropdown-menu .dropdown-submenu {
-        width: auto;
+
+   .media-body {
+        padding: 1.5em 0 0;
     }
 }
-
 .blog-login {
     h3{
         margin-top: 20px;

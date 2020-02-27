@@ -15,7 +15,7 @@ class VisitorRegistryController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\VisitorRegistry';
+    protected $title = 'log 日志';
 
     /**
      * Make a grid builder.

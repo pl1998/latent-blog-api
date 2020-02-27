@@ -3,33 +3,41 @@
         <div class="col-md-1"></div>
         <div class="col-md-10 col-md-offset-1">
             <div v-for="article in articles.data" class="media animated pulse">
-                <router-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
-                    <img :src="article.cover_img" data-holder-rendered="true">
-                </router-link>
-                <div class="media-body">
-                    <h6 class="media-heading">
-                        <a href="">{{article.title}}</a>
-                    </h6>
-                    <div class="meta">
-                        <span class="cinema">{{article.description}}</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <router-link :to="`/article/${article.id}/${article.slug}`" class="media-left">
+                            <img :src="article.cover_img" data-holder-rendered="true">
+                        </router-link>
                     </div>
-                    <div class="description"></div>
-                    <div class="extra">
-                        <a v-for="labels in article.label_list" href="">
+                    <div class="col-md-6">
+                        <div class="media-body">
+                            <h6 class="media-heading">
+                                <a href="">{{article.title}}</a>
+                            </h6>
+                            <div class="meta">
+                                <span class="cinema">{{article.description}}</span>
+                            </div>
+                            <div class="description"></div>
+                            <div class="extra">
+                                <a v-for="labels in article.label_list" href="">
                                 <span class='label btn btn-xs'
                                       v-bind:style="{background:labels.color,color:'#f0f0f0'}"><i class='fa fa-tag'></i>&nbsp;{{labels.label_name}}</span>
-                        </a>
-                        <div class="info">
-                            <i class="fa fa-user"></i>{{article.admin_user.name}}&nbsp;&nbsp;
-                            <i class="fa fa-clock-o"></i>{{article.created_at}}&nbsp;&nbsp;
-                            <i class="fa fa-eye"></i>{{article.review_count}}&nbsp;&nbsp;
-                            <a href="http://blog.test/article" class="pull-right">
-                                <router-link :to="`/article/${article.id}/${article.slug}`">Read More <i class='fa fa-mail-forward'></i></router-link>
-                            </a>
-                            <i class="ion-ios-arrow-forward"></i>
+                                </a>
+                                <div class="info">
+                                    <i class="fa fa-user"></i>{{article.admin_user.name}}&nbsp;&nbsp;
+                                    <i class="fa fa-clock-o"></i>{{article.created_at}}&nbsp;&nbsp;
+                                    <i class="fa fa-eye"></i>{{article.review_count}}&nbsp;&nbsp;
+                                    <a href="http://blog.test/article" class="pull-right">
+                                        <router-link :to="`/article/${article.id}/${article.slug}`">Read More <i class='fa fa-mail-forward'></i></router-link>
+                                    </a>
+                                    <i class="ion-ios-arrow-forward"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
             <div class="panel-footer  remove-padding-horizontal pager-footer">
                 <Pagination :currentPage="currentPage" :total="total" :pageSize="parseInt(pageSize)" :onPageChange="changePage"/>

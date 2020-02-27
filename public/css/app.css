@@ -14315,13 +14315,22 @@ a:hover {
   left: 100%;
 }
 
-@media (max-width: 992px) {
-  .dropdown-menu {
-    width: 50%;
+@media (max-width: 767px) {
+  media-left {
+    display: block;
+    text-align: center;
   }
 
-  .dropdown-menu .dropdown-submenu {
-    width: auto;
+  media-left img {
+    display: block;
+    height: auto;
+    border-radius: 5px;
+    margin: 0 auto;
+    max-width: 250px;
+  }
+
+  .media-body {
+    padding: 1.5em 0 0;
   }
 }
 

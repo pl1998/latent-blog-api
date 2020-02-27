@@ -28,6 +28,11 @@ class Article extends Model
         'stick'
     ];
 
+    public function visitor_registry()
+    {
+        return $this->hasMany(VisitorRegistry::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

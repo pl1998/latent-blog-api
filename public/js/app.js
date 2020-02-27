@@ -2067,6 +2067,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Categories",
@@ -2269,6 +2270,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -81391,62 +81400,71 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "ul",
-            { staticClass: "navbar-nav mr-auto" },
-            _vm._l(_vm.categories, function(nav) {
-              return _c(
-                "li",
-                { staticClass: "nav-item  dropdown" },
-                [
-                  !nav.children
-                    ? _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link ",
-                          attrs: {
-                            to: nav.url,
-                            "data-toggle": "dropdown ",
-                            "aria-haspopup": "true",
-                            "aria-expanded": "false"
-                          }
-                        },
-                        [_vm._v(_vm._s(nav.name))]
-                      )
-                    : _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link dropdown-toggle ",
-                          attrs: {
-                            to: { name: nav.url },
-                            "data-toggle": "dropdown",
-                            "aria-haspopup": "true",
-                            "aria-expanded": "false"
-                          }
-                        },
-                        [_vm._v(_vm._s(nav.name))]
-                      ),
-                  _vm._v(" "),
-                  nav.children
-                    ? _c(
-                        "ul",
-                        {
-                          staticClass: "dropdown-menu",
-                          attrs: { "aria-labelledby": "categoryTree" }
-                        },
-                        _vm._l(nav.children, function(item, index) {
-                          return _c("NavCategory", {
-                            key: index,
-                            attrs: { synClass: item }
-                          })
-                        }),
-                        1
-                      )
-                    : _vm._e()
-                ],
-                1
+            "div",
+            {
+              staticClass: "collapse navbar-collapse",
+              attrs: { id: "navbarSupportedContent" }
+            },
+            [
+              _c(
+                "ul",
+                { staticClass: "navbar-nav mr-auto  " },
+                _vm._l(_vm.categories, function(nav) {
+                  return _c(
+                    "li",
+                    { staticClass: "nav-item  dropdown" },
+                    [
+                      !nav.children
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link ",
+                              attrs: {
+                                to: nav.url,
+                                "data-toggle": "dropdown ",
+                                "aria-haspopup": "true",
+                                "aria-expanded": "false"
+                              }
+                            },
+                            [_vm._v(_vm._s(nav.name))]
+                          )
+                        : _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link dropdown-toggle ",
+                              attrs: {
+                                to: { name: nav.url },
+                                "data-toggle": "dropdown",
+                                "aria-haspopup": "true",
+                                "aria-expanded": "false"
+                              }
+                            },
+                            [_vm._v(_vm._s(nav.name))]
+                          ),
+                      _vm._v(" "),
+                      nav.children
+                        ? _c(
+                            "ul",
+                            {
+                              staticClass: "dropdown-menu",
+                              attrs: { "aria-labelledby": "categoryTree" }
+                            },
+                            _vm._l(nav.children, function(item, index) {
+                              return _c("NavCategory", {
+                                key: index,
+                                attrs: { synClass: item }
+                              })
+                            }),
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                }),
+                0
               )
-            }),
-            0
+            ]
           ),
           _vm._v(" "),
           _vm._m(0),
@@ -81754,113 +81772,124 @@ var render = function() {
       { staticClass: "col-md-10 col-md-offset-1" },
       [
         _vm._l(_vm.articles.data, function(article) {
-          return _c(
-            "div",
-            { staticClass: "media animated pulse" },
-            [
+          return _c("div", { staticClass: "media animated pulse" }, [
+            _c("div", { staticClass: "row" }, [
               _c(
-                "router-link",
-                {
-                  staticClass: "media-left",
-                  attrs: { to: "/article/" + article.id + "/" + article.slug }
-                },
+                "div",
+                { staticClass: "col-md-6" },
                 [
-                  _c("img", {
-                    attrs: {
-                      src: article.cover_img,
-                      "data-holder-rendered": "true"
-                    }
-                  })
-                ]
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "media-left",
+                      attrs: {
+                        to: "/article/" + article.id + "/" + article.slug
+                      }
+                    },
+                    [
+                      _c("img", {
+                        attrs: {
+                          src: article.cover_img,
+                          "data-holder-rendered": "true"
+                        }
+                      })
+                    ]
+                  )
+                ],
+                1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "media-body" }, [
-                _c("h6", { staticClass: "media-heading" }, [
-                  _c("a", { attrs: { href: "" } }, [
-                    _vm._v(_vm._s(article.title))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "meta" }, [
-                  _c("span", { staticClass: "cinema" }, [
-                    _vm._v(_vm._s(article.description))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "description" }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "extra" },
-                  [
-                    _vm._l(article.label_list, function(labels) {
-                      return _c("a", { attrs: { href: "" } }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "label btn btn-xs",
-                            style: {
-                              background: labels.color,
-                              color: "#f0f0f0"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "fa fa-tag" }),
-                            _vm._v(" " + _vm._s(labels.label_name))
-                          ]
-                        )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "info" }, [
-                      _c("i", { staticClass: "fa fa-user" }),
-                      _vm._v(
-                        _vm._s(article.admin_user.name) +
-                          "  \n                        "
-                      ),
-                      _c("i", { staticClass: "fa fa-clock-o" }),
-                      _vm._v(
-                        _vm._s(article.created_at) +
-                          "  \n                        "
-                      ),
-                      _c("i", { staticClass: "fa fa-eye" }),
-                      _vm._v(
-                        _vm._s(article.review_count) +
-                          "  \n                        "
-                      ),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "pull-right",
-                          attrs: { href: "http://blog.test/article" }
-                        },
-                        [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "media-body" }, [
+                  _c("h6", { staticClass: "media-heading" }, [
+                    _c("a", { attrs: { href: "" } }, [
+                      _vm._v(_vm._s(article.title))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "meta" }, [
+                    _c("span", { staticClass: "cinema" }, [
+                      _vm._v(_vm._s(article.description))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "description" }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "extra" },
+                    [
+                      _vm._l(article.label_list, function(labels) {
+                        return _c("a", { attrs: { href: "" } }, [
                           _c(
-                            "router-link",
+                            "span",
                             {
-                              attrs: {
-                                to:
-                                  "/article/" + article.id + "/" + article.slug
+                              staticClass: "label btn btn-xs",
+                              style: {
+                                background: labels.color,
+                                color: "#f0f0f0"
                               }
                             },
                             [
-                              _vm._v("Read More "),
-                              _c("i", { staticClass: "fa fa-mail-forward" })
+                              _c("i", { staticClass: "fa fa-tag" }),
+                              _vm._v(" " + _vm._s(labels.label_name))
                             ]
                           )
-                        ],
-                        1
-                      ),
+                        ])
+                      }),
                       _vm._v(" "),
-                      _c("i", { staticClass: "ion-ios-arrow-forward" })
-                    ])
-                  ],
-                  2
-                )
+                      _c("div", { staticClass: "info" }, [
+                        _c("i", { staticClass: "fa fa-user" }),
+                        _vm._v(
+                          _vm._s(article.admin_user.name) +
+                            "  \n                                "
+                        ),
+                        _c("i", { staticClass: "fa fa-clock-o" }),
+                        _vm._v(
+                          _vm._s(article.created_at) +
+                            "  \n                                "
+                        ),
+                        _c("i", { staticClass: "fa fa-eye" }),
+                        _vm._v(
+                          _vm._s(article.review_count) +
+                            "  \n                                "
+                        ),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "pull-right",
+                            attrs: { href: "http://blog.test/article" }
+                          },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to:
+                                    "/article/" +
+                                    article.id +
+                                    "/" +
+                                    article.slug
+                                }
+                              },
+                              [
+                                _vm._v("Read More "),
+                                _c("i", { staticClass: "fa fa-mail-forward" })
+                              ]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", { staticClass: "ion-ios-arrow-forward" })
+                      ])
+                    ],
+                    2
+                  )
+                ])
               ])
-            ],
-            1
-          )
+            ])
+          ])
         }),
         _vm._v(" "),
         _c(
