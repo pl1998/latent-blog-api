@@ -13,7 +13,7 @@
 
 <div id="app">
     <Categories></Categories>
-    <HeadNav v-if="$route.path.slice(-6)!=='/login' && $route.path.slice(-9)!=='/register' " ></HeadNav>
+    <Nav v-if="$route.path.slice(-6)!=='/login' && $route.path.slice(-9)!=='/register' " ></Nav>
     <div class="container">
         <router-view></router-view>
     </div>

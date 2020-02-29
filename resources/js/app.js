@@ -59,7 +59,7 @@ Vue.directive('highlight',function (el) {
 
 
 
-// import App from './view/App'
+import App from './view/App'
 // import Home from './view/Home'
 // import Article from './view/Article'
 // import Login from './view/layouts/Login'
@@ -67,8 +67,8 @@ Vue.directive('highlight',function (el) {
 // import Tag from './view/Tag'
 // import Down from './view/Down'
 // import Categories from './view/Categories'
-// import HeadNav from './view/HeadNav'
-// import Footer from './view/Footer'
+// import Nav from './view/Nav'
+
 // import NavCategory from './view/layouts/NavCategory'
 // import Pagination from './view/Pagination'
 // import Likes from './view/Likes'
@@ -80,21 +80,17 @@ Vue.directive('highlight',function (el) {
 Vue.component('Categories',require('./view/Categories.vue').default);
 Vue.component('Home',require('./view/Home.vue').default);
 Vue.component('HeadNav',require('./view/HeadNav.vue').default);
-Vue.component('Footers',require('./view/Footer.vue').default);
+Vue.component('Footer',require('./view/Footer.vue').default);
 Vue.component('NavCategory',require('./view/layouts/NavCategory.vue').default);
 Vue.component('Pagination',require('./view/Pagination.vue').default);
 Vue.component('Likes',require('./view/Likes.vue').default);
 
 
 
+
 const app = new Vue({
     el: '#app',
+    components: { App },
     router,
-    store,
+    store
 });
-// const app = new Vue({
-//     // el: '#app',
-//     // components: { App },
-//     router,
-//     store
-// }).$mount('#app')
