@@ -12,5 +12,18 @@
 */
 
 
-Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+//Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+Route::get('/', 'SpaController@index');
+Route::get('/article/:id/:slug', 'SpaController@index');
+Route::get('/login', 'SpaController@index');
+Route::get('/register', 'SpaController@index');
+Route::get('/register', 'SpaController@index');
+Route::get('/tag/:tags/', 'SpaController@index');
+Route::get('/likes', 'SpaController@index');
+
+
+//github登录
+Route::get('/oauth/github', 'AuthController@redirectToProvider');
+Route::get('/oauth/callback', 'AuthController@handleProviderCallback');
+
 

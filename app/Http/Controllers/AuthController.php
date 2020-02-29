@@ -1,12 +1,13 @@
 <?php
 
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 
 use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Overtrue\LaravelSocialite\Socialite;
 
 
@@ -31,17 +32,24 @@ class AuthController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('github')->user();
-        $user=User::where('github_name',$user->name)->first();
-        if(empty($user)){
+
+        $users=User::where('github_id',$user->id)->first();
+
+        if(empty($users)){
             $user=User::create([
-                'name'=>$user->name,
+                'name'=>$user->username,
                 'email'=>$user->email,
                 'github_name'=>$user->name,
+                'github_id'=>$user->id,
                 'avatar'=>$user->avatar,
                 'verified'=>1,
+                'password'=>Hash::make('123456')
             ]);
+            Auth::login($user);
+        }else{
+            Auth::login($users);
         }
-        Auth::login($user);
-        return  Redirect()->guest('/register');
+
+        return  Redirect()->guest('/');
     }
 }

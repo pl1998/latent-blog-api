@@ -24,7 +24,7 @@
                             <span>or</span>
                         </div>
                         <div class="form-group">
-                            <a @click="githubLogin" style="color:#fff" class="btn btn-primary form-control"><i class="fa fa-github"></i>  Github 登录</a>
+                            <a href="/oauth/github" style="color:#fff" class="btn btn-primary form-control"><i class="fa fa-github"></i>  Github 登录</a>
                         </div>
                         <div class="form-group">
                             <router-link :to="`/password/reset`" class="btn form-control reset_pass">忘记密码?</router-link>
@@ -48,14 +48,14 @@
             }
         },
         methods: {
-            githubLogin:function () {
-               axios
-                .get('/api/oauth/github')
-                   .then(response => {
-                       this.call = response.data;
-                       console.log(this.call)
-                   });
-            },
+            // githubLogin:function () {
+            //    axios
+            //     .get('/api/oauth/github')
+            //        .then(response => {
+            //            this.call = response.data;
+            //            console.log(this.call)
+            //        });
+            // },
             login(e)
             {
                 swal({

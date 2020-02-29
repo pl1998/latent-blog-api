@@ -18,9 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-//github登录
-Route::get('/oauth/github', 'Api\AuthController@redirectToProvider');
-Route::get('/github/callback', 'Api\AuthController@handleProviderCallback');
 
 Route::prefix('v1')->name('api.v1.')
 //    ->middleware('throttle:1,1')

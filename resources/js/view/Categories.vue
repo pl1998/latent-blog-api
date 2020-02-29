@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
         <div class="container">
-            <router-link class="navbar-brand" :to="{ name: '/#' }">Latent</router-link>
+<!--            <img src="/images/967592.png" style="height: 30px">-->
+
+            <router-link  class="navbar-brand"  :to="{ name: '/#' }">Latent</router-link>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto  " >
                 <li v-for="nav in categories" class="nav-item  dropdown">
