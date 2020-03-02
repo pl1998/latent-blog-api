@@ -25,6 +25,7 @@ class VisitorRegistryController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new VisitorRegistry());
+      $grid->model()->orderBy('created_at', 'desc');
 
         $grid->column('article.title', __('文章title'));
         $grid->column('ip', __('访问Ip'));

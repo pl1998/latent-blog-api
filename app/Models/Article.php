@@ -88,7 +88,7 @@ class Article extends Model
 
    public function visitor_registries()
    {
-       return $this->hasMany(VisitorRegistry::class);
+       return $this->hasMany(VisitorRegistry::class,'art_id','id');
    }
 
 

@@ -11,6 +11,7 @@ class VisitorRegistry extends Model
 
     public function article()
     {
-        return $this->belongsTo(Article::class);
+        return $this->hasOne(Article::class,'id','art_id');
+
     }
 }
