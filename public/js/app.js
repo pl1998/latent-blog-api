@@ -1939,7 +1939,7 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Categories__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Categories */ "./resources/js/view/Categories.vue");
-/* harmony import */ var _HeadNav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HeadNav */ "./resources/js/view/HeadNav.vue");
+/* harmony import */ var _HeadNav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeadNav */ "./resources/js/view/HeadNav.vue");
 /* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Footer */ "./resources/js/view/Footer.vue");
 //
 //
@@ -1956,7 +1956,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    HeadNav: _HeadNav__WEBPACK_IMPORTED_MODULE_3__["default"],
+    HeadNav: _HeadNav__WEBPACK_IMPORTED_MODULE_1__["default"],
     Categories: _Categories__WEBPACK_IMPORTED_MODULE_0__["default"],
     Footer: _Footer__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
@@ -99205,7 +99205,7 @@ var articles = {
     loadArticles: function loadArticles(_ref, page) {
       var commit = _ref.commit;
       commit('setArticlesLoadStatus', 1);
-      _api_articles_js__WEBPACK_IMPORTED_MODULE_0__["default"].getArticles(page, 5).then(function (response) {
+      _api_articles_js__WEBPACK_IMPORTED_MODULE_0__["default"].getArticles(page, 10).then(function (response) {
         commit('setArticles', response.data);
         commit('setTotal', response.data.total);
         commit('setPageSize', response.data.per_page);

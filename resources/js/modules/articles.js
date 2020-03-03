@@ -27,7 +27,8 @@ export const articles = {
     actions: {
         loadArticles( { commit },page ){
             commit( 'setArticlesLoadStatus', 1 );
-            ArticlesAPI.getArticles(page,5)
+
+            ArticlesAPI.getArticles(page,10)
                 .then( function( response ){
                     commit( 'setArticles', response.data );
                     commit( 'setTotal', response.data.total );
