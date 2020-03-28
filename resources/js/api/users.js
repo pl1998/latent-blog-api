@@ -13,7 +13,6 @@ export default {
     //authorizations
     deleteSignInByOauth: function (token) {
         axios.defaults.headers.common['Authorization'] = token;
-        console.log(token)
         return axios.delete(ROAST_CONFIG.API_URL + '/authorizations', {
         });
     },

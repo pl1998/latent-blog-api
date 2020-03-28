@@ -8,7 +8,7 @@ export const getArticlesByFilter = (state, getters) => (filter) => {
     axios
         .get('http://blog.test/api/getArticleList')
         .then(response => {
-            console.log(response.data)
+
             this.articles = response.data;
         });
     //过滤机制
