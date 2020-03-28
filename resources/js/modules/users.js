@@ -21,7 +21,7 @@ export const users = {
         loginErrors:'',
         // 存储token
         Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
-        user:{},
+        users:{},
         userLoadStatus:0,
         logoutStatus:0,
         userProfileUpdateStatus:'',
@@ -49,9 +49,11 @@ export const users = {
 
         loginByOauth({commit},token){
             commit('setLoginStatus',1);
+            console.log(token)
             UserAPI.postSignInByOauth(token)
                 .then(function ( response ) {
                     localStorage.setItem('login_user',response.data)
+                    console.log(response.data)
                     commit('setLoginToken','Bearer ' + token);
                     commit('setUser',response.data);
                     commit('setUserLoadStatus',2);
@@ -63,7 +65,7 @@ export const users = {
                     commit('setUser' ,'');
                     commit('setLoginStatus',3);
                     commit('setUserLoadStatus',3);
-                    commit('setLoginErrors',error.response.data.message !== '' ? error.response.data.message: '未知错误');
+                    commit('setLoginErrors',error.data.message !== '' ? error.data.message: '未知错误');
                 });
         },
         loadUser({commit}){
@@ -136,7 +138,7 @@ export const users = {
         },
         setUser (state, data) {
             console.log(data);
-            state.user = data;
+            state.users = data;
         },
         setUserLoadStatus(state,status){
             state.userLoadStatus = status;
@@ -168,7 +170,8 @@ export const users = {
             return state.Authorization;
         },
         getUser(state){
-            return state.user;
+            console.log(state.users);
+            return state.users;
         },
         getUserLoadStatus(state){
             return function(){

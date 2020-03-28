@@ -39,8 +39,6 @@
 </template>
 
 <script>
-    import UsersApi from "../../api/users";
-
     export default {
         name: "Login",
 
@@ -53,20 +51,9 @@
             }
         },
         created() {
-            console.log(localStorage.getItem('users'))
-            //this.showLoginForm();
-            //this.$store.dispatch('loginByOauth', localStorage.getItem('Authorization'));
+            this.loginType();
         },
-        computed: {
-            loginStatus() {
-                return this.$store.getters.getLoginStatus;
-                if (this.$store.getters.getLoginStatus() == 2) {
-                    window.location.href = '/';
-                }
-            },
-
-        },
-
+        computed: {},
         methods: {
             login(e) {
                 swal({
@@ -84,24 +71,8 @@
                         console.log(response);
                     });
             },
-            showLoginForm() {
-                console.log(this.state.getUser())
-                if (this.$route.query.login != null) {
-                    this.loginDialogFormVisible = false;
-                }
-            },
-            redirectToIndex() {
-                if (this.$route.query.login != null) {
-                    this.$router.push({name: '首页'});
-                }
-            },
-            showLoginForm() {
-                if (this.$route.query.login != null) {
-                    this.loginDialogFormVisible = true;
-                }
-            },
             githubLogin() {
-                if( this.$store.getters.getLoginToken != null && this.$store.getters.getLoginToken != '') {
+                if(localStorage.getItem('Authorization') != null ) {
                     this.authLoginToken( localStorage.getItem('Authorization'));
                 }else {
                     window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
@@ -117,11 +88,14 @@
                  * 授权请求获取登录信息
                  */
                 this.$store.dispatch('loginByOauth',token);
+            },
+            loginType()
+            {
+                if(localStorage.getItem('login_user')){
+
+                }
             }
-        },
-        watch: {
-            '$route': 'showLoginForm',
-        },
+        }
     }
 </script>
 

@@ -23,7 +23,7 @@
             <input type="text" class="nav-search-box-input form-control ds-input" aria-label="search" placeholder="搜索"
                    value>
             <i class="el-icon-search nav-search"></i>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="">
                 <ul class="navbar-nav mr-auto">
 
                 </ul>
