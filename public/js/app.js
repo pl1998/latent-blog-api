@@ -2699,7 +2699,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
     window.addEventListener('message', function (e) {
       //开始登录
-      localStorage.setItem('Authorization', e.data);
+      //localStorage.setItem('Authorization',e.data);
       this.$store.dispatch('loginByOauth', localStorage.getItem('Authorization'));
       this.$watch(this.$store.getters.getLoginStatus, function () {
         if (this.$store.getters.getLoginStatus() === 2) {
@@ -99181,8 +99181,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('HeadNav', __webpack_requir
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Footer', __webpack_require__(/*! ./view/Footer.vue */ "./resources/js/view/Footer.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('NavCategory', __webpack_require__(/*! ./view/layouts/NavCategory.vue */ "./resources/js/view/layouts/NavCategory.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Pagination', __webpack_require__(/*! ./view/Pagination.vue */ "./resources/js/view/Pagination.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Likes', __webpack_require__(/*! ./view/Likes.vue */ "./resources/js/view/Likes.vue")["default"]); // Vue.component('Likes',require('./view/Auth/LoginLoading.vue').default);
-
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Likes', __webpack_require__(/*! ./view/Likes.vue */ "./resources/js/view/Likes.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Login', __webpack_require__(/*! ./view/layouts/Login.vue */ "./resources/js/view/layouts/Login.vue")["default"]);
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   components: {

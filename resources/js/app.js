@@ -85,7 +85,8 @@ Vue.component('Footer',require('./view/Footer.vue').default);
 Vue.component('NavCategory',require('./view/layouts/NavCategory.vue').default);
 Vue.component('Pagination',require('./view/Pagination.vue').default);
 Vue.component('Likes',require('./view/Likes.vue').default);
-// Vue.component('Likes',require('./view/Auth/LoginLoading.vue').default);
+Vue.component('Login',require('./view/layouts/Login.vue').default);
+
 
 
 
