@@ -76,10 +76,11 @@ export const articles = {
         },
 
         setArticleLoadStatus( state, status ){
+
             state.articleLoadStatus = status;
         },
-
         setArticle( state, article ){
+            console.log(article)
             state.article = article;
         }
     },

@@ -1,8 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
         <div class="container">
-<!--            <img src="/images/967592.png" style="height: 30px">-->
-
             <router-link  class="navbar-brand"  :to="{ name: '/#' }">Latent</router-link>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto  " >
@@ -27,10 +25,13 @@
             <i class="el-icon-search nav-search"></i>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                </ul>
-                <ul v-if="this.user.data" class="navbar-nav navbar-right">
-                    <router-link class="nav-link" :to="{ name: 'login' }">{{this.user.date.name}}</router-link>
 
+                </ul>
+                <ul v-if="this.users" class="navbar-nav navbar-right">
+                    <img class="logo" :src="this.users.avatar">
+                    <p>{{this.users.name}}</p>
+
+                    <a class="nav-link" @click="logoutUser" >退出</a>
                 </ul>
                 <ul v-else class="navbar-nav navbar-right">
                     <router-link class="nav-link" :to="{ name: 'login' }"> 登 录</router-link>
@@ -45,14 +46,9 @@
     import NavCategory from "./layouts/NavCategory";
     export default {
         name: "Categories",
-        data(){
-          return{
-              user:[],
-          }
-        },
         components: {NavCategory},
         created() {
-            this.$store.dispatch('loadCategories')
+           this.$store.dispatch('loadCategories')
         },
         computed:{
             categoriesLoadStatus(){
@@ -62,16 +58,22 @@
             {
                 return this.$store.getters.getCategories;
             },
-            loginUsers() {
-                if(this.$state.getters.getLoginStatus===2){
-                    this.user = this.state.getUser();
-                }
+            users() {
+                return this.$store.getters.getUser;
             }
-
         },
+        methods:{
+            logoutUser()
+            {
+                this.$store.dispatch('logoutUser')
+            }
+        }
     }
 </script>
 
 <style scoped>
-
+    .logo{
+        width:30px;
+        height:30px;
+    }
 </style>

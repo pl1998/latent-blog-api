@@ -44,12 +44,13 @@ export default new VueRouter({
             path: '/likes',
             name: 'likes',
             components: Vue.component( 'Likes', require( './view/Likes.vue' ) ),
+        },
+        //logout
+        {
+            path: '/logout',
+            name: 'logout',
+            meta:{requireAuth:true}
         }
-        // {
-        //     path: '/LoginLoading',
-        //     name: 'LoginLoading',
-        //     components: Vue.component( 'LoginLoading', require( './view/Auth/LoginLoading' ) ),
-        // }
     ],
 });
 

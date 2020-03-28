@@ -50,7 +50,4 @@ class AuthorizationController extends Controller
         auth('api')->logout();
         return response(null, 204);
     }
-
-
-
 }

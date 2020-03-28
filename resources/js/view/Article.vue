@@ -28,7 +28,7 @@
             }
         },
         created() {
-            this.$store.dispatch('loadArticle', this.$route.params);
+          this.$store.dispatch('loadArticle', this.$route.params);
         },
         computed: {
             articleLoadStatus() {

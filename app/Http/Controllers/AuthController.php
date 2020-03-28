@@ -32,7 +32,6 @@ class AuthController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-
         $users=User::where('github_id',$user->id)->first();
 
 

@@ -21,18 +21,7 @@ export const users = {
         loginErrors:'',
         // 存储token
         Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
-        user: {
-            data:{
-                id:2,
-                name:'latent',
-                email:null,
-                avatar:'',
-                bound_oauth:'github',
-                created_at:'2020-03-13 21:26:11',
-                updated_at:'2020-03-13 21:26:11',
-                introduction:'',
-            }
-        },
+        user:{},
         userLoadStatus:0,
         logoutStatus:0,
         userProfileUpdateStatus:'',
@@ -58,14 +47,13 @@ export const users = {
         //         })
         // },
 
-        loginByOauth({commit}){
+        loginByOauth({commit},token){
             commit('setLoginStatus',1);
-            UserAPI.postSignInByOauth(store.Authorization)
-                console.log(11)
-                console.log(store.Authorization)
+            UserAPI.postSignInByOauth(token)
                 .then(function ( response ) {
-                    commit('setLoginToken','Bearer ' + store.Authorization);
-                    commit('setUser' , response.data);
+                    localStorage.setItem('login_user',response.data)
+                    commit('setLoginToken','Bearer ' + token);
+                    commit('setUser',response.data);
                     commit('setUserLoadStatus',2);
                     commit('setLoginStatus' , 2);
                 })
@@ -111,17 +99,20 @@ export const users = {
                     commit('setOtherLoadStatus',3);
                 });
         },
-        logout({commit,dispatch}){
+        logoutUser({commit,dispatch}){
             commit('setLogoutStatus',1);
-            try {
-                localStorage.removeItem('Authorization');
-                commit('setLoginToken', '');
-                dispatch('loadUser');
-                commit('setLogoutStatus', 2);
-                commit('setLoginStatus',0);
-            }catch (e) {
-                commit('setLogoutStatus', 3);
-            }
+            console.log(localStorage.getItem('Authorization'));
+            UserAPI.deleteSignInByOauth(localStorage.getItem('Authorization'))
+                .then(function ( response ) {
+                    localStorage.removeItem('Authorization');
+                    commit('setLoginToken', '');
+                    dispatch('loadUser');
+                    commit('setLogoutStatus', 2);
+                    commit('setLoginStatus',0);
+                })
+                .catch(function (error) {
+                    commit('setLogoutStatus', 3);
+                });
         },
 
         refreshToken({commit},data){
@@ -144,6 +135,7 @@ export const users = {
             localStorage.setItem('Authorization', access_token);
         },
         setUser (state, data) {
+            console.log(data);
             state.user = data;
         },
         setUserLoadStatus(state,status){
@@ -165,9 +157,7 @@ export const users = {
     getters:{
 
         getLoginStatus( state ){
-            return function () {
-                return state.loginStatus;
-            }
+            return state.loginStatus;
         },
         getLoginErrors(state ){
             return function () {

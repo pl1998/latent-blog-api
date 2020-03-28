@@ -39,27 +39,32 @@
 </template>
 
 <script>
+    import UsersApi from "../../api/users";
+
     export default {
         name: "Login",
 
         data() {
             return {
                 loginDialogFormVisible: false,
-                email:'',
-                password:'',
-                users:[]
+                email: '',
+                password: '',
+                users: []
             }
         },
         created() {
-           this.showLoginForm();
+            console.log(localStorage.getItem('users'))
+            //this.showLoginForm();
+            //this.$store.dispatch('loginByOauth', localStorage.getItem('Authorization'));
         },
         computed: {
             loginStatus() {
                 return this.$store.getters.getLoginStatus;
-                if(this.$store.getters.getLoginStatus() == 2){
-                    window.location.href='/';
+                if (this.$store.getters.getLoginStatus() == 2) {
+                    window.location.href = '/';
                 }
-            }
+            },
+
         },
 
         methods: {
@@ -81,50 +86,42 @@
             },
             showLoginForm() {
                 console.log(this.state.getUser())
-                if(this.$route.query.login != null) {
+                if (this.$route.query.login != null) {
                     this.loginDialogFormVisible = false;
                 }
             },
-            redirectToIndex(){
-                if(this.$route.query.login != null){
-                    this.$router.push({name:'首页'});
+            redirectToIndex() {
+                if (this.$route.query.login != null) {
+                    this.$router.push({name: '首页'});
                 }
             },
-            showLoginForm(){
-                if(this.$route.query.login != null){
+            showLoginForm() {
+                if (this.$route.query.login != null) {
                     this.loginDialogFormVisible = true;
                 }
             },
             githubLogin() {
-                window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
-                window.addEventListener('message', function (e) {
-                    //开始登录
-                   localStorage.setItem('Authorization',e.data);
-                    this.$store.dispatch('loginByOauth',localStorage.getItem('Authorization'));
-
-                    this.$watch(this.$store.getters.getLoginStatus, function () {
-                        if (this.$store.getters.getLoginStatus() === 2) {
-                            swal('登录中....')
-                            // this.$store.dispatch('setLastPath',{
-                            //     params:this.$route.fullPath,
-                            // })
-                            window.location.href='/';
-                        }
-                        if(this.$store.getters.getLoginStatus() === 3) {
-                            swal(this.$store.getters.getLoginStatus())
-                        }
-                    });
-                }, false)
+                if( this.$store.getters.getLoginToken != null && this.$store.getters.getLoginToken != '') {
+                    this.authLoginToken( localStorage.getItem('Authorization'));
+                }else {
+                    window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
+                    window.addEventListener('message', function (e) {
+                        //开始登录
+                        localStorage.setItem('Authorization', e.data);
+                        this.authLoginToken();
+                    }, false)
+                }
             },
-            authLoginToken() {
-                alert(localStorage.getItem('Authorization'))
+            authLoginToken(token) {
+                /**
+                 * 授权请求获取登录信息
+                 */
+                this.$store.dispatch('loginByOauth',token);
             }
-
         },
         watch: {
-            '$route':'showLoginForm',
+            '$route': 'showLoginForm',
         },
-
     }
 </script>
 

@@ -20,6 +20,7 @@ Route::get('/register', 'SpaController@index');
 Route::get('/register', 'SpaController@index');
 Route::get('/tag/{tags}', 'SpaController@index');
 Route::get('/likes', 'SpaController@index');
+Route::get('/logout', 'SpaController@index');
 
 
 //github登录
@@ -31,5 +32,6 @@ Route::get('/oauth/qqCallback', 'AuthController@redirectToProvider');
 
 //登录中转页面
 Route::get('/LoginLoading', 'SpaController@loading');
+
 
 
