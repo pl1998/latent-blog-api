@@ -55,7 +55,7 @@ class AuthController extends Controller
         //授权回调
         return view('loading',[
            'token'=>$token,
-           'domain'=>'http://blog.test/login'
+           'domain'=>env('APP_URL'),
         ]);
 
     }

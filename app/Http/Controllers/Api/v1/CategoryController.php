@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController
 {
@@ -13,6 +14,7 @@ class CategoryController
     // $allCategories 参数代表数据库中所有的类目，如果是 null 代表需要从数据库中查询
     public function getCategoryTree($parentId = null, $allCategories = null)
     {
+
         if (is_null($allCategories)) {
             // 从数据库中一次性取出所有类目
             $allCategories = Category::all();
