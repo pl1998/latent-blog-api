@@ -3,7 +3,7 @@
     <li v-else @click.stop="jumpRoute(synClass)"class="dropdown-submenu">
         <router-link :to="{name:synClass.url}" class="dropdown-item dropdown-toggle" data-toggle="dropdown">{{ synClass.name }}</router-link>
         <ul class="dropdown-menu">
-            <!-- 遍历当前类目的子类目，递归调用自己这个模板 -->
+           m hrqRDC  <!-- 遍历当前类目的子类目，递归调用自己这个模板 -->
             <NavCategory v-for="(item,index) in synClass.children" :synClass="item" :key="index" ></NavCategory>
         </ul>
     </li>

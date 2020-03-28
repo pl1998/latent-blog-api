@@ -14,6 +14,10 @@
     import Footer from "./Footer";
     export default {
         components: {HeadNav, Categories, Footer},
+
+        watch() {
+
+        }
     }
 </script>
 

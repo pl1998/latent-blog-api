@@ -20,6 +20,8 @@ class ArticleController
     public function getArticleList(Request $request)
     {
 
+
+
        $articleList =  Article::query()
            ->with('admin_user')
            ->where('status',0)
@@ -40,16 +42,11 @@ class ArticleController
      */
 
     public function show(Request $request){
-
-       $article =   Article::query()->with('admin_user')->find($request->id);
+        $article =   Article::query()->with('admin_user')->find($request->id);
         $article->label_list = $article->full_name;
-       //执行异步任务
-       //dispatch(new VisitArticle($article));
-
-
-        //文章访问记录
+        dispatch(new VisitArticle($article));
         $this->visit($request->id);
-       return $article->toArray();
+        return $article->toArray();
     }
 
     /**

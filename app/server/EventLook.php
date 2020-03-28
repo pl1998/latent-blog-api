@@ -15,6 +15,5 @@ class EventLook
     public static function eventLook($art_id)
     {
 
-
     }
 }

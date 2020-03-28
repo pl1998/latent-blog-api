@@ -26,4 +26,10 @@ Route::get('/likes', 'SpaController@index');
 Route::get('/oauth/github', 'AuthController@redirectToProvider');
 Route::get('/oauth/callback', 'AuthController@handleProviderCallback');
 
+Route::get('/oauth/qqLogin', 'AuthController@redirectToProvider');
+Route::get('/oauth/qqCallback', 'AuthController@redirectToProvider');
+
+//登录中转页面
+Route::get('/LoginLoading', 'SpaController@loading');
+
 

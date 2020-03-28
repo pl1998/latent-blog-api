@@ -27,6 +27,7 @@ class AuthorizationController extends Controller
       return $this->respondWithToken($token)->setStatusCode(201);
     }
 
+
     protected function respondWithToken($token)
     {
         return response()->json([
@@ -35,6 +36,7 @@ class AuthorizationController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
+
 
 
     public function update()

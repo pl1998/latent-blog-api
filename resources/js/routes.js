@@ -16,6 +16,11 @@ export default new VueRouter({
             components: Vue.component( 'Home', require( './view/Home.vue' ) ),
         },
         {
+            path: '/',
+            name: 'home',
+            components: Vue.component( 'Home', require( './view/Home.vue' ) ),
+        },
+        {
             path: '/article/:id/:slug',
             name: 'article.show',
             components: Vue.component( 'Article', require( './view/Article.vue' ) ),
@@ -40,5 +45,13 @@ export default new VueRouter({
             name: 'likes',
             components: Vue.component( 'Likes', require( './view/Likes.vue' ) ),
         }
+        // {
+        //     path: '/LoginLoading',
+        //     name: 'LoginLoading',
+        //     components: Vue.component( 'LoginLoading', require( './view/Auth/LoginLoading' ) ),
+        // }
     ],
 });
+
+//设置vue前置守卫
+

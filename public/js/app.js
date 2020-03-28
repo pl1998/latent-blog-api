@@ -1959,7 +1959,8 @@ __webpack_require__.r(__webpack_exports__);
     HeadNav: _HeadNav__WEBPACK_IMPORTED_MODULE_1__["default"],
     Categories: _Categories__WEBPACK_IMPORTED_MODULE_0__["default"],
     Footer: _Footer__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }
+  },
+  watch: function watch() {}
 });
 
 /***/ }),
@@ -2070,9 +2071,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Categories",
+  data: function data() {
+    return {
+      user: []
+    };
+  },
   components: {
     NavCategory: _layouts_NavCategory__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2085,6 +2095,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     categories: function categories() {
       return this.$store.getters.getCategories;
+    },
+    loginUsers: function loginUsers() {
+      if (this.$state.getters.getLoginStatus === 2) {
+        this.user = this.state.getUser();
+      }
     }
   }
 });
@@ -2296,6 +2311,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.$store.dispatch('loadArticles', this.$route.query.page);
   },
+  // beforeRouteEnter(to,from,next) {
+  //
+  // },
   components: {
     Pagination: _Pagination__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2577,6 +2595,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
 //
 //
 //
@@ -2619,21 +2643,25 @@ __webpack_require__.r(__webpack_exports__);
   name: "Login",
   data: function data() {
     return {
-      name: '',
+      loginDialogFormVisible: false,
       email: '',
-      call: null,
-      password: ''
+      password: '',
+      users: []
     };
   },
-  methods: {
-    // githubLogin:function () {
-    //    axios
-    //     .get('/api/oauth/github')
-    //        .then(response => {
-    //            this.call = response.data;
-    //            console.log(this.call)
-    //        });
-    // },
+  created: function created() {
+    this.showLoginForm();
+  },
+  computed: {
+    loginStatus: function loginStatus() {
+      return this.$store.getters.getLoginStatus;
+
+      if (this.$store.getters.getLoginStatus() == 2) {
+        window.location.href = '/';
+      }
+    }
+  },
+  methods: (_methods = {
     login: function login(e) {
       swal({
         title: "登录失败!",
@@ -2645,8 +2673,53 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/v1/authorizations', {
         email: this.email,
         password: this.password
-      }).then(function (response) {});
+      }).then(function (response) {
+        console.log(response);
+      });
+    },
+    showLoginForm: function showLoginForm() {
+      console.log(this.state.getUser());
+
+      if (this.$route.query.login != null) {
+        this.loginDialogFormVisible = false;
+      }
+    },
+    redirectToIndex: function redirectToIndex() {
+      if (this.$route.query.login != null) {
+        this.$router.push({
+          name: '首页'
+        });
+      }
     }
+  }, _defineProperty(_methods, "showLoginForm", function showLoginForm() {
+    if (this.$route.query.login != null) {
+      this.loginDialogFormVisible = true;
+    }
+  }), _defineProperty(_methods, "githubLogin", function githubLogin() {
+    window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+    window.addEventListener('message', function (e) {
+      //开始登录
+      localStorage.setItem('Authorization', e.data);
+      this.$store.dispatch('loginByOauth', localStorage.getItem('Authorization'));
+      this.$watch(this.$store.getters.getLoginStatus, function () {
+        if (this.$store.getters.getLoginStatus() === 2) {
+          swal('登录中....'); // this.$store.dispatch('setLastPath',{
+          //     params:this.$route.fullPath,
+          // })
+
+          window.location.href = '/';
+        }
+
+        if (this.$store.getters.getLoginStatus() === 3) {
+          swal(this.$store.getters.getLoginStatus());
+        }
+      });
+    }, false);
+  }), _defineProperty(_methods, "authLoginToken", function authLoginToken() {
+    alert(localStorage.getItem('Authorization'));
+  }), _methods),
+  watch: {
+    '$route': 'showLoginForm'
   }
 });
 
@@ -81463,30 +81536,46 @@ var render = function() {
             [
               _c("ul", { staticClass: "navbar-nav mr-auto" }),
               _vm._v(" "),
-              _c(
-                "ul",
-                { staticClass: "navbar-nav navbar-right" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: { name: "login" } }
-                    },
-                    [_vm._v(" 登 录")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: { name: "register" } }
-                    },
-                    [_vm._v("注 册")]
+              this.user.data
+                ? _c(
+                    "ul",
+                    { staticClass: "navbar-nav navbar-right" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "login" } }
+                        },
+                        [_vm._v(_vm._s(this.user.date.name))]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
-              )
+                : _c(
+                    "ul",
+                    { staticClass: "navbar-nav navbar-right" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "login" } }
+                        },
+                        [_vm._v(" 登 录")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "register" } }
+                        },
+                        [_vm._v("注 册")]
+                      )
+                    ],
+                    1
+                  )
             ]
           )
         ],
@@ -82289,113 +82378,130 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "blog-login" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-4" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4 floating-box well" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("div", { staticClass: "form-group data-validator-form" }, [
-              _c("label", { staticClass: "control-label" }, [_vm._v("邮箱")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.trim",
-                    value: _vm.email,
-                    expression: "email",
-                    modifiers: { trim: true }
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "请填写邮箱" },
-                domProps: { value: _vm.email },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.email = $event.target.value.trim()
-                  },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
-                  }
-                }
-              })
-            ]),
+  return _c(
+    "div",
+    { staticClass: "blog-login", attrs: { close: _vm.redirectToIndex } },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4 floating-box well" }, [
+          _c("div", { staticClass: "panel panel-default" }, [
+            _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "control-label" }, [_vm._v("密码")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.trim",
-                    value: _vm.password,
-                    expression: "password",
-                    modifiers: { trim: true }
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "form-group data-validator-form" }, [
+                _c("label", { staticClass: "control-label" }, [_vm._v("邮箱")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.trim",
+                      value: _vm.email,
+                      expression: "email",
+                      modifiers: { trim: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "请填写邮箱" },
+                  domProps: { value: _vm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value.trim()
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
                   }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  id: "password",
-                  type: "password",
-                  placeholder: "请填写密码"
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [_vm._v("密码")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.trim",
+                      value: _vm.password,
+                      expression: "password",
+                      modifiers: { trim: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "password",
+                    type: "password",
+                    placeholder: "请填写密码"
+                  },
+                  domProps: { value: _vm.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.password = $event.target.value.trim()
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn  btn-success btn-block",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.login }
                 },
-                domProps: { value: _vm.password },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.password = $event.target.value.trim()
-                  },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn  btn-success btn-block",
-                attrs: { type: "submit" },
-                on: { click: _vm.login }
-              },
-              [_vm._v("\n                         登录\n                    ")]
-            ),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
+                [_vm._v("\n                        登录\n                    ")]
+              ),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
                 _c(
-                  "router-link",
+                  "a",
                   {
-                    staticClass: "btn form-control reset_pass",
-                    attrs: { to: "/password/reset" }
+                    staticClass: "btn btn-primary form-control",
+                    staticStyle: { color: "#fff" },
+                    on: { click: _vm.githubLogin }
                   },
-                  [_vm._v("忘记密码?")]
+                  [
+                    _c("i", { staticClass: "fa fa-github" }),
+                    _vm._v(" Github 登录")
+                  ]
                 )
-              ],
-              1
-            )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn form-control reset_pass",
+                      attrs: { to: "/password/reset" }
+                    },
+                    [_vm._v("忘记密码?")]
+                  )
+                ],
+                1
+              )
+            ])
           ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -82411,22 +82517,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "strike" }, [_c("span", [_vm._v("or")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary form-control",
-          staticStyle: { color: "#fff" },
-          attrs: { href: "/oauth/github" }
-        },
-        [_c("i", { staticClass: "fa fa-github" }), _vm._v("  Github 登录")]
-      )
-    ])
   }
 ]
 render._withStripped = true
@@ -82483,13 +82573,17 @@ var render = function() {
           _c(
             "ul",
             { staticClass: "dropdown-menu" },
-            _vm._l(_vm.synClass.children, function(item, index) {
-              return _c("NavCategory", {
-                key: index,
-                attrs: { synClass: item }
+            [
+              _vm._v("\n       m hrqRDC  "),
+              _vm._v(" "),
+              _vm._l(_vm.synClass.children, function(item, index) {
+                return _c("NavCategory", {
+                  key: index,
+                  attrs: { synClass: item }
+                })
               })
-            }),
-            1
+            ],
+            2
           )
         ],
         1
@@ -98975,10 +99069,20 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************!*\
   !*** ./resources/js/api/users.js ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config.js */ "./resources/js/config.js");
+//postSignInByOauth
 
+/* harmony default export */ __webpack_exports__["default"] = ({
+  postSignInByOauth: function postSignInByOauth(token) {
+    axios.defaults.headers.common['Authorization'] = token;
+    return axios.get(_config_js__WEBPACK_IMPORTED_MODULE_0__["ROAST_CONFIG"].API_URL + '/user', {});
+  }
+});
 
 /***/ }),
 
@@ -99027,6 +99131,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // axios.
 
 
 
+ // http响应拦截器
 
 axios__WEBPACK_IMPORTED_MODULE_7___default.a.interceptors.response.use(function (response) {
   var token = response.headers.authorization;
@@ -99076,7 +99181,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('HeadNav', __webpack_requir
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Footer', __webpack_require__(/*! ./view/Footer.vue */ "./resources/js/view/Footer.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('NavCategory', __webpack_require__(/*! ./view/layouts/NavCategory.vue */ "./resources/js/view/layouts/NavCategory.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Pagination', __webpack_require__(/*! ./view/Pagination.vue */ "./resources/js/view/Pagination.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Likes', __webpack_require__(/*! ./view/Likes.vue */ "./resources/js/view/Likes.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Likes', __webpack_require__(/*! ./view/Likes.vue */ "./resources/js/view/Likes.vue")["default"]); // Vue.component('Likes',require('./view/Auth/LoginLoading.vue').default);
+
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   components: {
@@ -99434,7 +99540,6 @@ var likes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "users", function() { return users; });
 /* harmony import */ var _api_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/users */ "./resources/js/api/users.js");
-/* harmony import */ var _api_users__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_api_users__WEBPACK_IMPORTED_MODULE_0__);
 /*
 |-------------------------------------------------------------------------------
 | VUEX modules/users.js
@@ -99451,11 +99556,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var users = {
   state: {
-    verificationCodeLoadStatus: 0,
-    verificationCodeError: '',
-    //手机号注册
-    registerByPhoneStatus: 0,
-    registerByPhoneError: '',
     //登录状态
     loginStatus: 0,
     loginErrors: '',
@@ -99463,14 +99563,13 @@ var users = {
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     user: {
       data: {
-        id: 11,
-        name: 'Mozilan',
+        id: 2,
+        name: 'latent',
         email: null,
         avatar: '',
-        bound_phone: false,
         bound_oauth: 'github',
-        created_at: '2019-10-15 20:26:11',
-        updated_at: '2019-10-15 20:26:11',
+        created_at: '2020-03-13 21:26:11',
+        updated_at: '2020-03-13 21:26:11',
         introduction: ''
       }
     },
@@ -99482,85 +99581,45 @@ var users = {
     otherLoadStatus: ''
   },
   actions: {
-    loadCaptchas: function loadCaptchas(_ref, data) {
+    // login({commit},data){
+    //     commit('setLoginStatus',1);
+    //     UserAPI.postSignUp( data.username,data.password)
+    //         .then(function ( response ) {
+    //             commit('setUser' , response.data);
+    //             commit('setUserLoadStatus',2);
+    //             commit('setLoginToken','Bearer ' + response.data.meta.access_token);
+    //             commit('setLoginStatus' , 2);
+    //         })
+    //         .catch(function (error) {
+    //             commit('setUser' ,'');
+    //             commit('setUserLoadStatus',3);
+    //             commit('setLoginStatus',3);
+    //             commit('setLoginErrors',error.response.data.message !== '' ? error.response.data.message: '未知错误');
+    //         })
+    // },
+    loginByOauth: function loginByOauth(_ref) {
       var commit = _ref.commit;
-      commit('setCaptchaLoadStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.getCaptchas(data.phone).then(function (response) {
-        commit('setCaptchas', response.data);
-        commit('setCaptchaLoadStatus', 2);
+      commit('setLoginStatus', 1);
+      _api_users__WEBPACK_IMPORTED_MODULE_0__["default"].postSignInByOauth(store.Authorization);
+      console.log(11);
+      console.log(store.Authorization).then(function (response) {
+        commit('setLoginToken', 'Bearer ' + store.Authorization);
+        commit('setUser', response.data);
+        commit('setUserLoadStatus', 2);
+        commit('setLoginStatus', 2);
       })["catch"](function (error) {
-        commit('setCaptchas', []);
-        commit('setCaptchasError', error.response.data.errors[Object.keys(error.response.data.errors)[0]].toString());
-        commit('setCaptchaLoadStatus', 3);
+        localStorage.removeItem('Authorization');
+        commit('setLoginToken', '');
+        commit('setUser', '');
+        commit('setLoginStatus', 3);
+        commit('setUserLoadStatus', 3);
+        commit('setLoginErrors', error.response.data.message !== '' ? error.response.data.message : '未知错误');
       });
     },
-    loadVerificationCodes: function loadVerificationCodes(_ref2, data) {
+    loadUser: function loadUser(_ref2) {
       var commit = _ref2.commit;
-      commit('setVerificationCodeLoadStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.getVerificationCodes(data.captcha_key, data.captcha_code, data.phone).then(function (response) {
-        commit('setVerificationCodes', response.data.key);
-        commit('setVerificationCodeLoadStatus', 2);
-      })["catch"](function (error) {
-        commit('setVerificationCodes', []);
-
-        if (error.response.status == 422) {
-          commit('setVerificationCodeError', '图形验证码已失效');
-        } else {
-          commit('setVerificationCodeError', error.response.data.message);
-        }
-
-        commit('setVerificationCodeLoadStatus', 3);
-      });
-    },
-    registerByPhone: function registerByPhone(_ref3, data) {
-      var commit = _ref3.commit,
-          dispatch = _ref3.dispatch;
-      commit('setRegisterByPhoneStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.postSignIn(data.verification_key, data.verification_code, data.name, data.password).then(function (response) {
-        commit('setRegisterByPhoneStatus', 2);
-        commit('setLoginToken', 'Bearer ' + response.data.meta.access_token);
-        dispatch('loadUser');
-      })["catch"](function (error) {
-        commit('setRegisterByPhoneError', error.response.data.errors[Object.keys(error.response.data.errors)[0]].toString());
-        commit('setRegisterByPhoneStatus', 3);
-      });
-    },
-    login: function login(_ref4, data) {
-      var commit = _ref4.commit;
-      commit('setLoginStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.postSignUp(data.username, data.password).then(function (response) {
-        commit('setUser', response.data.data);
-        commit('setUserLoadStatus', 2);
-        commit('setLoginToken', 'Bearer ' + response.data.meta.access_token);
-        commit('setLoginStatus', 2);
-      })["catch"](function (error) {
-        commit('setUser', '');
-        commit('setUserLoadStatus', 3);
-        commit('setLoginStatus', 3);
-        commit('setLoginErrors', error.response.data.message !== '' ? error.response.data.message : '未知错误');
-      });
-    },
-    loginByOauth: function loginByOauth(_ref5, data) {
-      var commit = _ref5.commit;
-      commit('setLoginStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.postSignInByOauth(data.code, data.social_type).then(function (response) {
-        commit('setLoginToken', 'Bearer ' + response.data.meta.access_token);
-        commit('setUser', response.data.data);
-        commit('setUserLoadStatus', 2);
-        commit('setLoginStatus', 2);
-      })["catch"](function (error) {
-        localStorage.removeItem('Authorization');
-        commit('setLoginToken', '');
-        commit('setUser', '');
-        commit('setLoginStatus', 3);
-        commit('setUserLoadStatus', 3);
-        commit('setLoginErrors', error.response.data.message !== '' ? error.response.data.message : '未知错误');
-      });
-    },
-    loadUser: function loadUser(_ref6) {
-      var commit = _ref6.commit;
       commit('setUserLoadStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.getLoadUser().then(function (response) {
+      _api_users__WEBPACK_IMPORTED_MODULE_0__["default"].getLoadUser().then(function (response) {
         commit('setUserLoadStatus', 2);
         commit('setUser', response.data.data);
       })["catch"](function (error) {
@@ -99570,10 +99629,10 @@ var users = {
         commit('setUserLoadStatus', 3);
       });
     },
-    loadOther: function loadOther(_ref7, data) {
-      var commit = _ref7.commit;
+    loadOther: function loadOther(_ref3, data) {
+      var commit = _ref3.commit;
       commit('setOtherLoadStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.getLoadOther(data).then(function (response) {
+      _api_users__WEBPACK_IMPORTED_MODULE_0__["default"].getLoadOther(data).then(function (response) {
         if (response.data.data !== '') {
           commit('setOtherLoadStatus', 2);
           commit('setOther', response.data.data);
@@ -99585,9 +99644,9 @@ var users = {
         commit('setOtherLoadStatus', 3);
       });
     },
-    logout: function logout(_ref8) {
-      var commit = _ref8.commit,
-          dispatch = _ref8.dispatch;
+    logout: function logout(_ref4) {
+      var commit = _ref4.commit,
+          dispatch = _ref4.dispatch;
       commit('setLogoutStatus', 1);
 
       try {
@@ -99600,48 +99659,12 @@ var users = {
         commit('setLogoutStatus', 3);
       }
     },
-    updateUserProfile: function updateUserProfile(_ref9, data) {
-      var commit = _ref9.commit,
-          dispatch = _ref9.dispatch;
-      commit('setUserProfileUpdateStatus', 1);
-      _api_users__WEBPACK_IMPORTED_MODULE_0___default.a.patchUpdateUserProfile(data).then(function (response) {
-        commit('setUserProfileUpdateStatus', 2);
-        dispatch('loadUser');
-      })["catch"](function (error) {
-        commit('setUserProfileUpdateMessages', error.response.data.errors[Object.keys(error.response.data.errors)[0]].toString());
-        commit('setUserProfileUpdateStatus', 3);
-      });
-    },
-    refreshToken: function refreshToken(_ref10, data) {
-      var commit = _ref10.commit;
+    refreshToken: function refreshToken(_ref5, data) {
+      var commit = _ref5.commit;
       commit('setLoginToken', data.token);
     }
   },
   mutations: {
-    setCaptchaLoadStatus: function setCaptchaLoadStatus(state, status) {
-      state.captchaLoadStatus = status;
-    },
-    setCaptchas: function setCaptchas(state, capchas) {
-      state.captchas = capchas;
-    },
-    setCaptchasError: function setCaptchasError(state, error) {
-      state.captchaError = error;
-    },
-    setVerificationCodeLoadStatus: function setVerificationCodeLoadStatus(state, status) {
-      state.verificationCodeLoadStatus = status;
-    },
-    setVerificationCodes: function setVerificationCodes(state, verificationCodes) {
-      state.verificationCodes = verificationCodes;
-    },
-    setVerificationCodeError: function setVerificationCodeError(state, error) {
-      state.verificationCodeError = error;
-    },
-    setRegisterByPhoneStatus: function setRegisterByPhoneStatus(state, status) {
-      state.registerByPhoneStatus = status;
-    },
-    setRegisterByPhoneError: function setRegisterByPhoneError(state, error) {
-      state.registerByPhoneError = error;
-    },
     setLoginStatus: function setLoginStatus(state, status) {
       state.loginStatus = status;
     },
@@ -99676,28 +99699,6 @@ var users = {
     }
   },
   getters: {
-    getCaptchaLoadStatus: function getCaptchaLoadStatus(state) {
-      return function () {
-        return state.captchaLoadStatus;
-      };
-    },
-    getCaptchas: function getCaptchas(state) {
-      return state.captchas;
-    },
-    getCaptchaError: function getCaptchaError(state) {
-      return state.captchaError;
-    },
-    getVerificationCodeLoadStatus: function getVerificationCodeLoadStatus(state) {
-      return function () {
-        return state.verificationCodeLoadStatus;
-      };
-    },
-    getVerificationCodes: function getVerificationCodes(state) {
-      return state.verificationCodes;
-    },
-    getVerificationCodeError: function getVerificationCodeError(state) {
-      return state.verificationCodeError;
-    },
     getLoginStatus: function getLoginStatus(state) {
       return function () {
         return state.loginStatus;
@@ -99710,14 +99711,6 @@ var users = {
     },
     getLoginToken: function getLoginToken(state) {
       return state.Authorization;
-    },
-    getRegisterByPhoneStatus: function getRegisterByPhoneStatus(state) {
-      return function () {
-        return state.registerByPhoneStatus;
-      };
-    },
-    getRegisterByPhoneError: function getRegisterByPhoneError(state) {
-      return state.registerByPhoneError;
     },
     getUser: function getUser(state) {
       return state.user;
@@ -99777,6 +99770,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'home',
     components: vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Home', __webpack_require__(/*! ./view/Home.vue */ "./resources/js/view/Home.vue"))
   }, {
+    path: '/',
+    name: 'home',
+    components: vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Home', __webpack_require__(/*! ./view/Home.vue */ "./resources/js/view/Home.vue"))
+  }, {
     path: '/article/:id/:slug',
     name: 'article.show',
     components: vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Article', __webpack_require__(/*! ./view/Article.vue */ "./resources/js/view/Article.vue"))
@@ -99796,8 +99793,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/likes',
     name: 'likes',
     components: vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Likes', __webpack_require__(/*! ./view/Likes.vue */ "./resources/js/view/Likes.vue"))
-  }]
-}));
+  } // {
+  //     path: '/LoginLoading',
+  //     name: 'LoginLoading',
+  //     components: Vue.component( 'LoginLoading', require( './view/Auth/LoginLoading' ) ),
+  // }
+  ]
+})); //设置vue前置守卫
 
 /***/ }),
 
@@ -100983,8 +100985,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/blog/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/blog/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/blog/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/blog/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),

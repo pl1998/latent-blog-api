@@ -29,6 +29,7 @@ import swal from "sweetalert";
 
 
 
+// http响应拦截器
 axios.interceptors.response.use((response) => {
     var token = response.headers.authorization;
     if (token) {
@@ -84,6 +85,7 @@ Vue.component('Footer',require('./view/Footer.vue').default);
 Vue.component('NavCategory',require('./view/layouts/NavCategory.vue').default);
 Vue.component('Pagination',require('./view/Pagination.vue').default);
 Vue.component('Likes',require('./view/Likes.vue').default);
+// Vue.component('Likes',require('./view/Auth/LoginLoading.vue').default);
 
 
 

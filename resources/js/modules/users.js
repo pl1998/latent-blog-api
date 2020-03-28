@@ -16,12 +16,6 @@ import UserAPI from '../api/users';
 
 export const users = {
     state: {
-
-        verificationCodeLoadStatus:0,
-        verificationCodeError:'',
-        //手机号注册
-        registerByPhoneStatus:0,
-        registerByPhoneError:'',
         //登录状态
         loginStatus:0,
         loginErrors:'',
@@ -29,14 +23,13 @@ export const users = {
         Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
         user: {
             data:{
-                id:11,
-                name:'Mozilan',
+                id:2,
+                name:'latent',
                 email:null,
                 avatar:'',
-                bound_phone:false,
                 bound_oauth:'github',
-                created_at:'2019-10-15 20:26:11',
-                updated_at:'2019-10-15 20:26:11',
+                created_at:'2020-03-13 21:26:11',
+                updated_at:'2020-03-13 21:26:11',
                 introduction:'',
             }
         },
@@ -48,71 +41,31 @@ export const users = {
         otherLoadStatus:'',
     },
     actions: {
-        loadCaptchas({commit},data){
-            commit('setCaptchaLoadStatus', 1);
-            UserAPI.getCaptchas(data.phone)
-                .then(function (response) {
-                    commit('setCaptchas', response.data);
-                    commit('setCaptchaLoadStatus', 2);
-                })
-                .catch(function (error){
-                    commit('setCaptchas', []);
-                    commit('setCaptchasError', error.response.data.errors[Object.keys(error.response.data.errors)[0]].toString());
-                    commit('setCaptchaLoadStatus', 3);
-                });
-        },
-        loadVerificationCodes({commit}, data) {
-            commit('setVerificationCodeLoadStatus', 1);
-            UserAPI.getVerificationCodes(data.captcha_key, data.captcha_code, data.phone)
-                .then(function (response) {
-                    commit('setVerificationCodes',response.data.key);
-                    commit('setVerificationCodeLoadStatus', 2);
-                })
-                .catch(function (error) {
-                    commit('setVerificationCodes', []);
-                    if(error.response.status == 422){
-                        commit('setVerificationCodeError', '图形验证码已失效');
-                    }else{
-                        commit('setVerificationCodeError', error.response.data.message);
-                    }
-                    commit('setVerificationCodeLoadStatus', 3);
-                });
-        },
-        registerByPhone( {commit , dispatch},data){
-            commit( 'setRegisterByPhoneStatus', 1);
-            UserAPI.postSignIn( data.verification_key,data.verification_code, data.name,data.password)
-                .then(function ( response ) {
-                    commit('setRegisterByPhoneStatus' , 2);
-                    commit('setLoginToken','Bearer ' + response.data.meta.access_token);
-                    dispatch('loadUser');
-                })
-                .catch(function (error){
-                    commit('setRegisterByPhoneError', error.response.data.errors[Object.keys(error.response.data.errors)[0]].toString());
-                    commit('setRegisterByPhoneStatus',3);
-                })
-        },
-        login({commit},data){
+        // login({commit},data){
+        //     commit('setLoginStatus',1);
+        //     UserAPI.postSignUp( data.username,data.password)
+        //         .then(function ( response ) {
+        //             commit('setUser' , response.data);
+        //             commit('setUserLoadStatus',2);
+        //             commit('setLoginToken','Bearer ' + response.data.meta.access_token);
+        //             commit('setLoginStatus' , 2);
+        //         })
+        //         .catch(function (error) {
+        //             commit('setUser' ,'');
+        //             commit('setUserLoadStatus',3);
+        //             commit('setLoginStatus',3);
+        //             commit('setLoginErrors',error.response.data.message !== '' ? error.response.data.message: '未知错误');
+        //         })
+        // },
+
+        loginByOauth({commit}){
             commit('setLoginStatus',1);
-            UserAPI.postSignUp( data.username,data.password)
+            UserAPI.postSignInByOauth(store.Authorization)
+                console.log(11)
+                console.log(store.Authorization)
                 .then(function ( response ) {
-                    commit('setUser' , response.data.data);
-                    commit('setUserLoadStatus',2);
-                    commit('setLoginToken','Bearer ' + response.data.meta.access_token);
-                    commit('setLoginStatus' , 2);
-                })
-                .catch(function (error) {
-                    commit('setUser' ,'');
-                    commit('setUserLoadStatus',3);
-                    commit('setLoginStatus',3);
-                    commit('setLoginErrors',error.response.data.message !== '' ? error.response.data.message: '未知错误');
-                })
-        },
-        loginByOauth({commit},data){
-            commit('setLoginStatus',1);
-            UserAPI.postSignInByOauth( data.code,data.social_type)
-                .then(function ( response ) {
-                    commit('setLoginToken','Bearer ' + response.data.meta.access_token);
-                    commit('setUser' , response.data.data);
+                    commit('setLoginToken','Bearer ' + store.Authorization);
+                    commit('setUser' , response.data);
                     commit('setUserLoadStatus',2);
                     commit('setLoginStatus' , 2);
                 })
@@ -170,47 +123,12 @@ export const users = {
                 commit('setLogoutStatus', 3);
             }
         },
-        updateUserProfile({commit,dispatch},data) {
-            commit( 'setUserProfileUpdateStatus', 1);
-            UserAPI.patchUpdateUserProfile( data)
-                .then(function ( response ) {
-                    commit('setUserProfileUpdateStatus' , 2);
-                    dispatch('loadUser');
-                })
-                .catch(function (error){
-                    commit('setUserProfileUpdateMessages', error.response.data.errors[Object.keys(error.response.data.errors)[0]].toString());
-                    commit('setUserProfileUpdateStatus',3);
-                })
-        },
+
         refreshToken({commit},data){
             commit('setLoginToken', data.token);
         }
     },
     mutations:{
-        setCaptchaLoadStatus(state,status){
-            state.captchaLoadStatus = status;
-        },
-        setCaptchas(state,capchas){
-            state.captchas = capchas;
-        },
-        setCaptchasError(state,error){
-            state.captchaError = error;
-        },
-        setVerificationCodeLoadStatus(state,status){
-            state.verificationCodeLoadStatus = status;
-        },
-        setVerificationCodes(state,verificationCodes){
-            state.verificationCodes = verificationCodes;
-        },
-        setVerificationCodeError( state , error ){
-            state.verificationCodeError = error;
-        },
-        setRegisterByPhoneStatus(state , status){
-            state.registerByPhoneStatus = status;
-        },
-        setRegisterByPhoneError(state , error ){
-            state.registerByPhoneError = error;
-        },
         setLoginStatus(state , status){
             state.loginStatus = status;
         },
@@ -245,28 +163,7 @@ export const users = {
         },
     },
     getters:{
-        getCaptchaLoadStatus( state ){
-            return function () {
-                return state.captchaLoadStatus;
-            }
-        },
-        getCaptchas( state ){
-            return state.captchas;
-        },
-        getCaptchaError( state ){
-            return state.captchaError;
-        },
-        getVerificationCodeLoadStatus( state ){
-            return function () {
-                return state.verificationCodeLoadStatus;
-            }
-        },
-        getVerificationCodes( state ){
-            return state.verificationCodes;
-        },
-        getVerificationCodeError( state ){
-            return state.verificationCodeError;
-        },
+
         getLoginStatus( state ){
             return function () {
                 return state.loginStatus;
@@ -279,14 +176,6 @@ export const users = {
         },
         getLoginToken( state ){
             return state.Authorization;
-        },
-        getRegisterByPhoneStatus (state){
-            return function () {
-                return state.registerByPhoneStatus;
-            }
-        },
-        getRegisterByPhoneError( state ){
-            return state.registerByPhoneError;
         },
         getUser(state){
             return state.user;

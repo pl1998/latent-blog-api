@@ -28,7 +28,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 </ul>
-                <ul class="navbar-nav navbar-right">
+                <ul v-if="this.user.data" class="navbar-nav navbar-right">
+                    <router-link class="nav-link" :to="{ name: 'login' }">{{this.user.date.name}}</router-link>
+
+                </ul>
+                <ul v-else class="navbar-nav navbar-right">
                     <router-link class="nav-link" :to="{ name: 'login' }"> 登 录</router-link>
                     <router-link class="nav-link" :to="{ name: 'register' }">注 册</router-link>
                 </ul>
@@ -41,6 +45,11 @@
     import NavCategory from "./layouts/NavCategory";
     export default {
         name: "Categories",
+        data(){
+          return{
+              user:[],
+          }
+        },
         components: {NavCategory},
         created() {
             this.$store.dispatch('loadCategories')
@@ -52,6 +61,11 @@
             categories()
             {
                 return this.$store.getters.getCategories;
+            },
+            loginUsers() {
+                if(this.$state.getters.getLoginStatus===2){
+                    this.user = this.state.getUser();
+                }
             }
 
         },

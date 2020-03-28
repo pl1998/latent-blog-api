@@ -44,6 +44,9 @@
         created() {
             this.$store.dispatch('loadArticles',this.$route.query.page);
         },
+        // beforeRouteEnter(to,from,next) {
+        //
+        // },
         components: {Pagination},
         watch: {
             '$route'(to) {
