@@ -99,7 +99,7 @@
                 window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
                 window.addEventListener('message', function (e) {
                     //开始登录
-                    //localStorage.setItem('Authorization',e.data);
+                   localStorage.setItem('Authorization',e.data);
                     this.$store.dispatch('loginByOauth',localStorage.getItem('Authorization'));
 
                     this.$watch(this.$store.getters.getLoginStatus, function () {
