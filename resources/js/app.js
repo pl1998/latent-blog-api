@@ -11,13 +11,19 @@ import swal from "sweetalert";
 
 import animated from 'animate.css'
 Vue.use(animated)
-//验证器
+
+//全局指令
 import './src/directives/index'
+
 import hljs from 'highlight.js';
 import axios from 'axios'
 window.axios = axios
 window.hljs = hljs
 window.swal = swal
+
+/**
+ * 注册一个全局指令
+ */
 
 Vue.directive('highlight',function (el) {
     let blocks = el.querySelectorAll('pre code');
@@ -25,6 +31,7 @@ Vue.directive('highlight',function (el) {
         hljs.highlightBlock(block)
     })
 })
+
 
 
 

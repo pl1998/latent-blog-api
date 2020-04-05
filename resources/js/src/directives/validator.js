@@ -82,6 +82,7 @@ export default {
         }
     },
     inserted(el, binding, vnode) {
+        alert(11111)
         const { value, modifiers } = binding
         const form = el.closest('[data-validator-form]')
         const submitBtn = form ? form.querySelector('[type=submit]') : null

@@ -4,16 +4,22 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Controllers\OathTrians\GiteeOauth;
 use App\Models\User;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Overtrue\LaravelSocialite\Socialite;
+use phpDocumentor\Reflection\Types\This;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 class AuthController extends Controller
 {
+
+    use GiteeOauth;
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -32,32 +38,39 @@ class AuthController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-        $users=User::where('github_id',$user->id)->first();
+        $users = User::where('github_id', $user->id)->first();
 
-
-        if(empty($users)){
-
-            $users=User::create([
-
-                'name'=>$user->username,
-                'email'=>$user->email,
-                'github_name'=>$user->name,
-                'github_id'=>$user->id,
-                'avatar'=>$user->avatar,
-                'verified'=>1,
-                'password'=>Hash::make('123456'),
-                'bound_oauth'=>'github',
-
+        if (empty($users)) {
+            $users = User::create([
+                'name' => $user->username,
+                'email' => $user->email,
+                'github_name' => $user->name,
+                'github_id' => $user->id,
+                'avatar' => $user->avatar,
+                'verified' => 1,
+                'password' => Hash::make('123456'),
+                'bound_oauth' => 'github',
             ]);
         }
         $token = Auth::guard('api')->login($users);
         //授权回调
-        return view('loading',[
-           'token'=>$token,
-           'domain'=>env('APP_URL'),
+        return view('loading', [
+            'token' => $token,
+            'domain' => env('APP_URL'),
         ]);
 
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

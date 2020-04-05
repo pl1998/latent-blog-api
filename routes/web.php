@@ -27,11 +27,17 @@ Route::get('/logout', 'SpaController@index');
 Route::get('/oauth/github', 'AuthController@redirectToProvider');
 Route::get('/oauth/callback', 'AuthController@handleProviderCallback');
 
+//码云登录
+Route::get('/oauth/gitee', 'AuthController@redirectGitee');
+Route::get('/oauth/giteeCallback', 'AuthController@handleProviderGiteeCallback');
+
 Route::get('/oauth/qqLogin', 'AuthController@redirectToProvider');
 Route::get('/oauth/qqCallback', 'AuthController@redirectToProvider');
 
 //登录中转页面
 Route::get('/LoginLoading', 'SpaController@loading');
+
+Route::get('/send/email','MailSendController@emailSend')->name('send.email.view');
 
 
 

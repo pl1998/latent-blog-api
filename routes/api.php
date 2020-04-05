@@ -40,6 +40,8 @@ Route::prefix('v1')->name('api.v1.')
         //刷新token
         Route::put('authorizations', 'Api\v1\AuthorizationController@update')->name('api.authorizations.update');
 
+        Route::post('send/email', 'Api\v1\EmailSendController@seedEmail')->name('api.EmailSend.send');
+
         //删除token
         Route::delete('authorizations', 'Api\v1\AuthorizationController@destroy')->name('api.authorizations.destroy');
 

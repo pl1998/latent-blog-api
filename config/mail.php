@@ -133,4 +133,6 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+    'reply_to' => ['address' => 'pltruenine@163.com', 'name' => 'Laten tBolg'],
+
 ];

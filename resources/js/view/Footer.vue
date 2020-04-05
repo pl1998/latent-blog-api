@@ -9,11 +9,11 @@
                 </li>
             </ul>
             <div class="links">
-                <a v-for="link in links" :href="link.url" target="_blank" >{{link.title}}</a>
+                <a v-for="link in links" :href="link.url" :alt="link.title"  v-title="link.title" target="_blank" >{{link.title}}</a>
             </div>
         </div>
         <p  class="p-bottom">
-            <a href="http://www.beian.miit.gov.cn/" target="_blank"  v-title="recode">{{recode}}</a>
+            <a href="http://www.beian.miit.gov.cn/" target="_blank" :alt="recode"   v-title="recode">{{recode}}</a>
         </p>
     </footer>
 </template>

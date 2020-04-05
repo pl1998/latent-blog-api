@@ -2087,6 +2087,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Categories",
@@ -19463,7 +19473,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.logo[data-v-f3046e50]{\n    width:30px;\n    height:30px;\n}\n", ""]);
+exports.push([module.i, "\n.logo[data-v-f3046e50] {\n    width: 30px;\n    height: 30px;\n}\n", ""]);
 
 // exports
 
@@ -81497,7 +81507,11 @@ var render = function() {
                                 "aria-expanded": "false"
                               }
                             },
-                            [_vm._v(_vm._s(nav.name))]
+                            [
+                              _vm._v(
+                                _vm._s(nav.name) + "\n                    "
+                              )
+                            ]
                           )
                         : _c(
                             "router-link",
@@ -81510,7 +81524,11 @@ var render = function() {
                                 "aria-expanded": "false"
                               }
                             },
-                            [_vm._v(_vm._s(nav.name))]
+                            [
+                              _vm._v(
+                                _vm._s(nav.name) + "\n                    "
+                              )
+                            ]
                           ),
                       _vm._v(" "),
                       nav.children
@@ -81686,9 +81704,21 @@ var render = function() {
         "div",
         { staticClass: "links" },
         _vm._l(_vm.links, function(link) {
-          return _c("a", { attrs: { href: link.url, target: "_blank" } }, [
-            _vm._v(_vm._s(link.title))
-          ])
+          return _c(
+            "a",
+            {
+              directives: [
+                {
+                  name: "title",
+                  rawName: "v-title",
+                  value: link.title,
+                  expression: "link.title"
+                }
+              ],
+              attrs: { href: link.url, alt: link.title, target: "_blank" }
+            },
+            [_vm._v(_vm._s(link.title))]
+          )
         }),
         0
       )
@@ -81706,7 +81736,11 @@ var render = function() {
               expression: "recode"
             }
           ],
-          attrs: { href: "http://www.beian.miit.gov.cn/", target: "_blank" }
+          attrs: {
+            href: "http://www.beian.miit.gov.cn/",
+            target: "_blank",
+            alt: _vm.recode
+          }
         },
         [_vm._v(_vm._s(_vm.recode))]
       )
@@ -99146,7 +99180,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  // 路由值守
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(animate_css__WEBPACK_IMPORTED_MODULE_4___default.a); //验证器
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(animate_css__WEBPACK_IMPORTED_MODULE_4___default.a); //全局指令
 
 
 
@@ -99154,6 +99188,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(animate_css__WEBPACK_IMPORTED_MOD
 window.axios = axios__WEBPACK_IMPORTED_MODULE_7___default.a;
 window.hljs = highlight_js__WEBPACK_IMPORTED_MODULE_6___default.a;
 window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_3___default.a;
+/**
+ * 注册一个全局指令
+ */
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('highlight', function (el) {
   var blocks = el.querySelectorAll('pre code');
   blocks.forEach(function (block) {
@@ -99807,6 +99845,43 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
+/***/ "./resources/js/src/directives/dropdown.js":
+/*!*************************************************!*\
+  !*** ./resources/js/src/directives/dropdown.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  bind: function bind(el, binding, vnode) {
+    var handler = function handler() {
+      el.parentElement.classList.toggle('open');
+    };
+
+    var documentHandler = function documentHandler(e) {
+      var target = e.target;
+      if (target.isSameNode(el) || el.contains(target)) return;
+      el.parentElement.classList.remove('open');
+    };
+
+    el.addEventListener('click', handler, false);
+    document.addEventListener('click', documentHandler, false);
+
+    el.destroy = function () {
+      el.removeEventListener('click', handler, false);
+      document.removeEventListener('click', documentHandler, false);
+      el.destroy = null;
+    };
+  },
+  unbind: function unbind(el) {
+    el.destroy();
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/src/directives/index.js":
 /*!**********************************************!*\
   !*** ./resources/js/src/directives/index.js ***!
@@ -99819,9 +99894,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validator */ "./resources/js/src/directives/validator.js");
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dropdown */ "./resources/js/src/directives/dropdown.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('validator', _validator__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('dropdown', _dropdown__WEBPACK_IMPORTED_MODULE_2__["default"]);
+var directives = {
+  validator: _validator__WEBPACK_IMPORTED_MODULE_1__["default"],
+  dropdown: _dropdown__WEBPACK_IMPORTED_MODULE_2__["default"]
+};
+
+for (var _i = 0, _Object$entries = Object.entries(directives); _i < _Object$entries.length; _i++) {
+  var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+      key = _Object$entries$_i[0],
+      value = _Object$entries$_i[1];
+
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive(key, value);
+}
 
 /***/ }),
 
@@ -99926,6 +100024,7 @@ function getErrorElement(el) {
     };
   },
   inserted: function inserted(el, binding, vnode) {
+    alert(11111);
     var value = binding.value,
         modifiers = binding.modifiers;
     var form = el.closest('[data-validator-form]');
@@ -101007,8 +101106,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/code/blog/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/code/blog/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/blog/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/blog/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),
