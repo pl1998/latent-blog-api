@@ -131,7 +131,7 @@ class ArticleController extends AdminController
         $form->text('title', __('文章标题'))->rules('required');
         $form->image('cover_img', __('文章图片'))->rules('required');
         $form->text('description', __('文章描述'))->rules('required|min:5');
-        $form->summernote('content', __('文章内容'))->rules('required');
+        $form->markdown('content', __('文章内容'))->rules('required');
 
         //$form->datetime('created_at', __('发布时间'))->rules('required|date');
 

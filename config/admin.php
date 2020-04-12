@@ -399,10 +399,10 @@ return [
         'simplemde' => [
 
             // Set to false if you want to disable this extension
-            'enable' => false,
+            'enable' => true,
 
             // If you want to set an alias for the calling method
-            //'alias' => 'markdown',
+            'alias' => 'markdown',
 
             // Editor configuration
             'config' => [
@@ -410,16 +410,5 @@ return [
                 'placeholder' => '请用markworn书写...',
             ]
         ],
-        'summernote' => [
-
-            //Set to false if you want to disable this extension
-            'enable' => true,
-
-            // Editor configuration
-            'config' => [
-                'lang'   => 'zh-CN',
-                'height' => 500,
-            ]
-        ]
     ],
 ];

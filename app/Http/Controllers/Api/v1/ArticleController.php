@@ -22,6 +22,7 @@ class ArticleController
 
 
 
+
        $articleList =  Article::query()
            ->with('admin_user')
            ->where('status',0)
@@ -42,8 +43,11 @@ class ArticleController
      */
 
     public function show(Request $request){
+
         $article =   Article::query()->with('admin_user')->find($request->id);
+
         $article->label_list = $article->full_name;
+
         dispatch(new VisitArticle($article));
         $this->visit($request->id);
         return $article->toArray();
@@ -56,6 +60,7 @@ class ArticleController
 
     public function visit($article_id)
     {
+
         $ip = getRealIpAddr(); //获取访问ip
         if (!empty($ip)) {
             //判断该文章是否相对应的ip

@@ -29,6 +29,7 @@ Route::prefix('v1')->name('api.v1.')
 
         Route::get('likes', 'Api\v1\LikesController@all')->name('api.likes.all');
         Route::post('likes', 'Api\v1\LikesController@store')->name('api.likes.store');
+        Route::get('show', 'Api\v1\LabelsController@show')->name('api.labels.show');
 
 
         // 用户注册
@@ -40,7 +41,7 @@ Route::prefix('v1')->name('api.v1.')
         //刷新token
         Route::put('authorizations', 'Api\v1\AuthorizationController@update')->name('api.authorizations.update');
 
-        Route::post('send/email', 'Api\v1\EmailSendController@seedEmail')->name('api.EmailSend.send');
+        Route::post('send/email', 'Api\v1\EmailSendController@RegisterEamil')->name('api.EmailSend.send');
 
         //删除token
         Route::delete('authorizations', 'Api\v1\AuthorizationController@destroy')->name('api.authorizations.destroy');

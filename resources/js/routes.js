@@ -50,7 +50,8 @@ export default new VueRouter({
             path: '/logout',
             name: 'logout',
             meta:{requireAuth:true}
-        }
+        },
+
     ],
 });
 

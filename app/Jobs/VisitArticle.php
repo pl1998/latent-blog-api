@@ -39,9 +39,10 @@ class VisitArticle implements ShouldQueue
         if (!empty($ip)) {
             //判断该文章是否相对应的ip
             $visitor = VisitorRegistry::query()->where('ip', $ip)->where('art_id', $this->article->id)->first();
+
                 if (!$visitor) {
                     //新增一个文章访问记录
-                    Article::query()->create([
+                    VisitorRegistry::query()->create([
                         'clicks'=>1,
                         'art_id'=>$this->article->id,
                         'ip'=>$ip,

@@ -54,7 +54,7 @@
         methods: {
             getArticle()
             {
-                console.log(this.$route.params.slug)
+
                 if(!this.$route.params.slug){
                     this.load=0;
                 }else {

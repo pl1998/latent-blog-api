@@ -22,7 +22,7 @@
                             登录
                         </button>
                         <div class="strike">
-                            <span>or</span>
+<!--                            <span>or</span>-->
                         </div>
                         <div class="form-group">
                             <a @click="githubLogin" style="color:#fff" class="btn btn-primary form-control"><i
@@ -68,7 +68,7 @@
                     password: this.password,
                 })
                     .then(function (response) {
-                        console.log(response);
+
                     });
             },
             githubLogin() {

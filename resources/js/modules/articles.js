@@ -80,7 +80,7 @@ export const articles = {
             state.articleLoadStatus = status;
         },
         setArticle( state, article ){
-            console.log(article)
+
             state.article = article;
         }
     },

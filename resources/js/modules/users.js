@@ -49,11 +49,11 @@ export const users = {
 
         loginByOauth({commit},token){
             commit('setLoginStatus',1);
-            console.log(token)
+
             UserAPI.postSignInByOauth(token)
                 .then(function ( response ) {
                     localStorage.setItem('login_user',response.data)
-                    console.log(response.data)
+
                     commit('setLoginToken','Bearer ' + token);
                     commit('setUser',response.data);
                     commit('setUserLoadStatus',2);
@@ -103,7 +103,7 @@ export const users = {
         },
         logoutUser({commit,dispatch}){
             commit('setLogoutStatus',1);
-            console.log(localStorage.getItem('Authorization'));
+
             UserAPI.deleteSignInByOauth(localStorage.getItem('Authorization'))
                 .then(function ( response ) {
                     localStorage.removeItem('Authorization');
@@ -137,7 +137,7 @@ export const users = {
             localStorage.setItem('Authorization', access_token);
         },
         setUser (state, data) {
-            console.log(data);
+
             state.users = data;
         },
         setUserLoadStatus(state,status){
@@ -170,7 +170,7 @@ export const users = {
             return state.Authorization;
         },
         getUser(state){
-            console.log(state.users);
+
             return state.users;
         },
         getUserLoadStatus(state){

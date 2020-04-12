@@ -29,10 +29,9 @@ class UserController extends AdminController
 
         $grid->column('name', __('Name'));
         $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('是否验证')->using([0 => '未验证', 1 => '已验证',], '未知')->dot([0 => 'danger', 1 => 'success',], 'warning');
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('创建日期', __('Created at'));
+        $grid->column('avatar', __('Email'))->image('',$width = 30, $height = 30);
+        $grid->column('是否验证')->using([0 => '未验证', 1 => '已验证',], '未验证')->dot([0 => 'danger', 1 => 'success',], 'warning');
+        $grid->column('created_at', __('注册时间'));
 
         return $grid;
     }
@@ -67,13 +66,9 @@ class UserController extends AdminController
     protected function form()
     {
         $form = new Form(new User());
-
         $form->text('name', __('Name'));
         $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
-        $form->password('password', __('Password'));
-        $form->text('remember_token', __('Remember token'));
-
+        $form->image('avatar', __('avatar'));
         return $form;
     }
 }

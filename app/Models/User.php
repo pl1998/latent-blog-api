@@ -50,7 +50,12 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         if(empty($value)){
             return env('APP_URL').'/storage/images/avatar_github'.rand(1,7).'.jpg';
         }else {
-            return $value;
+
+            if(!preg_match('/^http(s)?:\\/\\/.+/',$value)){
+                return env('APP_URL').'/storage/'.$value;
+            }else{
+                return $value;
+            }
         }
     }
 
@@ -63,4 +68,6 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     {
         return [];
     }
+
+
 }

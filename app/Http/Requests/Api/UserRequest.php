@@ -14,6 +14,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'password' => 'required|alpha_dash|min:6',
             'confirm_password' => 'required|same:password',
+            'code' => 'required',
         ];
     }
 

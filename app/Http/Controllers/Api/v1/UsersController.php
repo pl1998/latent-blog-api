@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -18,11 +19,16 @@ class UsersController extends Controller
 
     public function store(UserRequest $request)
     {
+
+        if($request->code == Cache::get($request->email) ) {
+            return response('邮箱验证码错误', 500);
+        }
+
         $user = User::query()->create([
            'name'=>$request->name,
            'email'=>$request->email,
            'password'=>Hash::make($request->password),
-
+            'avatar'=>sprintf("https://api.adorable.io/avatars/200/%s7D.png",$request->name)
         ]);
         return new UserResource($user);
     }
@@ -36,4 +42,6 @@ class UsersController extends Controller
     {
         return new UserResource($request->user());
     }
+
+
 }
