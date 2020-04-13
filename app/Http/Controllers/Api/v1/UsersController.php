@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 
 class UsersController extends Controller
 {
@@ -20,7 +21,7 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
 
-        if($request->code == Cache::get($request->email) ) {
+        if($request->code == Redis::get($request->email) ) {
             return response('邮箱验证码错误', 500);
         }
 

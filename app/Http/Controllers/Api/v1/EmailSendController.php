@@ -32,7 +32,7 @@ class EmailSendController extends Controller
         $data['code'] = $code;
         $data['slot'] = '';
         $data['url'] = env('APP_RUL') . '/auth/registe';
-        Cache::set($data['email'], $code, $this->time);
+        Redis::set($data['email'], $code, $this->time);
         Mail::send(new RegisterEmail($data));
     }
 }
