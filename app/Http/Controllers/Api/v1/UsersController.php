@@ -26,7 +26,6 @@ class UsersController extends Controller
         if($request->code == $redis->get('check_'.$request->email) ) {
             return response('邮箱验证码错误', 500);
         }
-
         $user = User::query()->create([
            'name'=>$request->name,
            'email'=>$request->email,

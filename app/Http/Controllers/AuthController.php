@@ -54,9 +54,11 @@ class AuthController extends Controller
         }
         $token = Auth::guard('api')->login($users);
         //授权回调
+
+
         return view('loading', [
             'token' => $token,
-            'domain' => env('APP_URL'),
+            'domain' => env('APP_CALLBACK'),
         ]);
 
     }

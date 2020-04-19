@@ -10,7 +10,7 @@
     <link rel="Shortcut Icon" href="/images/967592.png" type="image/x-icon" />
 </head>
 <body>
-<div>登陆中...</div>
+<div style="text-align: center;margin: 100px auto;height: 500px;width: 400px">授权登陆中...</div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 

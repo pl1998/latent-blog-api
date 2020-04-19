@@ -72,18 +72,19 @@
                     });
             },
             githubLogin() {
-                if(localStorage.getItem('Authorization') != null ) {
-                    this.authLoginToken( localStorage.getItem('Authorization'));
+                if(localStorage.getItem('token') != null ) {
+                    this.authLoginToken( localStorage.getItem('token'));
                 }else {
                     window.open('/oauth/github', 'newwindow', 'height=500, width=500, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
                     window.addEventListener('message', function (e) {
                         //开始登录
-                        localStorage.setItem('Authorization', e.data);
+                        localStorage.setItem('token', e.data);
                         this.authLoginToken();
                     }, false)
                 }
             },
             authLoginToken(token) {
+                console.log(token)
                 /**
                  * 授权请求获取登录信息
                  */
