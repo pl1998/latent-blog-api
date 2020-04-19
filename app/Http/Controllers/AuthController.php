@@ -6,20 +6,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\OathTrians\GiteeOauth;
 use App\Models\User;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
+
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Overtrue\LaravelSocialite\Socialite;
-use phpDocumentor\Reflection\Types\This;
-use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 
 class AuthController extends Controller
 {
 
-    use GiteeOauth;
+//    use GiteeOauth;
     /**
      * Redirect the user to the GitHub authentication page.
      *
