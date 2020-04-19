@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrderShipped;
 use App\Mail\RegisterEmail;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 
@@ -27,6 +25,8 @@ class EmailSendController extends Controller
     public function RegisterEamil(Request $request)
     {
         $data = $request->all();
+
+
 
         $code = rand(100000, 999999);
         $data['code'] = $code;

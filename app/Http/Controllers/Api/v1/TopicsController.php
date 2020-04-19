@@ -20,6 +20,7 @@ class TopicsController extends Controller
             return response('参数不完整',500);
         }
        $topic =  Topic::query()->find($request->id);
+
        return json_encode($topic->toArray());
     }
 
@@ -28,9 +29,22 @@ class TopicsController extends Controller
      */
     public function store(Request $request)
     {
-        if(empty($request->category_id)){
-            return response('参数不完整',500);
-        }
+
+
+//        if(empty($request->category_id)){
+//            return response('参数不完整',500);
+//        }
+        $data = $request->all();
+
+
+        Topic::query()->create([
+            'topic_id'=>$request->topic_id,
+            'category_id'=>$request->category_id,
+            'user_id'=>$request->user_id,
+            'to_uid'=>$data['to_uid'] ?  $data['to_uid'] : '',
+            'content'=>$data['content'],
+        ]);
+        return response('评论成功',200);
     }
 
     /**
