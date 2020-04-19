@@ -21,7 +21,9 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
 
-        if($request->code == Redis::get($request->email) ) {
+        $redis = Redis::connection();
+
+        if($request->code == $redis->get($request->email) ) {
             return response('邮箱验证码错误', 500);
         }
 

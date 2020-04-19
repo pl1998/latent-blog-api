@@ -26,13 +26,13 @@ class EmailSendController extends Controller
     {
         $data = $request->all();
 
-
-
+        $redis = Redis::connection();
         $code = rand(100000, 999999);
         $data['code'] = $code;
         $data['slot'] = '';
         $data['url'] = env('APP_RUL') . '/auth/registe';
-        Redis::set($data['email'], $code, $this->time);
+        $redis->set($data['email'], $code, $this->time);
+
         Mail::send(new RegisterEmail($data));
     }
 }
