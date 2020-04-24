@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Triats;
 use App\Models\User;
 use GuzzleHttp\Client;
 use mysql_xdevapi\Exception;
-
+use Illuminate\Support\Facades\Auth;
 Trait LoginWeiBoTrait
 {
     private $key;
@@ -86,7 +86,7 @@ Trait LoginWeiBoTrait
         $user = $users->getUserInfo($uid,$filed='wb_id');
 
         if (!$user || empty($user)) {
-            $url = config('SLogin.accessUser') . '?' . http_build_query($arr);
+            $url = config('auto.access_token_url') . '?' . http_build_query($arr);
             try {
                 $res = $this->client->request('GET', $url)->getBody();
             } catch (\Exception $e) {
@@ -97,9 +97,13 @@ Trait LoginWeiBoTrait
             }
             return json_decode($res, true);
         } else {
-            var_dump($user);die;
-            Auth::login($user, true);
-            return redirect()->route('home');
+            // $token = Auth::guard('api')->login($users);
+            $token = Auth::guard('api')->login($user);
+
+            return view('loading', [
+                'token' => $token,
+                'domain' => env('APP_CALLBACK'),
+            ]);
         }
 
     }
