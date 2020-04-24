@@ -23,7 +23,7 @@ class UsersController extends Controller
 
         $redis = Redis::connection();
 
-        if($request->code == $redis->get('check_'.$request->email) ) {
+        if($request->code != $redis->get('check_'.$request->email) ) {
             return response('邮箱验证码错误', 500);
         }
         $user = User::query()->create([

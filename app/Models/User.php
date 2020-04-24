@@ -69,5 +69,11 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         return [];
     }
 
+    public function getUserInfo($uid,$filed)
+    {
+        $this->where($filed,$uid)->find();
+    }
+
+
 
 }

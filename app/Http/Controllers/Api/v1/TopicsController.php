@@ -29,7 +29,7 @@ class TopicsController extends Controller
      */
     public function store(Request $request)
     {
-
+dd($request->all());
 
 //        if(empty($request->category_id)){
 //            return response('参数不完整',500);
