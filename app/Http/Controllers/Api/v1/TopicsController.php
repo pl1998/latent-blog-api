@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\TopicRequest;
+use App\Http\Resources\ApiTopics;
+use App\Mail\TopicsEmail;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TopicsController extends Controller
 {
@@ -16,35 +20,32 @@ class TopicsController extends Controller
      */
     public function show(Request $request)
     {
-        if(empty($request->id)) {
-            return response('参数不完整',500);
+        if (empty($request->id)) {
+            return response('参数不完整', 500);
         }
-       $topic =  Topic::query()->find($request->id);
+        $topic =Topic::query();
+        $topics = $topic->where('category_id',$request->id)->paginate(20);
 
-       return json_encode($topic->toArray());
+
+        return ApiTopics::collection($topics);
     }
 
     /**
      * @param Request $request
      */
-    public function store(Request $request)
+    public function store(TopicRequest $request)
     {
-dd($request->all());
+        $params = $request->all();
+        $params['content'] = $params['content']['content'];
 
-//        if(empty($request->category_id)){
-//            return response('参数不完整',500);
-//        }
-        $data = $request->all();
+        Topic::query()->create($params);
+
+        $params['url'] = env('APP_RUL') . '/article/'.$params['category_id'].'/xsfsfsafasadfasewasfwevwefwe';
 
 
-        Topic::query()->create([
-            'topic_id'=>$request->topic_id,
-            'category_id'=>$request->category_id,
-            'user_id'=>$request->user_id,
-            'to_uid'=>$data['to_uid'] ?  $data['to_uid'] : '',
-            'content'=>$data['content'],
-        ]);
-        return response('评论成功',200);
+        Mail::send(new TopicsEmail($params));
+
+        return response(json_encode(['msg'=>'评论成功']), 200);
     }
 
     /**
