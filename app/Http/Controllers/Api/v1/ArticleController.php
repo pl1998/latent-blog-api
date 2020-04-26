@@ -3,12 +3,14 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
-use App\Models\Label;
+
 use App\Models\VisitorRegistry;
 use Illuminate\Http\Request;
 use App\Jobs\VisitArticle;
-use Illuminate\Support\Facades\DB;
+
 
 
 class ArticleController
@@ -19,10 +21,6 @@ class ArticleController
      */
     public function getArticleList(Request $request)
     {
-
-
-
-
        $articleList =  Article::query()
            ->with('admin_user')
            ->where('status',0)
@@ -81,5 +79,16 @@ class ArticleController
         } else {
             return;
         }
+    }
+
+
+    /**
+     * 热门文章
+     */
+    public function hotList()
+    {
+        $hot_list = Article::query()->orderBy('review_count','desc')->paginate(4);
+        return ArticleResource::collection($hot_list);
+
     }
 }

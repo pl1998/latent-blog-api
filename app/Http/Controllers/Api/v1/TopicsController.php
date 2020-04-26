@@ -36,7 +36,9 @@ class TopicsController extends Controller
     public function store(TopicRequest $request)
     {
         $params = $request->all();
-        $params['content'] = $params['content']['content'];
+
+        //$params['content'] = $params['content']['content'];
+
 
         Topic::query()->create($params);
 

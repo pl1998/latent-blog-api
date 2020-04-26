@@ -23,7 +23,12 @@ Route::prefix('v1')->name('api.v1.')
 //    ->middleware('throttle:1,1')
     ->group(function () {
         Route::get('categories', 'Api\v1\CategoryController@getCategoryTree');
+
+        //文章
         Route::get('articles', 'Api\v1\ArticleController@getArticleList');
+        //热门文章
+        Route::get('articles/hot', 'Api\v1\ArticleController@hotList');
+
         Route::get('article/{id}/{slug}', 'Api\v1\ArticleController@show');
         Route::get('likes', 'Api\v1\LikesController@all')->name('api.likes.all');
         Route::post('likes', 'Api\v1\LikesController@store')->name('api.likes.store');
