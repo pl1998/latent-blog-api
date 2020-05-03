@@ -39,7 +39,7 @@ Route::prefix('v1')->name('api.v1.')
         Route::post('authorizations', 'Api\v1\AuthorizationController@store')->name('api.authorizations.store');
         //刷新token
         Route::put('authorizations', 'Api\v1\AuthorizationController@update')->name('api.authorizations.update');
-        Route::post('send/email', 'Api\v1\EmailSendController@RegisterEamil')->name('api.EmailSend.send');
+
         //删除token
         Route::delete('authorizations', 'Api\v1\AuthorizationController@destroy')->name('api.authorizations.destroy');
         // 某个用户的详情
@@ -56,6 +56,12 @@ Route::prefix('v1')->name('api.v1.')
         Route::post('topics','Api\v1\TopicsController@store')->name('topics.store');
         Route::put('topics/{id}/update','Api\v1\TopicsController@update')->name('topics.update');
         Route::get('topics/{id}','Api\v1\TopicsController@show')->name('topics.show');
+
+        //邮件发送
+        //注册邮箱验证码
+        Route::post('send/email', 'Api\v1\EmailSendController@RegisterEamil')->name('api.EmailSend.send');
+        //给latent留言
+        Route::post('send/leaveMessage', 'Api\v1\EmailSendController@leaveMessage')->name('api.leaveMessage.send');
     });
 
 
