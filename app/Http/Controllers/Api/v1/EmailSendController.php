@@ -59,7 +59,6 @@ class EmailSendController extends Controller
             return response(json_encode(['msg'=>$validator->getMessage()]), 500);
         }
 
-
         try {
             $params['status'] = 0;
             Mail::send(new LeaveMessage($params));

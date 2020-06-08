@@ -12,7 +12,7 @@ return [
     |
     */
     'name' => 'Laravel-admin',
-    'secure' => true,
+    'secure' => false,
     /*
     |--------------------------------------------------------------------------
     | Laravel-admin logo

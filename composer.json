@@ -23,7 +23,8 @@
         "overtrue/pinyin": "~4.0",
         "predis/predis": "~1.1",
         "tymon/jwt-auth": "1.0.0-rc.5",
-        "weboap/visitor": "dev-master"
+        "weboap/visitor": "dev-master",
+        "xiaosier/libweibo": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

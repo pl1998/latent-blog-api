@@ -40,7 +40,10 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
 
     public function setAvatarAttributes($value)
     {
-        if(empty($value)){
+        if(preg_match('|^[1-9]\d{4,10}@qq\.com$|',$this->email)){
+            $array = explode('@',$this->email);
+            $this->attributes['avatar'] = "http://q1.qlogo.cn/g?b=qq&nk=$array[0]&s=100";
+        }else{
             $this->attributes['avatar'] = env('APP_URL').'public/images/avatar_github'.rand(1,7).'jpg';
         }
     }
@@ -48,15 +51,14 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     public function getAvatarAttribute($value)
     {
         if(empty($value)){
-            return env('APP_URL').'/storage/images/avatar_github'.rand(1,7).'.jpg';
-        }else {
-
-            if(!preg_match('/^http(s)?:\\/\\/.+/',$value)){
-                return env('APP_URL').'/storage/'.$value;
+            if(preg_match('|^[1-9]\d{4,10}@qq\.com$|',$this->email)){
+                $array = explode('@',$this->email);
+                return "http://q1.qlogo.cn/g?b=qq&nk=$array[0]&s=100";
             }else{
-                return $value;
+                return '';
             }
         }
+
     }
 
     public function getJWTIdentifier()

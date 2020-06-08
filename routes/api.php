@@ -62,6 +62,9 @@ Route::prefix('v1')->name('api.v1.')
         Route::post('send/email', 'Api\v1\EmailSendController@RegisterEamil')->name('api.EmailSend.send');
         //给latent留言
         Route::post('send/leaveMessage', 'Api\v1\EmailSendController@leaveMessage')->name('api.leaveMessage.send');
+
+
+        Route::get('weibo/share', 'Api\v1\ShareController@weiBoShare');
     });
 
 

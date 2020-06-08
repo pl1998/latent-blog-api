@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35ebff2dc98a6963f49abf7abd34ff88",
+    "content-hash": "27ceb40af94565079c2546dd6eb3cbb8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5321,6 +5321,55 @@
             "time": "2018-08-04T21:15:16+00:00"
         },
         {
+            "name": "xiaosier/libweibo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xiaosier/libweibo.git",
+                "reference": "d27fbbbc5c3d3116bbc795884fd378a2b67b5247"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xiaosier/libweibo/zipball/d27fbbbc5c3d3116bbc795884fd378a2b67b5247",
+                "reference": "d27fbbbc5c3d3116bbc795884fd378a2b67b5247",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "saetv2.ex.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "lazypeople",
+                    "email": "hfutming@gmail.com",
+                    "homepage": "http://lazy.changes.com.cn",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP sdk for Weibo open platform",
+            "homepage": "http://github.com/xiaosier/libweibo",
+            "keywords": [
+                "sdk",
+                "weibo"
+            ],
+            "time": "2019-12-27T01:55:56+00:00"
+        },
+        {
             "name": "xrstf/ip-utils",
             "version": "v1.1.0",
             "source": {
@@ -7338,7 +7387,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "hanson/rainbow": 20,
-        "weboap/visitor": 20
+        "weboap/visitor": 20,
+        "xiaosier/libweibo": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
