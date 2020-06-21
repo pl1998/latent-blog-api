@@ -65,6 +65,10 @@ Route::prefix('v1')->name('api.v1.')
 
 
         Route::get('weibo/share', 'Api\v1\ShareController@weiBoShare');
+
+        //文档归档
+        Route::get('pigeonhole','Api\v1\ArticleController@pigeonhole');
+
     });
 
 

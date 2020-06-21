@@ -10,7 +10,8 @@ use App\Models\Article;
 use App\Models\VisitorRegistry;
 use Illuminate\Http\Request;
 use App\Jobs\VisitArticle;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 
 class ArticleController
@@ -81,7 +82,6 @@ class ArticleController
         }
     }
 
-
     /**
      * 热门文章
      */
@@ -89,6 +89,44 @@ class ArticleController
     {
         $hot_list = Article::query()->orderBy('review_count','desc')->paginate(4);
         return ArticleResource::collection($hot_list);
+
+    }
+
+
+    /**
+     * 文章归档
+     * @return array|false|string
+     */
+
+    public function pigeonhole()
+    {
+
+        //将数据缓存入redis 计划凌晨清除 、新增文章时更新缓存
+        $redis = Redis::connection();
+
+        $pigeonhole_key = 'pigeonhole_'.date('Y_m_d');
+        $article_list = $redis->get($pigeonhole_key);
+
+        if(!$article_list){
+            $article = DB::table('articles')->orderBy('created_at','desc')->select('id','title','created_at')->get();
+
+            $article_list = [];
+
+            foreach ($article as $key => $value){
+                $keys = date('Y-m-d',strtotime($value->created_at));
+                $article_list[$keys][$key]['id']=$value->id;
+                $article_list[$keys][$key]['title']=$value->title;
+                $article_list[$keys][$key]['created_at']=$value->created_at;
+                $article_list[$keys][$key]['day']=date('d',strtotime($value->created_at));
+            }
+
+            foreach ($article_list as $key=> $value){
+                $article_list[$key] = array_merge($value);
+            }
+            $article_list = json_encode($article_list,JSON_UNESCAPED_UNICODE);
+            $redis->set($pigeonhole_key,$article_list,86400);
+        }
+        return $article_list;
 
     }
 }

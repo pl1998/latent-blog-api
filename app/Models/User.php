@@ -55,7 +55,14 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
                 $array = explode('@',$this->email);
                 return "http://q1.qlogo.cn/g?b=qq&nk=$array[0]&s=100";
             }else{
-                return '';
+                return $value;
+            }
+        }else{
+            if(preg_match('|^[1-9]\d{4,10}@qq\.com$|',$this->email)){
+                $array = explode('@',$this->email);
+                return "http://q1.qlogo.cn/g?b=qq&nk=$array[0]&s=100";
+            }else{
+                return $value;
             }
         }
 

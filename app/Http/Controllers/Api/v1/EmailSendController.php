@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\RegisterEmailRequest;
 use App\Mail\OrderShipped;
 use App\Mail\RegisterEmail;
 use App\Mail\LeaveMessage;
@@ -25,7 +26,7 @@ class EmailSendController extends Controller
      * 注册邮箱验证码
      */
 
-    public function RegisterEamil(Request $request)
+    public function RegisterEamil(RegisterEmailRequest $request)
     {
         $data = $request->all();
 
@@ -34,7 +35,7 @@ class EmailSendController extends Controller
         $data['code'] = $code;
         $data['slot'] = '';
         $data['url'] = env('APP_RUL') . '/auth/registe';
-        $redis->set('check_'.$data['email'],$code);
+        $redis->set('check_'.$data['email'],$code,300);
 
         Mail::send(new RegisterEmail($data));
     }
@@ -45,10 +46,10 @@ class EmailSendController extends Controller
      */
     public function leaveMessage(LeaveMessageModel $messageModel , Request $request)
     {
-
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:20',
             'email' => 'required|email',
+            'url'=>'requred',
             'content' => 'required|min:4|max:255',
         ]);
 
@@ -71,6 +72,7 @@ class EmailSendController extends Controller
         $messageModel->email = $params['email'];
         $messageModel->content = $params['content'];
         $messageModel->status = $params['status'];
+        $messageModel->url = $params['url'];
         $messageModel->save();
 
         if($params['status']==0){
