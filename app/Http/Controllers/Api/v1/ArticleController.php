@@ -102,12 +102,12 @@ class ArticleController
     {
 
         //将数据缓存入redis 计划凌晨清除 、新增文章时更新缓存
-        $redis = Redis::connection();
-
-        $pigeonhole_key = 'pigeonhole_'.date('Y_m_d');
-        $article_list = $redis->get($pigeonhole_key);
-
-        if(!$article_list){
+//        $redis = Redis::connection();
+//
+//        $pigeonhole_key = 'pigeonhole_'.date('Y_m_d');
+//        $article_list = $redis->get($pigeonhole_key);
+//
+//        if(!$article_list){
             $article = DB::table('articles')->orderBy('created_at','desc')->select('id','title','created_at')->get();
 
             $article_list = [];
@@ -124,8 +124,8 @@ class ArticleController
                 $article_list[$key] = array_merge($value);
             }
             $article_list = json_encode($article_list,JSON_UNESCAPED_UNICODE);
-            $redis->set($pigeonhole_key,$article_list,'',86400);
-        }
+//            $redis->set($pigeonhole_key,$article_list,'',86400);
+//        }
         return $article_list;
 
     }
