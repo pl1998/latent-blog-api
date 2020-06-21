@@ -124,7 +124,7 @@ class ArticleController
                 $article_list[$key] = array_merge($value);
             }
             $article_list = json_encode($article_list,JSON_UNESCAPED_UNICODE);
-            $redis->set($pigeonhole_key,$article_list,86400);
+            $redis->set($pigeonhole_key,$article_list,'',86400);
         }
         return $article_list;
 
