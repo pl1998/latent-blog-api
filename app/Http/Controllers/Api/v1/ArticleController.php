@@ -132,7 +132,7 @@ class ArticleController
 
             foreach ($article as $key => $value) {
 
-                $keys = date('Y-m-d', strtotime($value->created_at));
+                $keys = date('Y-m', strtotime($value->created_at));
                 $article_list[$keys][$key]['id'] = $value->id;
                 $article_list[$keys][$key]['title'] = $value->title;
                 $article_list[$keys][$key]['created_at'] = $value->created_at;
