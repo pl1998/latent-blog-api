@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
-
 use App\Models\VisitorRegistry;
 use Illuminate\Http\Request;
 use App\Jobs\VisitArticle;
@@ -22,17 +21,31 @@ class ArticleController
      */
     public function getArticleList(Request $request)
     {
-       $articleList =  Article::query()
-           ->with('admin_user')
-           ->where('status',0)
-           ->orderBy('stick','desc')
-           ->orderBy('created_at','desc')
-           ->paginate($request->pageSize);
 
-       foreach ($articleList as $key=> $article){
-           $article->label_list = $article->full_name;
-       }
-       return $articleList->toArray();
+        $redis = Redis::connection();
+
+        $article_key = 'article_list' . date('Y_m_d') . $request->pageSize;
+
+        $articleList = $redis->get($article_key);
+
+
+        if(!$articleList) {
+            $articleList = Article::query()
+                ->with('admin_user')
+                ->where('status', 0)
+                ->orderBy('stick', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate($request->pageSize);
+
+            foreach ($articleList as $key => $article) {
+                $article->label_list = $article->full_name;
+            }
+            $articleList = $articleList->toArray();
+            $redis->set($article_key, json_encode($articleList));
+            return $articleList;
+        }
+
+        return $articleList;
     }
 
     /**
@@ -41,9 +54,10 @@ class ArticleController
      * @return array
      */
 
-    public function show(Request $request){
+    public function show(Request $request)
+    {
 
-        $article =   Article::query()->with('admin_user')->find($request->id);
+        $article = Article::query()->with('admin_user')->find($request->id);
 
         $article->label_list = $article->full_name;
 
@@ -68,9 +82,9 @@ class ArticleController
             if (!$visitor) {
                 //新增一个文章访问记录
                 VisitorRegistry::query()->create([
-                    'clicks'=>1,
-                    'art_id'=>$article_id,
-                    'ip'=>$ip,
+                    'clicks' => 1,
+                    'art_id' => $article_id,
+                    'ip' => $ip,
                 ]);
 
             } else {
@@ -87,7 +101,7 @@ class ArticleController
      */
     public function hotList()
     {
-        $hot_list = Article::query()->orderBy('review_count','desc')->paginate(4);
+        $hot_list = Article::query()->orderBy('review_count', 'desc')->paginate(4);
         return ArticleResource::collection($hot_list);
 
     }
@@ -100,32 +114,37 @@ class ArticleController
 
     public function pigeonhole()
     {
-
         //将数据缓存入redis 计划凌晨清除 、新增文章时更新缓存
-//        $redis = Redis::connection();
-//
-//        $pigeonhole_key = 'pigeonhole_'.date('Y_m_d');
-//        $article_list = $redis->get($pigeonhole_key);
-//
-//        if(!$article_list){
-            $article = DB::table('articles')->orderBy('created_at','desc')->select('id','title','created_at')->get();
+
+
+        $redis = Redis::connection();
+        $pigeonhole_key = 'pigeonhole_' . date('Y_m_d');
+        $article_list = $redis->get($pigeonhole_key);
+        if (!$article_list) {
+
+            $article = DB::table('articles')
+                ->orderBy('created_at', 'desc')
+                ->where('status', 0)
+                ->select('id', 'title', 'created_at')
+                ->get();
 
             $article_list = [];
 
-            foreach ($article as $key => $value){
-                $keys = date('Y-m-d',strtotime($value->created_at));
-                $article_list[$keys][$key]['id']=$value->id;
-                $article_list[$keys][$key]['title']=$value->title;
-                $article_list[$keys][$key]['created_at']=$value->created_at;
-                $article_list[$keys][$key]['day']=date('d',strtotime($value->created_at));
+            foreach ($article as $key => $value) {
+
+                $keys = date('Y-m-d', strtotime($value->created_at));
+                $article_list[$keys][$key]['id'] = $value->id;
+                $article_list[$keys][$key]['title'] = $value->title;
+                $article_list[$keys][$key]['created_at'] = $value->created_at;
+                $article_list[$keys][$key]['day'] = date('d', strtotime($value->created_at));
             }
 
-            foreach ($article_list as $key=> $value){
+            foreach ($article_list as $key => $value) {
                 $article_list[$key] = array_merge($value);
             }
-            $article_list = json_encode($article_list,JSON_UNESCAPED_UNICODE);
-//            $redis->set($pigeonhole_key,$article_list,'',86400);
-//        }
+            $article_list = json_encode($article_list, JSON_UNESCAPED_UNICODE);
+            $article_list = $redis->set($pigeonhole_key, $article_list);
+        }
         return $article_list;
 
     }
