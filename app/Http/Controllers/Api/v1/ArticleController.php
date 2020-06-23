@@ -101,8 +101,16 @@ class ArticleController
      */
     public function hotList()
     {
-        $hot_list = Article::query()->orderBy('review_count', 'desc')->paginate(4);
-        return ArticleResource::collection($hot_list);
+        $hot_key = 'host_list'.date('Y_m_d');
+        $redis = Redis::connection();
+        $hot_list = $redis->get($hot_key);
+        if(!$hot_list){
+            $hot_list = Article::query()->orderBy('review_count', 'desc')->select('id','title','created_at','review_count')->paginate(5);
+
+            $hot_list = json_encode($hot_list,JSON_UNESCAPED_UNICODE);
+            $redis->set($hot_key,$hot_list);
+        }
+        return $hot_list;
 
     }
 
