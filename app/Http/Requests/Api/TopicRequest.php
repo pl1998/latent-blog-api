@@ -9,10 +9,9 @@ class TopicRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|between:2,25|regex:/^[A-Za-z0-9\-\_]+$/',
-            'email' => 'required|email',
             'content' => 'required',
-            'category_id' => 'required:int',
+            'user_id' => 'required',
+            'article_id' => 'required:int',
 
         ];
     }
@@ -20,11 +19,10 @@ class TopicRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name.required' => '账号必须填写',
-            'email' => '不是一个合格的邮箱地址',
-            'name.between'=>'账号的长度不正确',
-            'name.unique'=>'账号已经被注册过了',
-            'name.between'=>'昵称太短了',
+            'user_id.required' => '用户未登录',
+            'content.required' => '内容不能为空',
+            'article_id.between'=>'评论对象不能为空',
+
 
         ];
     }

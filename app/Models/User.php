@@ -84,5 +84,10 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     }
 
 
+    public function topic()
+    {
+        return $this->hasOne('App\Models\Topic','id','user_id');
+    }
+
 
 }

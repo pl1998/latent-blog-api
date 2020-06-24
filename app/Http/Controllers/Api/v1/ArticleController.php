@@ -4,7 +4,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 
-use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\VisitorRegistry;
 use Illuminate\Http\Request;
@@ -22,14 +21,14 @@ class ArticleController
     public function getArticleList(Request $request)
     {
 
-        $redis = Redis::connection();
-
-        $article_key = 'article_list' . date('Y_m_d') . $request->pageSize;
-
-        $articleList = $redis->get($article_key);
-
-
-        if(!$articleList) {
+//        $redis = Redis::connection();
+//
+//        $article_key = 'article_list' . date('Y_m_d') . $request->pageSize;
+//
+//        $articleList = $redis->get($article_key);
+//
+//
+//        if(!$articleList) {
             $articleList = Article::query()
                 ->with('admin_user')
                 ->where('status', 0)
@@ -41,9 +40,9 @@ class ArticleController
                 $article->label_list = $article->full_name;
             }
             $articleList = $articleList->toArray();
-            $redis->set($article_key, json_encode($articleList));
-            return $articleList;
-        }
+//            $redis->set($article_key, json_encode($articleList));
+//            return $articleList;
+//        }
 
         return $articleList;
     }

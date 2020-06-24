@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTopicsTable extends Migration
+class CreateAboutMeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTopicsTable extends Migration
      */
     public function up()
     {
-        Schema::create('topics', function (Blueprint $table) {
+        Schema::create('about_me', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('topic_id');
-            $table->unsignedInteger('article_id');//主题类型
-            $table->unsignedInteger('user_id');//评论用户id
-            $table->unsignedInteger('to_uid');//评论目标用户id
-            $table->text('content')->nullable();
+            $table->string('nickname',40);
+            $table->string('description',40);
+            $table->string('make',255);
+            $table->string('contact_me',255);
+            $table->string('img_url',255);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateTopicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('about_me');
     }
 }

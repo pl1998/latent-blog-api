@@ -22,12 +22,13 @@ class ApiTopics extends JsonResource
 
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'name' => $this->name,
             'email' => $this->email,
             'content' => $this->content,
             'created_at' => $this->created_at,
             'topic_id' => $this->topic_id,
-            'category_id' => $this->category_id,
+            'article_id' => $this->article_id,
             'avatar' => $this->avatar,
         ];
 
