@@ -9,5 +9,5 @@ class LeaveMessageModel extends Model
     //
     protected $table = 'leave_message';
 
-    protected $fillable = ['name','email','content','status'];
+    protected $fillable = ['name','email','content','status','url'];
 }

@@ -13,7 +13,7 @@ use App\Models\LeaveMessageModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
-use Validator;
+use App\Http\Requests\Api\leaveMessage as leaveMessageRequest;
 
 
 class EmailSendController extends Controller
@@ -44,27 +44,19 @@ class EmailSendController extends Controller
      * @param Request $request
      * 留言
      */
-    public function leaveMessage(LeaveMessageModel $messageModel , Request $request)
+    public function leaveMessage(LeaveMessageModel $messageModel, Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => 'required|max:20',
-            'email' => 'required|email',
-            'url'=>'requred',
-            'content' => 'required|min:4|max:255',
-        ]);
-
 
         $params = $request->all();
 
-        if($validator->fails()){
-            return response(json_encode(['msg'=>$validator->getMessage()]), 500);
-        }
+
 
         try {
             $params['status'] = 0;
             Mail::send(new LeaveMessage($params));
 
         }catch (\Exception $exception){
+            $msg = $exception->getMessage();
             $params['status'] = 1;
         }
 
@@ -78,7 +70,7 @@ class EmailSendController extends Controller
         if($params['status']==0){
             return response(json_encode(['msg'=>'留言成功','code'=>200]), 200);
         } else{
-            return response(json_encode(['msg'=>'留言失败','code'=>500]), 500);
+            return response(json_encode(['msg'=>$msg,'code'=>500]), 500);
         }
 
     }

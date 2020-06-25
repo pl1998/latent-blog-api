@@ -16,12 +16,18 @@ class leaveMessage extends Mailable
      *
      * @return void
      */
-    private $params;
 
-    public function __construct($params)
+    private $name;
+    private $email;
+    private $content;
+
+    public function __construct($data)
     {
         //
-        $this->params = $params;
+        $this->email = $data['email'];
+        $this->name = $data['name'];
+
+        $this->url = $data['url'];
 
     }
 
@@ -32,16 +38,16 @@ class leaveMessage extends Mailable
      */
     public function build()
     {
-        $params = $this->params;
 
-        return $this->from(env('MAIL_USERNAME'),$params['name'].'@'.$params['email'])
+
+        return $this->from(env('MAIL_USERNAME'),'latent博客留言邮件')
             ->subject('博客留言邮件')
-            ->to(env('MAIL_LEAVN'))
+            ->to($this->email)
             ->markdown('emails.leave.leave_notification')
             ->with([
-                'name'=>$params['name'],
-                'email'=>$params['email'],
-                'content'=>$params['content'],
+                'name'=>$this->name,
+                'email'=>$this->email,
+                'content'=>$this->content,
             ]);
 
 
