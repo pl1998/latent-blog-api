@@ -57,7 +57,6 @@ class ArticleController
     {
 
         $article = Article::query()->with('admin_user')->find($request->id);
-
         $article->label_list = $article->full_name;
 
         dispatch(new VisitArticle($article));
