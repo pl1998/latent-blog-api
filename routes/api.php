@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -50,6 +52,8 @@ Route::prefix('v1')->name('api.v1.')
 
             Route::get('user', 'Api\v1\UsersController@me')
                 ->name('user.show');
+
+            Route::post('subscription','Api\v1\SubscriptionController@store')->name('订阅');
         });
 
         //评论列表

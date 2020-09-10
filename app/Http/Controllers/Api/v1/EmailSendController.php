@@ -48,9 +48,6 @@ class EmailSendController extends Controller
     {
 
         $params = $request->all();
-
-
-
         try {
             $params['status'] = 0;
             Mail::send(new LeaveMessage($params));
