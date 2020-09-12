@@ -18,9 +18,11 @@
 
     function login()
     {
-
-
-
+        window.open('https://gitee.com/oauth/authorize?client_id=7e22fbb0ff807dd9768b88c5e4a89b92dedf4291e62ae395e5534b6f77122dde&redirect_uri=https://api.pltrue.top/oauth/giteeCallback&response_type=code')
+        window.addEventListener('message', function (e) {
+            //开始登录
+            console.log(e)
+        }, false)
     }
 </script>
 </body>

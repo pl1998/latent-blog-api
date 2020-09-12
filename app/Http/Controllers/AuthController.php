@@ -70,16 +70,11 @@ class AuthController extends Controller
     public function handleProviderGiteeCallback(Request $request)
     {
         $code = $request->get('code');
+        $result = $this->getAccessToken($code);
+        $result = $result->getBody()->getContents();
+        $result = json_decode($result,true);
+        $access_token = $result['access_token'];
 
-        $access_token = '6852132e7e36b915dbf268f62495b7de';
-        if(!empty($access_token)){
-
-        }else{
-            $result = $this->getAccessToken($code);
-            $result = $result->getBody()->getContents();
-            $result = json_decode($result,true);
-            $access_token = $result['access_token'];
-        }
         $userInfo = $this->getUserInfo($access_token);
 
         $userInfo = json_decode($userInfo->getBody()->getContents(),true);
