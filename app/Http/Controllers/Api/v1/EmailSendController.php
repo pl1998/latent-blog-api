@@ -19,7 +19,7 @@ use App\Http\Requests\Api\leaveMessage as leaveMessageRequest;
 class EmailSendController extends Controller
 {
 
-    protected $time = 180;
+    protected static $time = 500;
 
     /**
      * @param Request $request
@@ -35,7 +35,7 @@ class EmailSendController extends Controller
         $data['code'] = $code;
         $data['slot'] = '';
         $data['url'] = env('APP_RUL') . '/auth/registe';
-        $redis->set('check_'.$data['email'],$code,'',300);
+        $redis->set('check_'.$data['email'],$code,'',self::$time);
 
         Mail::send(new RegisterEmail($data));
     }
@@ -48,9 +48,6 @@ class EmailSendController extends Controller
     {
 
         $params = $request->all();
-
-
-
         try {
             $params['status'] = 0;
             Mail::send(new LeaveMessage($params));

@@ -23,7 +23,7 @@ trait GiteeOauth
     public function __construct()
     {
         $this->gitee_client_id = env('GITEE_CLIENT_ID');
-        $this->gitee_secret = env('GITEE_SECRET');
+        $this->gitee_secret = env('GITEE_CLIENT_SECRET');
         $this->gitee_redirect_url = env('GITEE_REDIRECT_URL');
         $this->authorize_url = env('GITEE_AUTHORIZE_URL');
         $this->client = new Client();
@@ -52,11 +52,24 @@ trait GiteeOauth
     /**
      * 获取access_token
      */
-
-    public function getAccessToken($code,$get_access_url)
+    public function getAccessToken($code)
     {
-        $access_url = sprintf($get_access_url,$code,$this->gitee_client_id,$this->gitee_redirect_url,$this->gitee_secret);
+        $access_url = sprintf('https://gitee.com/oauth/token?grant_type=authorization_code&code=%s&client_id=%s&redirect_uri=%s',$code,$this->gitee_client_id,$this->gitee_redirect_url);
 
-        return $this->client->request('POST',$access_url);
+        return $this->client->request('POST',$access_url,[
+            'form_params' => [
+                'client_secret'=>$this->gitee_secret
+            ]
+        ]);
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public function getUserInfo($access_token)
+    {
+        $url    = sprintf('https://gitee.com/api/v5/user?access_token=%s',$access_token);
+        $result = $this->client->request('get',$url);
+        return $result;
     }
 }

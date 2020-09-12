@@ -20,6 +20,7 @@ Route::group([
     $router->resource('likes', LikesController::class);
     $router->resource('visitor_registry', VisitorRegistryController::class);
     $router->resource('about-me-models', AboutMeController::class);
+    $router->resource('leave-msg', LeaveController::class);
 
     //下拉导航
     $router->get('api/category', 'CategoryController@apiIndex');

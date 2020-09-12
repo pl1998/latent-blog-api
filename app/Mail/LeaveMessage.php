@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class leaveMessage extends Mailable
+class LeaveMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -38,8 +38,6 @@ class leaveMessage extends Mailable
      */
     public function build()
     {
-
-
         return $this->from(env('MAIL_USERNAME'),'latent博客留言邮件')
             ->subject('博客留言邮件')
             ->to($this->email)
@@ -49,7 +47,5 @@ class leaveMessage extends Mailable
                 'email'=>$this->email,
                 'content'=>$this->content,
             ]);
-
-
     }
 }

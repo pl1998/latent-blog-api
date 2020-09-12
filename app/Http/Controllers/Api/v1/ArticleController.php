@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Models\Article;
+use App\Models\Label;
 use App\Models\VisitorRegistry;
 use Illuminate\Http\Request;
 use App\Jobs\VisitArticle;
@@ -20,31 +21,36 @@ class ArticleController
      */
     public function getArticleList(Request $request)
     {
+//        $page     = $request->get('page',1);
+        $pageSize = $request->get('pageSize',10);
+        $keywords = $request->get('keywords');
+        $query = Article::query();
 
-//        $redis = Redis::connection();
-//
-//        $article_key = 'article_list' . date('Y_m_d') . $request->pageSize;
-//
-//        $articleList = $redis->get($article_key);
-//
-//
-//        if(!$articleList) {
-            $articleList = Article::query()
+        if($keywords && $keywords!='undefined') {
+           $id =  Label::query()->where('label_name',$keywords)->value('id');
+
+
+           if(!$id) {
+               return [];
+           }
+
+           $query->where('label','like',$id.'%');
+
+        }
+            $list = $query
                 ->with('admin_user')
                 ->where('status', 0)
                 ->orderBy('stick', 'desc')
                 ->orderBy('created_at', 'desc')
-                ->paginate($request->pageSize);
-
-            foreach ($articleList as $key => $article) {
+                ->paginate($pageSize);
+            foreach ($list as $key => $article) {
                 $article->label_list = $article->full_name;
             }
-            $articleList = $articleList->toArray();
-//            $redis->set($article_key, json_encode($articleList));
-//            return $articleList;
-//        }
 
-        return $articleList;
+        $list = $list->toArray();
+
+
+        return $list;
     }
 
     /**
@@ -105,7 +111,6 @@ class ArticleController
         $hot_list = $redis->get($hot_key);
         if(!$hot_list){
             $hot_list = Article::query()->orderBy('review_count', 'desc')->select('id','title','created_at','review_count')->paginate(5);
-
             $hot_list = json_encode($hot_list,JSON_UNESCAPED_UNICODE);
             $redis->set($hot_key,$hot_list);
         }
@@ -122,8 +127,6 @@ class ArticleController
     public function pigeonhole()
     {
         //将数据缓存入redis 计划凌晨清除 、新增文章时更新缓存
-
-
         $redis = Redis::connection();
         $pigeonhole_key = 'pigeonhole_' . date('Y_m_d');
         $article_list = $redis->get($pigeonhole_key);
@@ -155,4 +158,5 @@ class ArticleController
         return $article_list;
 
     }
+
 }

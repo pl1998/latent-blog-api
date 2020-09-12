@@ -29,7 +29,7 @@ class AboutMeController extends AdminController
 //        $grid->column('id', __('Id'));
         $grid->column('nickname', __('昵称'));
         $grid->column('description', __('个人签名'));
-        $grid->column('make', __('简介'));
+        $grid->markdown('make', __('简介'));
         $grid->column('contact_me', __('联系方式'))->image('',$width = 100, $height = 100);
         $grid->column('img_url', __('风景图'))->image('',$width = 300, $height = 300);
 //        $grid->column('created_at', __('Created at'));
