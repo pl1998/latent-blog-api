@@ -29,26 +29,6 @@ trait GiteeOauth
         $this->client = new Client();
     }
 
-    public function getCodeUrl()
-    {
-        $url = sprintf($this->authorize_url, $this->gitee_client_id, $this->gitee_secret);
-        return $url;
-    }
-
-    /**
-     * 发送登录请求
-     */
-
-
-    public function getGiteeCode()
-    {
-
-        $oath_url = $this->getCodeUrl();
-        $result = $this->client->request('GET', $oath_url);
-        if ($result->getStatusCode() == 200) return;
-
-    }
-
     /**
      * 获取access_token
      */

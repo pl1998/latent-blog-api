@@ -79,7 +79,9 @@ class AuthController extends Controller
 
         $userInfo = json_decode($userInfo->getBody()->getContents(),true);
 
-        $user = User::query()->where('gitee_id',$userInfo['id'])->find();
+
+        $user = User::query()->where('gitee_id',$userInfo['id'])->first();
+
 
         if(empty($user)) {
             $user = User::query()->create([
