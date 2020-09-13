@@ -41,7 +41,7 @@ Route::get('/send/email','MailSendController@emailSend')->name('send.email.view'
 //Route::get('/send/email','MailSendController@emailSend')->name('send.email.view');
 
 
-Route::get('weibo/login','WeiBoController@index')->name('index.wb');
+Route::get('weibo/login','AuthController@handleWeiBoCallback')->name('index.wb');
 Route::get('weibo/authorization','WeiBoController@authorization')->name('authorization.wb');
 
 //

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\OathTrians\GiteeOauth;
 use App\Http\Controllers\OathTrians\GithubOauth;
+use App\Http\Controllers\OathTrians\WeiBoOauth;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -103,6 +104,42 @@ class AuthController extends Controller
                'github_name' => $userInfo['name'],
                'user_json' => json_encode($userInfo,JSON_UNESCAPED_UNICODE),
                 'bound_oauth'=>2
+            ]);
+        }
+
+        $token = Auth::guard('api')->login($user);
+
+        return view('loading', [
+            'token' => $token,
+            'domain' => env('APP_CALLBACK','https://pltrue.top/'),
+        ]);
+    }
+
+    /**
+     * 微博授权登录地址
+     * @param Request $request
+     * @param WeiBoOauth $oauth
+     */
+    public function handleWeiBoCallback(Request  $request, WeiBoOauth $oauth)
+    {
+        $code = $request->get('code');
+        $result = $oauth->getAccessToken($code);
+        $result = $result->getBody()->getContents();
+        $result = json_decode($result,true);
+        $access_token = $result['access_token'];
+        $userInfo = $oauth->getUserInfo($access_token);
+        $userInfo = json_decode($userInfo->getBody()->getContents(),true);
+
+        $user = User::query()->where('wb_id',$userInfo['id'])->first();
+
+        if(empty($user)) {
+            $user = User::query()->create([
+                'wb_id' => $userInfo['id'],
+                'name' => $userInfo['name'],
+                'github_name' => $userInfo['screen_name'],
+                'avatar' => $userInfo['avatar_large'],
+                'user_json' => json_encode($userInfo),
+                'bound_oauth' => 3
             ]);
         }
 

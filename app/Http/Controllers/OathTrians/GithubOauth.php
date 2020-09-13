@@ -20,10 +20,10 @@ class GithubOauth
         $client = new Client();
         return $client->request('POST',$access_url,[
             'form_params' => [
-                'client_secret'=> env('GITHUB_CLIENT_SECRET'),
+                'client_secret'=> env('GITHUB_CLIENT_SECRET','85e6932b0d8e811daa7c18f4e0bf3a7f0b113572'),
                 'code'         => $code,
-                'client_id'    => env('GITHUB_CLIENT_ID'),
-                'redirect_uri' => env('GITHUB_CALLBACK_URL'),
+                'client_id'    => env('GITHUB_CLIENT_ID','46b6e2304c11077b5eb6'),
+                'redirect_uri' => env('GITHUB_CALLBACK_URL','https://api.pltrue.top/oauth/callback'),
             ]
         ]);
     }
