@@ -25,12 +25,12 @@ use Illuminate\Support\Facades\Route;
 //
 //github登录
 Route::get('/oauth/github', 'AuthController@redirectToProvider');
-Route::get('/oauth/callback', 'AuthController@handleProviderCallback');
+Route::get('/oauth/callback', 'AuthController@handleGithubCallback');
 Route::get('/login','AuthController@login');
 
 //码云登录
 Route::get('/oauth/gitee', 'AuthController@redirectGitee');
-Route::get('/oauth/giteeCallback', 'AuthController@handleProviderGiteeCallback');
+Route::get('/oauth/giteeCallback', 'AuthController@handleGiteeCallback');
 
 Route::get('/oauth/qqLogin', 'AuthController@redirectToProvider');
 Route::get('/oauth/qqCallback', 'AuthController@redirectToProvider');

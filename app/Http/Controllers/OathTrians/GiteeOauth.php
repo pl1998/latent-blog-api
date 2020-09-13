@@ -6,7 +6,7 @@ namespace App\Http\Controllers\OathTrians;
 
 use GuzzleHttp\Client;
 
-trait GiteeOauth
+class GiteeOauth
 {
     private $gitee_client_id;
     private $gitee_secret;
@@ -17,15 +17,16 @@ trait GiteeOauth
     private $access_token;
 
     /**
+     * 获取配置参数
      * GiteeOauth constructor.
      */
 
     public function __construct()
     {
-        $this->gitee_client_id = env('GITEE_CLIENT_ID');
-        $this->gitee_secret = env('GITEE_CLIENT_SECRET');
-        $this->gitee_redirect_url = env('GITEE_REDIRECT_URL');
-        $this->authorize_url = env('GITEE_AUTHORIZE_URL');
+        $this->gitee_client_id = env('GITEE_CLIENT_ID','7e22fbb0ff807dd9768b88c5e4a89b92dedf4291e62ae395e5534b6f77122dde');
+        $this->gitee_secret = env('GITEE_CLIENT_SECRET','5be9e613e923695165d6dd31cac72105a90b4413bb594aeeefa27cb7293ecab4');
+        $this->gitee_redirect_url = env('GITEE_REDIRECT_URL','https://api.pltrue.top/oauth/giteeCallback');
+        $this->authorize_url = env('GITEE_AUTHORIZE_URL','https://pltrue.top/');
         $this->client = new Client();
     }
 

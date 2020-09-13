@@ -10,14 +10,21 @@ class AboutMeModel extends Model
 {
     protected $table = 'about_me';
 
-
     public function getContactMeAttribute($value)
     {
-        return env('APP_URL').'/storage/'.$value;
+        if(empty(env('APP_URL'))){
+            return 'https://api.pltrue.top/storage/'.$value;
+        }else{
+            return env('APP_URL').'/storage/'.$value;
+        }
     }
 
     public function getImgUrlAttribute($value)
     {
-        return env('APP_URL').'/storage/'.$value;
+        if(empty(env('APP_URL'))){
+            return 'https://api.pltrue.top/storage/'.$value;
+        }else{
+            return env('APP_URL').'/storage/'.$value;
+        }
     }
 }
