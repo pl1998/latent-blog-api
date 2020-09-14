@@ -13,7 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class TopicsController extends Controller
+class TopicsController
 {
 
     /**
@@ -21,6 +21,10 @@ class TopicsController extends Controller
      */
     public function show(Request $request)
     {
+
+
+        $page = $request->get('page',1);
+        $pageSize = $request->get('pageSize',10);
         if (empty($request->id)) {
             return response('参数不完整', 500);
         }
@@ -31,10 +35,22 @@ class TopicsController extends Controller
             $value->email = $value->user->email;
             $value->avatar = $value->user->avatar;
             $value->name = $value->user->name;
-
+            unset($value->user);
         }
 
-        return ApiTopics::collection($topics);
+
+
+        $topics = $topics->toArray();
+
+        //$topics = $topics->toArray();
+
+        $tree = getTree($topics['data']);
+
+        $list = ['data'=>$tree,'likes'=>[],'meta'=>['current_page'=>$topics['current_page'],'last_page'=>$topics['last_page']]];
+        return  response(json_encode($list),200);
+
+
+
     }
 
     /**
@@ -44,7 +60,6 @@ class TopicsController extends Controller
     {
         $params = $request->all();
 
-
         Topic::query()->create($params);
 
         $params['url'] = env('APP_RUL') . '/article/'.$params['article_id'].'/xsfsfsafasadfasewasfwevwefwe';
@@ -52,8 +67,10 @@ class TopicsController extends Controller
 
         $params['email'] = $users->email;
         $params['name'] = $users->name;
-        Mail::send(new TopicsEmail($params));
 
+        if(!empty($params['email'])){
+            Mail::send(new TopicsEmail($params));
+        }
         return response(json_encode(['msg'=>'评论成功']), 200);
     }
 

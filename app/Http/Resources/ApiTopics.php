@@ -18,11 +18,11 @@ class ApiTopics extends JsonResource
     {
 
 
-//        $data = parent::toArray($request);
 
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'to_uid' => intval($this->to_uid),
             'name' => $this->name,
             'email' => $this->email,
             'content' => $this->content,
