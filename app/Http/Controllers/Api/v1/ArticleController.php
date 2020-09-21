@@ -26,11 +26,9 @@ class ArticleController
         $keywords = $request->get('keywords');
         $query = Article::query();
 
-        if($keywords || $keywords!='undefined') {
+        if(!$keywords || $keywords!='undefined') {
 
            $label_name =  Label::query()->where('label_name','like',"%$keywords%")->value('label_name');
-
-
 
 
            if(!$label_name) {
