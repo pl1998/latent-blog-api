@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 //github登录
 Route::get('/oauth/github', 'AuthController@redirectToProvider');
 Route::get('/oauth/callback', 'AuthController@handleGithubCallback');
-Route::get('/login','AuthController@login');
+Route::get('/qq/login','AuthController@login');
 
 //码云登录
 Route::get('/oauth/gitee', 'AuthController@redirectGitee');

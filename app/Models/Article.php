@@ -50,8 +50,8 @@ class Article extends Model
        $labels = explode(',', $this->label);
        $label_list = [];
        foreach ($labels as $key=> $label ) {
-           $labelObj = Label::query()->find($label);
-           $label_list[$key]['id'] = $label;
+           $labelObj = Label::query()->where('label_name',$label)->first();
+           $label_list[$key]['id'] = $labelObj->id;
            $label_list[$key]['label_name'] = $labelObj->label_name;
            $label_list[$key]['color'] = $labelObj->color;
        }

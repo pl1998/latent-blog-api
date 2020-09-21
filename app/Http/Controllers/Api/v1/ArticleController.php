@@ -26,15 +26,18 @@ class ArticleController
         $keywords = $request->get('keywords');
         $query = Article::query();
 
-        if($keywords && $keywords!='undefined') {
-           $id =  Label::query()->where('label_name',$keywords)->value('id');
+        if($keywords || $keywords!='undefined') {
+
+           $label_name =  Label::query()->where('label_name','like',"%$keywords%")->value('label_name');
 
 
-           if(!$id) {
+
+
+           if(!$label_name) {
                return [];
            }
 
-           $query->where('label','like',$id.'%');
+           $query->where('label','like','%'.$label_name.'%');
 
         }
             $list = $query
@@ -43,7 +46,10 @@ class ArticleController
                 ->orderBy('stick', 'desc')
                 ->orderBy('created_at', 'desc')
                 ->paginate($pageSize);
+
+
             foreach ($list as $key => $article) {
+
                 $article->label_list = $article->full_name;
             }
 

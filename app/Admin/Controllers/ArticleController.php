@@ -40,8 +40,8 @@ class ArticleController extends AdminController
         $grid->column('label', __('所属标签'))->display(function ($label){
           $labels =   explode(',',$label);
           $value = "";
-          foreach ( $labels as $id ) {
-              $label = Label::query()->find($id);
+          foreach ( $labels as $label_name ) {
+              $label = Label::query()->where('label_name',$label_name)->first();
               $value .= sprintf("<span class='btn btn-xs'  style='background-color: %s;color: #f0f0f0'><i class='fa fa-tag'></i>&nbsp;%s</span>&nbsp;&nbsp;",$label->color,$label->label_name);
           }
           return $value;
@@ -122,8 +122,9 @@ class ArticleController extends AdminController
             $labels =    Label::all();
             $label_name = [];
             foreach ($labels as $label){
-                $label_name[$label->id] = $label->label_name;
+                $label_name[$label->label_name] = $label->label_name;
             }
+
             return $label_name;
 
         })->rules('required');
@@ -145,6 +146,8 @@ class ArticleController extends AdminController
         ]);
 
         $form->saving(function (Form $form) {
+
+
             if($form->status=='off'){
 
                 $form->status = 0;
