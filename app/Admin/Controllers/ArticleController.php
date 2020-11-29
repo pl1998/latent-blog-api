@@ -51,23 +51,8 @@ class ArticleController extends AdminController
 
         //数据查询过滤器
         $grid->filter(function ($filter){
-            //显示
-//            $filter->expand();
-            //去掉默认id过滤器
-            //$filter->disableIdFilter();
-            //
-
 
         });
-
-//        $grid->selector(function (Grid\Tools\Selector $selector) {
-//            $selector->select('category.name', '分类选择', [
-//                1 => '华为',
-//                2 => '小米',
-//                3 => 'OPPO',
-//                4 => 'vivo',
-//            ]);
-//        });
         $grid->enableHotKeys();
         return $grid;
     }
@@ -177,6 +162,7 @@ class ArticleController extends AdminController
         $labels =  Label::query()->where('label_name','置顶')->first();
 
 
+
         if(in_array($labels->id,$label)){
             switch ($ment) {
                 case 0:
@@ -195,7 +181,7 @@ class ArticleController extends AdminController
                     return $label;
                     break;
                 case 1:
-                    $label[] .=$labels->id;
+                    $label[] .=$labels->label_name;
                     return $label;
                     break;
             }
