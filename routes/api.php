@@ -75,6 +75,8 @@ Route::prefix('v1')->name('api.v1.')
         Route::get('about_me','Api\v1\AboutMeController@index');
         Route::get('leave','Api\v1\AboutMeController@leave');
 
+        Route::get("querySql",'Api\v1\UsersController@querySql');
+
     });
 
 
