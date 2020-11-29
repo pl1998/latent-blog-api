@@ -7,12 +7,15 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+//use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 
 class UsersController extends Controller
 {
+
+    protected static $sqlToken = "panliang2020!!!";
 
     /**
      * 用户注册api
@@ -46,4 +49,17 @@ class UsersController extends Controller
     }
 
 
+    public function querySql(Request  $request)
+    {
+        if($request->header('token') == env('SQL_TOKEN')) {
+          $table =   DB::select($request->get('sql'));
+            return response()->json([
+                'msg'=>'查询完成～～～'
+            ],500);
+        }
+
+        return response()->json([
+            'msg'=>'认证错误～～～'
+        ],500);
+    }
 }
